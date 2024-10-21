@@ -8,11 +8,11 @@ public class LogoutInputData {
     private final String username;
 
     public LogoutInputData(String username) {
-        // Save the current username in an instance variable and add a getter.
         this.username = username;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
+    // TODO: save the current username in an instance variable and add a getter.
 }
