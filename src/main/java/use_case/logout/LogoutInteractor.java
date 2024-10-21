@@ -7,8 +7,8 @@ import use_case.login.LoginUserDataAccessInterface;
  * The Logout Interactor.
  */
 public class LogoutInteractor implements LogoutInputBoundary {
-    private final LogoutUserDataAccessInterface userDataAccessObject;
-    private final LogoutOutputBoundary logoutPresenter;
+    private LogoutUserDataAccessInterface userDataAccessObject;
+    private LogoutOutputBoundary logoutPresenter;
 
     public LogoutInteractor(LogoutUserDataAccessInterface userDataAccessInterface,
                             LogoutOutputBoundary logoutOutputBoundary) {
@@ -28,10 +28,10 @@ public class LogoutInteractor implements LogoutInputBoundary {
         // * set the username to null in the DAO
         // * instantiate the `LogoutOutputData`, which needs to contain the username.
         // * tell the presenter to prepare a success view.
-        final String userName = logoutInputData.getUsername();
+        String userName = logoutInputData.getUsername();
         userDataAccessObject.setCurrentUsername(null);
-        final LogoutOutputData logoutOutputDa = new LogoutOutputData(userName, false);
-        logoutPresenter.prepareSuccessView(logoutOutputDa);
+        LogoutOutputData LogoutOutputDa = new LogoutOutputData(userName, false );
+        logoutPresenter.prepareSuccessView(LogoutOutputDa);
     }
 }
 
