@@ -1,5 +1,8 @@
 package use_case.logout;
 
+import use_case.login.LoginOutputBoundary;
+import use_case.login.LoginUserDataAccessInterface;
+
 /**
  * The Logout Interactor.
  */
@@ -9,6 +12,9 @@ public class LogoutInteractor implements LogoutInputBoundary {
 
     public LogoutInteractor(LogoutUserDataAccessInterface userDataAccessInterface,
                             LogoutOutputBoundary logoutOutputBoundary) {
+        this.userDataAccessObject = userDataAccessInterface;
+        this.logoutPresenter = logoutOutputBoundary;
+
         // TODO: save the DAO and Presenter in the instance variables.
         // Which parameter is the DAO and which is the presenter?
     }
