@@ -5,8 +5,8 @@ package use_case.logout;
  */
 public class LogoutOutputData {
 
-    private String username;
-    private boolean useCaseFailed;
+    private final String username;
+    private final boolean useCaseFailed;
 
     public LogoutOutputData(String username, boolean useCaseFailed) {
         // Save the parameters in the instance variables.
