@@ -1,24 +1,29 @@
 package entity;
 
 /**
- * A simple implementation of the Messages interface.
+ * A simple implementation of the Message interface.
  */
 
 public class Message {
-    private final User username;
+    private final User user;
     private final String text;
 
-    public Message(User username, String text) {
-        this.username = username;
+    public Message(User user, String text) {
+        this.user = user;
         this.text = text;
     }
 
-    public User getUsername() {
-        return username;
+    public String getUsername() {
+        return user.getName();
     }
 
     public String getText() {
         return text;
+    }
+
+    @Override
+    public String toString() {
+        return "Message from" + getUsername() + ":" + text;
     }
 
 }
