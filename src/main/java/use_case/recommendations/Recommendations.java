@@ -9,7 +9,7 @@ public class Recommendations {
 
         for (Book book : user.getReadBooks()) {
             String genre = book.getGenre();
-            List<Book> genreRecommendations = fetchBooksFromOpenLibraryAPI(genre);
+            List<Book> genreRecommendations = fetchBooksFromAPI(genre);
 
             for (Book recommendedBook : genreRecommendations) {
                 if (!user.getReadBooks().contains(recommendedBook)
@@ -22,4 +22,7 @@ public class Recommendations {
         return recommended;
     }
     // TODO: Implement API integration
+    private List<Book> fetchBooksFromAPI(String genre){
+        return new ArrayList<>();
+    }
 }
