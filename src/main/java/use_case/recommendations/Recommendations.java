@@ -1,5 +1,7 @@
 package use_case.recommendations;
 
+import entity.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
