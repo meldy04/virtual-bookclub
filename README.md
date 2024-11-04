@@ -18,12 +18,55 @@ book lovers' reading experience.
 
 * * *
 
-# Getting Started
-Please ensure you have Node.js and npm installed.
+# User Stories
+The TODOs are summarized below (by stories) and split among team members as follows:
 
 * * *
-# Project Blueprint
 
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+- `Team Story`
+
+    - [ ] TODO: after signing up or logging in, user browses through a list of existing book clubs and joins one.
+    - [ ] TODO: user is able to view the club's books and participate in discussions.
+
+* * *
+
+- `Recommendations`
+
+    - [ ] TODO: 'Recommended for You' - provides a list of books based on user's previous reads.
+    - [ ] TODO: user should be able to add recommendations to a 'Want To Read' list.
+
+* * *
+
+- `Add Review`
+
+    - [ ] TODO: user should be able to write a review for a book.
+    - [ ] TODO: review includes a 5-star rating system and text field.
+    - [ ] TODO: user should be able to read others' reviews.
+
+* * *
+
+- `Create Book Club`
+
+    - [ ] TODO: logged-in user should be able to start a new book club.
+    - [ ] TODO: book club is composed of a title, description and initial book.
+
+* * *
+
+- `Search`
+
+    - [ ] TODO: implement api usage to allow user to be able to search the app for information e.g.author, book, etc.
+
+* * *
+
+- `New Discussion`
+
+    - [ ] TODO: allow user to create a new discussion on a book.
+
+* * *
+
+- `Leave Book Club`
+
+    - [ ] TODO: user should be able to exit a book club
+    - [ ] TODO: user should no longer be able to see any discussions after leaving.
+
+* * *
