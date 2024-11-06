@@ -17,10 +17,10 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
-
 /**
  * The View for when the user is logged into the program.
  */
+
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
