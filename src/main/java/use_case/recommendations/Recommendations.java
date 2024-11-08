@@ -1,21 +1,31 @@
 package use_case.recommendations;
 
-import entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.Book;
+import entity.User;
+
+/**
+ * Implementation of the Recommendations class.
+ */
+
 public class Recommendations {
+    /**
+     * RecommendedBooks function.
+     * @param user User
+     * @return A list of recommended books for the user
+     */
     public List<Book> recommendBooks(User user) {
-        List<Book> recommended = new ArrayList<>();
+        final List<Book> recommended = new ArrayList<>();
 
         for (Book book : user.getReadBooks()) {
-            String genre = book.getGenre();
-            List<Book> genreRecommendations = fetchBooksFromAPI(genre);
+            final String genre = book.getGenre();
+            final List<Book> genreRecommendations = fetchBooksFromApi(genre);
 
             for (Book recommendedBook : genreRecommendations) {
                 if (!user.getReadBooks().contains(recommendedBook)
-                        && !user.getToReadBooks().contains(recommendedBook)) {
+                        && !user.getBooksToRead().contains(recommendedBook)) {
                     recommended.add(recommendedBook);
                 }
             }
@@ -24,7 +34,8 @@ public class Recommendations {
         return recommended;
     }
     // TODO: Implement API integration
-    private List<Book> fetchBooksFromAPI(String genre){
+
+    private List<Book> fetchBooksFromApi(String genre) {
         return new ArrayList<>();
     }
 }
