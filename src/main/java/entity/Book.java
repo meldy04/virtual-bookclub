@@ -3,6 +3,9 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing a book.
+ */
 public class Book {
 
     private String title;
@@ -39,6 +42,10 @@ public class Book {
         return reviews;
     }
 
+    /**
+     * Adds new review to reviews list.
+     * @param review the new review
+     */
     public void addReview(Review review) {
         this.reviews.add(review);
     }

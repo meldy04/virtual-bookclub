@@ -1,6 +1,5 @@
 package entity;
 
-
 /**
  * A representation of the reviews.
  */
@@ -49,16 +48,15 @@ public class Review implements Reviews {
         this.text = texts;
     }
 
+    @Override
     public String toString() {
         final String p1 = "User" + ':' + ' ';
         final String p2 = "Book" + ':' + ' ';
         final String p3 = "Rating" + ':' + ' ';
         final String p4 = "Review" + ':' + ' ';
 
-        return p1 + user.getName() + '\n' + p2 + book.getName() + '\n' + p3 + rating + '\n'
+        return p1 + user.getName() + '\n' + p2 + book.getTitle() + '\n' + p3 + rating + '\n'
                 + p4 + '\n' + text;
     }
-
-
 
 }
