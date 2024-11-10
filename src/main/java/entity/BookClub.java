@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
 public class BookClub {
@@ -11,7 +12,7 @@ public class BookClub {
     private String genre;
     private final List<User> members = new ArrayList<>();
     @SuppressWarnings("checkstyle:IllegalType")
-    private final HashMap<Book, Review> bookReview = new HashMap<Book, Review>();
+    private final Map<Book, Review> bookReview = new HashMap<Book, Review>();
     private final List<Discussion> discussions = new ArrayList<Dicsussion>();
 
     public BookClub(String name, String genre) {
@@ -72,7 +73,7 @@ public class BookClub {
     }
 
     @SuppressWarnings("checkstyle:IllegalType")
-    public HashMap getBookReviews() {
+    public Map<Book, Review> getBookReviews() {
         return bookReview;
     }
 }
