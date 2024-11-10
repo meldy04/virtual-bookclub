@@ -5,13 +5,13 @@ package use_case.join_club;
  */
 public class JoinClubInteractor implements JoinClubInputBoundary {
 
-    private final JoinclubOutputBoundary joinclubOutputBoundary;
+    private final JoinClubOutputBoundary joinclubOutputBoundary;
     private final JoinClubDataAccessInterface clubDataAccessInterface;
 
-    public JoinClubInteractor(JoinclubOutputBoundary joinclubOutputBoundary,
+    public JoinClubInteractor(JoinClubOutputBoundary joinClubOutputBoundary,
                               JoinClubDataAccessInterface clubDataAccessInterface1) {
 
-        this.joinclubOutputBoundary = joinclubOutputBoundary;
+        this.joinclubOutputBoundary = joinClubOutputBoundary;
         this.clubDataAccessInterface = clubDataAccessInterface1;
     }
 

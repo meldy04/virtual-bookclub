@@ -3,7 +3,7 @@ package use_case.join_club;
 /**
  * Output Boundary for Join Club Use case.
  */
-public interface JoinclubOutputBoundary {
+public interface JoinClubOutputBoundary {
     /**
      * Prepares the success view for the Join Club Use Case.
      * @param outputData the output data
