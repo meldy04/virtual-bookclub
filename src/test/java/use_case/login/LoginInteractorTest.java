@@ -27,9 +27,7 @@ class LoginInteractorTest {
             }
 
             @Override
-            public void prepareFailView(String error) {
-                fail("Use case failure is unexpected.");
-            }
+            public void prepareFailView(String error) {fail("Use case failure is unexpected.");}
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
