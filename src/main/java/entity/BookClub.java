@@ -13,7 +13,7 @@ public class BookClub {
     private final List<User> members = new ArrayList<>();
     @SuppressWarnings("checkstyle:IllegalType")
     private final Map<Book, Review> bookReview = new HashMap<Book, Review>();
-    private final List<Discussion> discussions = new ArrayList<Dicsussion>();
+    private final List<Discussion> discussions = new ArrayList<Discussion>();
 
     public BookClub(String name, String genre) {
         this.name = name;
@@ -37,8 +37,8 @@ public class BookClub {
     }
 
     /**
-     * Adds the a new user to the bookclub.
-     * @param user added to the bookclub.
+     * Adds the a new user to the book club.
+     * @param user added to the book club.
      */
 
     public void addMember(User user) {
@@ -46,8 +46,8 @@ public class BookClub {
     }
 
     /**
-     * Adds a new discussions thread to the bookclub.
-     * @param discussion added to the bookclub.
+     * Adds a new discussions thread to the book club.
+     * @param discussion added to the book club.
      */
 
     public void addDiscussion(Discussion discussion) {
@@ -55,9 +55,9 @@ public class BookClub {
     }
 
     /**
-     * A new bookreview added to the bookclub.
+     * A new book-review added to the book club.
      * @param book a new book review added.
-     * @param review coressponding to the book added.
+     * @param review corresponding to the book added.
      */
 
     public void addBookReview(Book book, Review review) {
