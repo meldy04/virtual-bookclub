@@ -23,9 +23,6 @@ import interface_adapter.logout.LogoutController;
 
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "logged in";
-    private final LoggedInViewModel loggedInViewModel;
-    private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
 
@@ -37,8 +34,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton changePassword;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
-        this.loggedInViewModel = loggedInViewModel;
-        this.loggedInViewModel.addPropertyChangeListener(this);
+        loggedInViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,6 +108,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(username);
 
         this.add(passwordInfo);
+        final JLabel passwordErrorField = new JLabel();
         this.add(passwordErrorField);
         this.add(buttons);
     }
@@ -130,7 +127,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return "logged in";
     }
 
     public void setChangePasswordController(ChangePasswordController changePasswordController) {

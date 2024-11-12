@@ -12,7 +12,7 @@ public class Book {
     private String author;
     private String genre;
     private double rating;
-    private List<Review> reviews;
+    private final List<Review> reviews;
 
     public Book(String title, String author, String genre, double rating) {
         this.title = title;

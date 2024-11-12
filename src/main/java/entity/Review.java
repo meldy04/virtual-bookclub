@@ -6,8 +6,8 @@ package entity;
 
 public class Review implements Reviews {
 
-    private User user;
-    private Book book;
+    private final User user;
+    private final Book book;
     private String text;
     private double rating;
 
