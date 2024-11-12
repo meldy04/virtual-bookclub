@@ -1,4 +1,4 @@
-# Lab 5: Logout
+# Virtual Book Club
 
 ## Preamble
 
