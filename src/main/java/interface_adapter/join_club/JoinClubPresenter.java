@@ -32,10 +32,11 @@ public class JoinClubPresenter implements JoinClubOutputBoundary {
     }
 
     @Override
-    public void prepareFailView() {
+    public void prepareFailView(String message) {
         final JoinClubState didNotJoinClub = joinClubViewModel.getState();
         didNotJoinClub.setBookclub("");
         didNotJoinClub.setJoined(false);
+        didNotJoinClub.setErrorMessage(message);
         this.joinClubViewModel.setState(didNotJoinClub);
         joinClubViewModel.firePropertyChanged();
     }
