@@ -1,22 +1,28 @@
 package use_case.join_club;
+import entity.User;
 
 /**
  * Input data for join_club usecase.
  */
 public class JoinClubInputData {
-    private String username;
+    private User user;
     private String clubName;
 
-    public JoinClubInputData(String username, String clubName) {
-        this.username = username;
+
+
+    public JoinClubInputData(User user ,String clubName) {
+        this.user = user;
         this.clubName = clubName;
+
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
     public String getClubName() {
         return clubName;
     }
 }
+
+
