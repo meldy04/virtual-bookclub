@@ -13,6 +13,6 @@ public interface JoinClubOutputBoundary {
     /**
      * Prepares the fail view for the Join Club Use Case.
      */
-    void prepareFailView();
+    void prepareFailView(String message);
 
 }

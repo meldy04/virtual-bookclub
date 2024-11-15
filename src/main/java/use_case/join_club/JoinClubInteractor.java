@@ -21,7 +21,8 @@ public class JoinClubInteractor implements JoinClubInputBoundary {
         final String clubName = joinClubInputData.getClubName();
 
         if (clubDataAccessInterface.isMember(username, clubName)) {
-            joinclubOutputBoundary.prepareFailView();
+            joinclubOutputBoundary.prepareFailView("User " + username + " is already a member of the "
+                    + clubName + " Book Club");
         }
         else {
             clubDataAccessInterface.addUser(username, clubName);
