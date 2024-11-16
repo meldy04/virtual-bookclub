@@ -4,7 +4,8 @@ package entity;
  * A representation of the reviews.
  */
 
-public class Review implements Reviews {
+public class
+Review implements Reviews {
 
     private User user;
     private Book book;

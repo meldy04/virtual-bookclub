@@ -1,39 +1,27 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * A discussion class.
+ */
 public class Discussion {
-    private final User user;
-    private final Book book;
-    private String discussion;
     private final String topic;
+    private List<Message> messages = new ArrayList<>();
 
-    public Discussion(User user, Book book, String topic, String discussion) {
-        this.user = user;
-        this.book = book;
+    public Discussion(String topic, List<Message> messages) {
         this.topic = topic;
-        this.discussion = discussion;
-
+        this.messages = messages;
     }
 
-    public String getDiscussion () {
-        return discussion;
-    }
-
-    public User getUser () {
-        return user;
-    }
-
-    public Book getBook () {
-        return book;
-    }
-
-    public void editDiscussion (String discussion){
-        this.discussion = discussion;
+    public List<Message> getMessages() {
+        return this.messages;
     }
 
     @Override
     public String toString() {
-        return "About this topic" + topic + "in this book" + book + " User " + user +
-                " would like to add the following opinion" + discussion;
+        return "Discussion about " + topic;
     }
 
 }

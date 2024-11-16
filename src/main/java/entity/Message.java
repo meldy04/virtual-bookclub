@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * A simple implementation of the Message interface.
+ * A Message class.
  */
 
 public class Message {
