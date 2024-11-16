@@ -33,26 +33,11 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
     @Override
     public void addUser(User user, String clubName) {
         BookClub bookClub = bookClubMap.get(clubName);
-        List<User> userList = bookClub.getMembers();
-
-        if (bookClub == null) {
-            System.out.println("Sorry the bookclub doesnt exist");
-        }
-
-        if (bookClub != null) {
-            if (isMember(user, clubName)){
-                System.out.println("You are already in this club");
-                }
-
-            }
-            bookClub.addMember(user);
-            System.out.println("You have been sucessfully been added to the bookclub");
-            jsonTranslator.saveClubsToFile(bookClubMap);
+        bookClub.addMember(user);
+        System.out.println("You have been sucessfully been added to the bookclub");
+        jsonTranslator.saveClubsToFile(bookClubMap);
 
         }
-
-
-
 
     @Override
     public boolean isMember(User user, String clubName){
