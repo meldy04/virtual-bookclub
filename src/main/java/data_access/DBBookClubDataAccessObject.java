@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.Map;
 
 public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
-    private static final String FILE_PATH = "Resources/book_clubs.json";
+
     private Map<String, BookClub> bookClubMap;
 
-    private final JSONTranslator jsonTranslator;
+    private final JacksonTranslator jacksonTranslator;
 
     // Constructor to initialize JSONTranslator and load clubs from the file
-    public DBBookClubDataAccessObject() throws URISyntaxException, IOException {
-        this.jsonTranslator = new JSONTranslator(FILE_PATH);
+    public DBBookClubDataAccessObject(JacksonTranslator jacksonTranslator) throws URISyntaxException, IOException {
+        this.jacksonTranslator = jacksonTranslator;
         loadClubsFromFile();
     }
 
     private void loadClubsFromFile() {
-        this.bookClubMap = jsonTranslator.getBookClubMap();
+        this.bookClubMap = JacksonTranslator.getBookClubData();
     }
 
     public Map<String, BookClub> getBookClubMap() {
@@ -34,8 +34,8 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
     public void addUser(User user, String clubName) {
         BookClub bookClub = bookClubMap.get(clubName);
         bookClub.addMember(user);
+        JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
-        jsonTranslator.saveClubsToFile(bookClubMap);
 
         }
 
