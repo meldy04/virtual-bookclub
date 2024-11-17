@@ -1,16 +1,16 @@
-[
-  {
+{
+  "Cooking Club": {
     "name": "Cooking Club",
     "genre": "Cooking",
     "members": [],
     "books": [],
     "discussions": []
   },
-  {
+  "Reading Club": {
     "name": "Reading Club",
     "genre": "Literature",
     "members": [],
     "books": [],
     "discussions": []
   }
-]
+}
