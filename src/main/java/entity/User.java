@@ -76,8 +76,23 @@ public class User {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    /**
+     * Adds a review for a book that the user has read.
+     * @param book The book a user wants to review. Must be a book they have read.
+     * @param rating The rating the user has given the book.
+     * @param text The body of the user's review.
+     * @return The Review object created.
+     */
+    public Review addReview(Book book, String text, double rating) {
+        if (!readBooks.contains(book)) {
+            System.out.println("User has not read this book and cannot review it.");
+        }
+
+        final Review review = new Review(this, book, text, rating);
+        reviews.add(review);
+        book.addReview(review);
+
+        return review;
     }
 
     @Override

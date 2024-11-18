@@ -48,6 +48,20 @@ public class Book {
      */
     public void addReview(Review review) {
         this.reviews.add(review);
+        updateRating();
+    }
+
+    private void updateRating() {
+        double total = 0;
+        for (Review review : reviews) {
+            total += review.getRating();
+        }
+        if (reviews.isEmpty()) {
+            this.rating = 0;
+        }
+        else {
+            this.rating = total / reviews.size();
+        }
     }
 
     private void setTitle(String newTitle) {
