@@ -12,7 +12,7 @@ import use_case.join_club.JoinClubDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
- * NOT persist data between runs of the program yes love that.
+ * NOT persist data between runs of the program yes love that huh.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface {
 
