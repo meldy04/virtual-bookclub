@@ -2,6 +2,7 @@ package entity;
 
 import java.util.List;
 
+
 /**
  * A user class.
  */

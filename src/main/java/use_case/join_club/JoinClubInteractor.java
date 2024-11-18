@@ -1,5 +1,7 @@
 package use_case.join_club;
 
+import entity.User;
+
 /**
  * The Join Club Interactor.
  */
@@ -17,15 +19,16 @@ public class JoinClubInteractor implements JoinClubInputBoundary {
 
     @Override
     public void execute(JoinClubInputData joinClubInputData) {
-        final String username = joinClubInputData.getUsername();
+        final User user  = joinClubInputData.getUser();
         final String clubName = joinClubInputData.getClubName();
 
-        if (clubDataAccessInterface.isMember(username, clubName)) {
+
+        if (clubDataAccessInterface.isMember(user, clubName)) {
             joinclubOutputBoundary.prepareFailView();
         }
         else {
-            clubDataAccessInterface.addUser(username, clubName);
-            final JoinClubOutputData outputData = new JoinClubOutputData(username, clubName, false);
+            clubDataAccessInterface.addUser(user, clubName);
+            final JoinClubOutputData outputData = new JoinClubOutputData(user, clubName,false);
             joinclubOutputBoundary.prepareSuccessView(outputData);
         }
 

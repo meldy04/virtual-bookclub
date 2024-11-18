@@ -1,21 +1,23 @@
 package use_case.join_club;
 
+import entity.User;
+
 /**
  * Output data for the Join Club Use Case.
  */
 public class JoinClubOutputData {
-    private final String username;
+    private final User user;
     private final String clubName;
     private boolean useCaseFailed;
 
-    public JoinClubOutputData(String username, String clubName, boolean useCaseFailed) {
-        this.username = username;
+    public JoinClubOutputData(User user, String clubName, boolean useCaseFailed) {
+        this.user = user;
         this.clubName = clubName;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
     public String getClubName() {
