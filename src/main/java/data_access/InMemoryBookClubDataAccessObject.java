@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import entity.BookClub;
+import entity.User;
 import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 
@@ -41,5 +43,20 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
 
     public Map<String, List<String>> getBookClubMap() {
         return bookClubMap;
+    }
+
+    @Override
+    public void addUser(User user, String clubName) {
+
+    }
+
+    @Override
+    public boolean isMember(User user, String clubName) {
+        return bookClubMap.get(clubName).contains(user.getName());
+    }
+
+    @Override
+    public List<BookClub> getAllClubs() {
+        return List.of();
     }
 }
