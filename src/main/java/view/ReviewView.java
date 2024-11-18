@@ -33,18 +33,23 @@ public class ReviewView extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         final Review review = reviews.get(rowIndex);
+        Object value = null;
         switch (columnIndex) {
             case 0:
-                return review.getUser().getName();
+                value = review.getUser().getName();
+                break;
             case 1:
-                return review.getBook().getTitle();
+                value = review.getBook().getTitle();
+                break;
             case 2:
-                return review.getRating();
+                value = review.getRating();
+                break;
             case 3:
-                return review.getText();
+                value = review.getText();
+                break;
             default:
-                return null;
-
+                value = null;
         }
+        return value;
     }
 }
