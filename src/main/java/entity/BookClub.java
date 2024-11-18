@@ -1,25 +1,30 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@SuppressWarnings({"checkstyle:WriteTag", "checkstyle:SuppressWarnings"})
+import java.util.ArrayList;
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookClub {
 
     private String name;
     private String genre;
-    private final List<User> members = new ArrayList<>();
-    @SuppressWarnings("checkstyle:IllegalType")
-    private final Map<Book, Review> bookReview = new HashMap<Book, Review>();
-    private final List<Discussion> discussions = new ArrayList<Discussion>();
+    private List<User> members = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
+    private List<Discussion> discussions = new ArrayList<>();
 
+    // No-argument constructor
+    public BookClub() {
+    }
+
+    // Parameterized constructor
     public BookClub(String name, String genre) {
         this.name = name;
         this.genre = genre;
     }
 
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -36,44 +41,40 @@ public class BookClub {
         this.genre = genre;
     }
 
-    /**
-     * Adds the a new user to the book club.
-     * @param user added to the book club.
-     */
-
-    public void addMember(User user) {
-        this.members.add(user);
-    }
-
-    /**
-     * Adds a new discussions thread to the book club.
-     * @param discussion added to the book club.
-     */
-
-    public void addDiscussion(Discussion discussion) {
-        this.discussions.add(discussion);
-    }
-
-    /**
-     * A new book-review added to the book club.
-     * @param book a new book review added.
-     * @param review corresponding to the book added.
-     */
-
-    public void addBookReview(Book book, Review review) {
-        this.bookReview.put(book, review);
-    }
-
     public List<User> getMembers() {
         return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 
     public List<Discussion> getDiscussions() {
         return discussions;
     }
 
-    @SuppressWarnings("checkstyle:IllegalType")
-    public Map<Book, Review> getBookReviews() {
-        return bookReview;
+    public void setDiscussions(List<Discussion> discussions) {
+        this.discussions = discussions;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    // Utility methods
+    public void addMember(User user) {
+        this.members.add(user);
+    }
+
+    public void addDiscussion(Discussion discussion) {
+        this.discussions.add(discussion);
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book);
     }
 }
