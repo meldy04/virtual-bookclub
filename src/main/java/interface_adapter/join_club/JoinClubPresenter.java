@@ -1,7 +1,6 @@
 package interface_adapter.join_club;
 
 import interface_adapter.ViewManagerModel;
-import use_case.join_club.JoinClubInputBoundary;
 import use_case.join_club.JoinClubOutputBoundary;
 import use_case.join_club.JoinClubOutputData;
 /**

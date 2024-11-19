@@ -3,27 +3,25 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
+/**
+ * A class representing a book club.
+ */
 public class BookClub {
 
     private String name;
     private String genre;
-    private List<User> members = new ArrayList<>();
+    private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private List<Discussion> discussions = new ArrayList<>();
-    private String ClubDescription;
 
     // No-argument constructor
     public BookClub() {
     }
 
     // Parameterized constructor
-    public BookClub(String name, String genre, String ClubDescription) {
+    public BookClub(String name, String genre) {
         this.name = name;
         this.genre = genre;
-        this.ClubDescription = ClubDescription;
     }
 
     // Getters and Setters
@@ -35,14 +33,6 @@ public class BookClub {
         this.name = name;
     }
 
-    public String getClubDescription() {
-        return ClubDescription;
-    }
-
-    public void setClubDescription(String ClubDescription) {
-        this.ClubDescription = ClubDescription;
-    }
-
     public String getGenre() {
         return genre;
     }
@@ -51,11 +41,11 @@ public class BookClub {
         this.genre = genre;
     }
 
-    public List<User> getMembers() {
+    public List<String> getMembers() {
         return members;
     }
 
-    public void setMembers(List<User> members) {
+    public void setMembers(List<String> members) {
         this.members = members;
     }
 
@@ -75,15 +65,26 @@ public class BookClub {
         this.books = books;
     }
 
-    // Utility methods
-    public void addMember(User user) {
-        this.members.add(user);
+    /**
+     * Adds username to members.
+     * @param username to be added to members
+     */
+    public void addMember(String username) {
+        this.members.add(username);
     }
 
+    /**
+     * Adds a new discussion to discussions.
+     * @param discussion to be added
+     */
     public void addDiscussion(Discussion discussion) {
         this.discussions.add(discussion);
     }
 
+    /**
+     * Adds a new book to books.
+     * @param book to be added
+     */
     public void addBook(Book book) {
         this.books.add(book);
     }
