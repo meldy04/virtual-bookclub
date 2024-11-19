@@ -10,7 +10,6 @@ public class JoinedClubState {
     private String bookclub;
     private boolean hasjoined;
 
-
     public JoinedClubState() {
 
     }

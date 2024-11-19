@@ -1,6 +1,8 @@
 package use_case.join_club;
 
 import data_access.InMemoryBookClubDataAccessObject;
+import entity.Book;
+import entity.BookClub;
 import org.junit.Test;
 
 import java.util.*;
@@ -12,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class JoinClubInteractorTest {
     @Test
     public void successTest() {
-        Map<String, List<String>> bookClubMap = new HashMap<>();
-        bookClubMap.put("Cooking", new ArrayList<>()); // creates empty book club
+        Map<String, BookClub> bookClubMap = new HashMap<>();
+        bookClubMap.put("Cooking", new BookClub("Cooking", "Culinary")); // creates empty book club
 
         JoinClubInputData inputData = new JoinClubInputData("Bob", "Cooking");
         JoinClubDataAccessInterface bookClubRepository = new InMemoryBookClubDataAccessObject(bookClubMap);
@@ -36,8 +38,10 @@ public class JoinClubInteractorTest {
 
     @Test
     public void failTest() {
-        Map<String, List<String>> bookClubMap = new HashMap<>();
-        bookClubMap.put("Cooking", new ArrayList<>(List.of("Bob"))); // creates a book club where Bob is a member
+        Map<String, BookClub> bookClubMap = new HashMap<>();
+        BookClub testClub = new BookClub("Cooking", "Culinary");
+        testClub.addMember("Bob");
+        bookClubMap.put("Cooking", testClub); // creates a book club where Bob is a member
 
         JoinClubInputData inputData = new JoinClubInputData("Bob", "Cooking");
         JoinClubDataAccessInterface bookClubRepository = new InMemoryBookClubDataAccessObject(bookClubMap);

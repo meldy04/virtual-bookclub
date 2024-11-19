@@ -12,7 +12,8 @@ public interface JoinClubOutputBoundary {
 
     /**
      * Prepares the fail view for the Join Club Use Case.
+     * @param errorMessage to be shown
      */
-    void prepareFailView(String message);
+    void prepareFailView(String errorMessage);
 
 }
