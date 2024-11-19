@@ -1,9 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A class representing a book club.
@@ -14,7 +12,7 @@ public class BookClub {
     private String genre;
     private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
-    private Map<String, Discussion> discussions = new HashMap<>();
+    private List<Discussion> discussions = new ArrayList<>();
 
     // No-argument constructor
     public BookClub() {
@@ -51,11 +49,11 @@ public class BookClub {
         this.members = members;
     }
 
-    public Map<String, Discussion> getDiscussions() {
+    public List<Discussion> getDiscussions() {
         return discussions;
     }
 
-    public void setDiscussions(Map<String, Discussion> discussions) {
+    public void setDiscussions(List<Discussion> discussions) {
         this.discussions = discussions;
     }
 
@@ -77,11 +75,10 @@ public class BookClub {
 
     /**
      * Adds a new discussion to discussions.
-     * @param topic of the discussion
      * @param discussion to be added
      */
-    public void addDiscussion(String topic, Discussion discussion) {
-        this.discussions.put(topic, discussion);
+    public void addDiscussion(Discussion discussion) {
+        this.discussions.add(discussion);
     }
 
     /**
