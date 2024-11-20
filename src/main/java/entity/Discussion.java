@@ -19,6 +19,14 @@ public class Discussion {
         return this.messages;
     }
 
+    /**
+     * Adds new message.
+     * @param newMessage to be added
+     */
+    public void addMessage(Message newMessage) {
+        this.messages.add(newMessage);
+    }
+
     @Override
     public String toString() {
         return "Discussion about " + topic;
