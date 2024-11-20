@@ -15,7 +15,7 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
 
         addMessageDataAccessInterface.saveMessage(username, text);
 
-        final AddMessageOutputData outputData = new AddMessageOutputData(username, text);
+        final AddMessageOutputData outputData = new AddMessageOutputData(username, text, false);
 
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
