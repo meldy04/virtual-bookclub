@@ -1,28 +1,22 @@
 package use_case.add_message;
 
+import java.util.AbstractMap;
+import java.util.List;
+
 /**
  * Output data for the add message usecase.
  */
 public class AddMessageOutputData {
-    private String username;
-    private String text;
-    private boolean useCaseFailed;
+    private final List<AbstractMap.SimpleEntry<String, String>> messages;
+    private final String currentTopic;
 
-    public AddMessageOutputData(String username, String text, boolean useCaseFailed) {
-        this.username = username;
-        this.text = text;
-        this.useCaseFailed = useCaseFailed;
+    public AddMessageOutputData(List<AbstractMap.SimpleEntry<String, String>> messages, String currentTopic) {
+        this.messages = messages;
+        this.currentTopic = currentTopic;
     }
 
-    public String getUsername() {
-        return username;
+    public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
+        return messages;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
-    }
 }

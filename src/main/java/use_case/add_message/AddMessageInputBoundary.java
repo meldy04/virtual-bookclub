@@ -9,4 +9,9 @@ public interface AddMessageInputBoundary {
      * @param addMessageInputData the input data
      */
     void execute(AddMessageInputData addMessageInputData);
+
+    /**
+     * Updates the add message view with new messages (doesn't require input).
+     */
+    void refreshMessages();
 }
