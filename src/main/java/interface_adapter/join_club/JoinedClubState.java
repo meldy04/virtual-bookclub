@@ -44,6 +44,4 @@ public class JoinedClubState {
         this.hasjoined = hasjoined2;
     }
 
-
-
 }

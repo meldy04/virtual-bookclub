@@ -1,32 +1,32 @@
 package view;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.*;
+import java.util.AbstractMap;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import data_access.InMemoryBookClubDataAccessObject;
-import entity.BookClub;
-import entity.Discussion;
-import entity.Message;
 import interface_adapter.add_message.AddMessageController;
-import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageState;
 import interface_adapter.add_message.AddMessageViewModel;
-import use_case.add_message.*;
-import use_case.join_club.JoinClubDataAccessInterface;
-import use_case.join_club.JoinClubInputData;
 
 /**
  * The View for when the user is adding/viewing messages.
  */
+
 public class AddMessageView extends JPanel implements PropertyChangeListener {
     private final String viewName = "add message";
 
@@ -140,9 +140,8 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
         this.addMessageController = controller;
     }
 
-
-    // psvm for testing the code
-
+    /*
+ psvm for testing the code
     public static void main(String[] args) {
         final AddMessageViewModel model = new AddMessageViewModel();
 
@@ -172,6 +171,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
             frame.setSize(500, 400); // Set the size of the JFrame
             frame.setVisible(true); // Make the JFrame visible
         });
-    }
+        }
+*/
 
 }

@@ -40,9 +40,21 @@ public interface AddMessageDataAccessInterface {
      */
     List<AbstractMap.SimpleEntry<String, String>> getMessages();
 
+    /**
+     * Sets the current discussion topic.
+     * @param topic current discussion topic
+     */
     void setCurrentDiscussion(String topic);
 
+    /**
+     * Sets the current club.
+     * @param clubName name of the current club
+     */
     void setCurrentClub(String clubName);
 
+    /**
+     * Sets the current username.
+     * @param currentUsername the current username
+     */
     void setCurrentUsername(String currentUsername);
 }

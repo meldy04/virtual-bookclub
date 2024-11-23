@@ -8,7 +8,8 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
     private AddMessageDataAccessInterface addMessageDataAccessInterface;
     private AddMessageOutputBoundary addMessageOutputBoundary;
 
-    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface, AddMessageOutputBoundary addMessageOutputBoundary) {
+    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface,
+                                AddMessageOutputBoundary addMessageOutputBoundary) {
         this.addMessageDataAccessInterface = addMessageDataAccessInterface;
         this.addMessageOutputBoundary = addMessageOutputBoundary;
     }
