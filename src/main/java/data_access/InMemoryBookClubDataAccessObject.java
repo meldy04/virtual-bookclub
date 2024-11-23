@@ -16,7 +16,7 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
 
     private final Map<String, BookClub> bookClubMap;
 
-    public InMemoryBookClubDataAccessObject(Map<String, BookClub>bookClubMap) {
+    public InMemoryBookClubDataAccessObject(Map<String, BookClub> bookClubMap) {
         this.bookClubMap = bookClubMap;
     }
 

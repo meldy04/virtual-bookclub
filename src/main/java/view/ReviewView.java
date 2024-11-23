@@ -6,6 +6,12 @@ import javax.swing.table.AbstractTableModel;
 
 import entity.Review;
 
+/**
+ * The {@code ReviewView} class extends {@code AbstractTableModel} to provide
+ * a table representation of a list of {@link Review} objects. This model can
+ * be used with a Swing JTable to display user reviews, including details such
+ * as username, book title, rating, and review text.
+ */
 public class ReviewView extends AbstractTableModel {
 
     private final List<Review> reviews;

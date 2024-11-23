@@ -14,26 +14,26 @@ public class Discussion {
 
     }
 
-    public String getDiscussion () {
+    public String getDiscussion() {
         return discussion;
     }
 
-    public User getUser () {
+    public User getUser() {
         return user;
     }
 
-    public Book getBook () {
+    public Book getBook() {
         return book;
     }
 
-    public void editDiscussion (String discussion){
+    public void editDiscussion(String discussion) {
         this.discussion = discussion;
     }
 
     @Override
     public String toString() {
-        return "About this topic" + topic + "in this book" + book + " User " + user +
-                " would like to add the following opinion" + discussion;
+        return "About this topic" + topic + "in this book" + book + " User " + user
+            + " would like to add the following opinion" + discussion;
     }
 
 }
