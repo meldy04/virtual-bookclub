@@ -36,19 +36,13 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
         return bookClubMap.containsKey(clubName);
     }
 
-    @Override
-    public boolean isMember(String username, String clubName) {
-        return bookClubMap.get(clubName).contains(username);
-    }
-
     public Map<String, List<String>> getBookClubMap() {
         return bookClubMap;
     }
 
     @Override
     public void addUser(User user, String clubName) {
-
-    }
+    } // will remove this method when the original one is used everywhere.
 
     @Override
     public boolean isMember(User user, String clubName) {
