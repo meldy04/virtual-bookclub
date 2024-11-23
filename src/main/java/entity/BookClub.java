@@ -1,9 +1,9 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookClub {
@@ -13,15 +13,17 @@ public class BookClub {
     private List<User> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private List<Discussion> discussions = new ArrayList<>();
+    private String ClubDescription;
 
     // No-argument constructor
     public BookClub() {
     }
 
     // Parameterized constructor
-    public BookClub(String name, String genre) {
+    public BookClub(String name, String genre, String ClubDescription) {
         this.name = name;
         this.genre = genre;
+        this.ClubDescription = ClubDescription;
     }
 
     // Getters and Setters
@@ -31,6 +33,14 @@ public class BookClub {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getClubDescription() {
+        return ClubDescription;
+    }
+
+    public void setClubDescription(String ClubDescription) {
+        this.ClubDescription = ClubDescription;
     }
 
     public String getGenre() {
