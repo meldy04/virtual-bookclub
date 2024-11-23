@@ -13,7 +13,7 @@ public class BookClub {
     private List<User> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private List<Discussion> discussions = new ArrayList<>();
-    private String ClubDescription;
+    private String clubDescription;
 
     // No-argument constructor
     public BookClub() {
@@ -23,7 +23,7 @@ public class BookClub {
     public BookClub(String name, String genre, String ClubDescription) {
         this.name = name;
         this.genre = genre;
-        this.ClubDescription = ClubDescription;
+        this.clubDescription = ClubDescription;
     }
 
     // Getters and Setters
@@ -36,11 +36,11 @@ public class BookClub {
     }
 
     public String getClubDescription() {
-        return ClubDescription;
+        return clubDescription;
     }
 
     public void setClubDescription(String ClubDescription) {
-        this.ClubDescription = ClubDescription;
+        this.clubDescription = ClubDescription;
     }
 
     public String getGenre() {
