@@ -1,5 +1,6 @@
 package data_access;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentDiscussion;
+    private String currentUsername;
 
     public InMemoryBookClubDataAccessObject(Map<String, BookClub> bookClubMap) {
         this.bookClubMap = bookClubMap;
@@ -43,8 +45,9 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public void saveMessage(String username, String text) {
-        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion).addMessage(new Message(username, text));
+    public void saveMessage(String text) {
+        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion)
+                .addMessage(new Message(currentUsername, text));
     }
 
     public void setCurrentClub(String currentClub) {
@@ -65,4 +68,25 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
         return currentDiscussion;
     }
 
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return currentUsername;
+    }
+
+    @Override
+    public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
+        final List<Message> messagesList = bookClubMap.get(currentClub)
+                .getDiscussions().get(currentDiscussion).getMessages();
+
+        final List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
+
+        for (Message message: messagesList) {
+            result.add(new AbstractMap.SimpleEntry<>(message.getUsername(), message.getText()));
+        }
+        return result;
+    }
 }

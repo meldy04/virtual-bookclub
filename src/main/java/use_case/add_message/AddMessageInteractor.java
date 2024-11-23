@@ -8,15 +8,30 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
     private AddMessageDataAccessInterface addMessageDataAccessInterface;
     private AddMessageOutputBoundary addMessageOutputBoundary;
 
+    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface, AddMessageOutputBoundary addMessageOutputBoundary) {
+        this.addMessageDataAccessInterface = addMessageDataAccessInterface;
+        this.addMessageOutputBoundary = addMessageOutputBoundary;
+    }
+
     @Override
     public void execute(AddMessageInputData addMessageInputData) {
-        final String username = addMessageInputData.getUsername();
         final String text = addMessageInputData.getText();
 
-        addMessageDataAccessInterface.saveMessage(username, text);
+        addMessageDataAccessInterface.saveMessage(text);
 
-        final AddMessageOutputData outputData = new AddMessageOutputData(username, text, false);
+        final AddMessageOutputData outputData =
+                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
+                        .getCurrentDiscussion());
 
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
+
+    @Override
+    public void refreshMessages() {
+        final AddMessageOutputData outputData =
+                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
+                        .getCurrentDiscussion());
+        addMessageOutputBoundary.prepareShowMessageView(outputData);
+    }
+
 }
