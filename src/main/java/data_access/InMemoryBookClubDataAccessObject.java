@@ -4,17 +4,20 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
+import use_case.show_topics.ShowTopicsDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface {
+public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
+        ShowTopicsDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -68,15 +71,6 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
         return currentDiscussion;
     }
 
-    public void setCurrentUsername(String currentUsername) {
-        this.currentUsername = currentUsername;
-    }
-
-    @Override
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
-
     @Override
     public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
         final List<Message> messagesList = bookClubMap.get(currentClub)
@@ -88,5 +82,21 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
             result.add(new AbstractMap.SimpleEntry<>(message.getUsername(), message.getText()));
         }
         return result;
+    }
+
+    @Override
+    public List<String> getTopics() {
+        final Set<String> keys = bookClubMap.get(currentClub).getDiscussions().keySet();
+        return new ArrayList<>(keys);
+    }
+
+    @Override
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return currentUsername;
     }
 }
