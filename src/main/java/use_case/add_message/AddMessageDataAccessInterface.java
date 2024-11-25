@@ -18,7 +18,6 @@ public interface AddMessageDataAccessInterface extends CurrentUsernameManager, C
      */
     void saveMessage(String text);
 
-
     /**
      * Gets all messages.
      * @return a list containing a simple entry of username and text.

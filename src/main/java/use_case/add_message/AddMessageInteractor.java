@@ -28,10 +28,9 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
     }
 
     @Override
-    public void refreshMessages() {
+    public void showMessages(String discussion) {
         final AddMessageOutputData outputData =
-                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
-                        .getCurrentDiscussion());
+                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), discussion);
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
 

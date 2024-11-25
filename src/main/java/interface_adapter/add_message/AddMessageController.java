@@ -24,8 +24,9 @@ public class AddMessageController {
 
     /**
      * Updates messages to be viewed.
+     * @param discussion the current discussion
      */
-    public void refreshMessages() {
-        addMessageUseCaseInteractor.refreshMessages();
+    public void showMessages(String discussion) {
+        addMessageUseCaseInteractor.showMessages(discussion);
     }
 }

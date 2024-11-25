@@ -10,14 +10,14 @@ import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
-import use_case.show_topics.ShowTopicsDataAccessInterface;
+import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowTopicsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
