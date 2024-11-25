@@ -1,61 +1,33 @@
 package view;
 
-import java.util.List;
+import java.awt.BorderLayout;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
-import entity.Review;
+import interface_adapter.reviews.ReviewViewModel;
 
 /**
- * The {@code ReviewView} class extends {@code AbstractTableModel} to provide
- * a table representation of a list of {@link Review} objects. This model can
- * be used with a Swing JTable to display user reviews, including details such
- * as username, book title, rating, and review text.
+ * Displays a table of reviews in the Swing application.
  */
-public class ReviewView extends AbstractTableModel {
+public class ReviewView extends JPanel {
+    private JTable reviewTable;
 
-    private final List<Review> reviews;
-    private final String[] columns = {"User", "Book", "Rating", "Review"};
+    public ReviewView(ReviewViewModel viewModel) {
+        setLayout(new BorderLayout());
 
-    public ReviewView(List<Review> reviews) {
-        this.reviews = reviews;
+        reviewTable = new JTable(viewModel);
+
+        final JTableHeader tableHeader = reviewTable.getTableHeader();
+        tableHeader.setReorderingAllowed(false);
+
+        final JScrollPane scrollPane = new JScrollPane(reviewTable);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
-    @Override
-    public int getRowCount() {
-        return reviews.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return columns.length;
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        return columns[columnIndex];
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        final Review review = reviews.get(rowIndex);
-        Object value = null;
-        switch (columnIndex) {
-            case 0:
-                value = review.getUser().getName();
-                break;
-            case 1:
-                value = review.getBook().getTitle();
-                break;
-            case 2:
-                value = review.getRating();
-                break;
-            case 3:
-                value = review.getText();
-                break;
-            default:
-                value = null;
-        }
-        return value;
+    public String getViewName() {
+        return "ReviewView";
     }
 }

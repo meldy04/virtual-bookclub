@@ -1,12 +1,15 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
+import entity.Book;
+import entity.Review;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -17,6 +20,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.recommendations.RecommendationsViewModel;
+import interface_adapter.reviews.ReviewViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -32,10 +37,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -65,6 +67,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private ReviewViewModel reviewView;
+    private RecommendationsView recommendationsView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -163,6 +167,30 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the Review View to the application.
+     * @param reviews List of reviews for a book
+     * @return this builder
+     */
+    public AppBuilder addReviewView(List<Review> reviews) {
+        final ReviewViewModel reviewViewModel = new ReviewViewModel(reviews);
+        final ReviewView view = new ReviewView(reviewViewModel);
+        cardPanel.add(view, "ReviewView");
+        return this;
+    }
+
+    /**
+     * Adds the Recommendations View to the application.
+     * @param recommendedBooks List of recommended books
+     * @return this builder
+     */
+    public AppBuilder addRecommendationsView(List<Book> recommendedBooks) {
+        final RecommendationsViewModel recommendationsViewModel = new RecommendationsViewModel(recommendedBooks);
+        recommendationsView = new RecommendationsView(recommendationsViewModel);
+        cardPanel.add(recommendationsView, "RecommendationsView");
         return this;
     }
 
