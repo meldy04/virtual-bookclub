@@ -1,6 +1,5 @@
 package interface_adapter.join_club;
 
-import entity.User;
 import use_case.join_club.JoinClubInputBoundary;
 import use_case.join_club.JoinClubInputData;
 
@@ -16,11 +15,11 @@ public class JoinClubController {
 
     /**
      * Executes the Join Club Use Case.
-     * @param user username of the user that wants to join
+     * @param username username of the user that wants to join
      * @param clubName name of the club the user wants to join
      */
-    public void execute(User user, String clubName) {
-        final JoinClubInputData inputData = new JoinClubInputData(user, clubName);
+    public void execute(String username, String clubName) {
+        final JoinClubInputData inputData = new JoinClubInputData(username, clubName);
         joinClubUseCaseInteractor.execute(inputData);
 
     }
