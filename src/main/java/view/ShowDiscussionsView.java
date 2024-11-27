@@ -83,7 +83,12 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("error")) {
+
+        if (evt.getPropertyName().equals("current club")) {
+            // corresponds to the switch to show discussions view
+            showTopicsController.execute();
+        }
+        else if (evt.getPropertyName().equals("error")) {
             final ShowDiscussionsState state = (ShowDiscussionsState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, state.getErrorMessage());
         }
