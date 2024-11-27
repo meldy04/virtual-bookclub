@@ -3,7 +3,7 @@ package interface_adapter.show_discussions;
 import use_case.show_discussions.ShowDiscussionsInputBoundary;
 
 /**
- * Controller for the show topics usecase.
+ * Controller for the show discussions usecase.
  */
 public class ShowDiscussionsController {
     private final ShowDiscussionsInputBoundary showTopicsInteractor;
@@ -13,7 +13,7 @@ public class ShowDiscussionsController {
     }
 
     /**
-     * Executes the show topics use case.
+     * Executes the show discussions use case.
      */
     public void execute() {
         showTopicsInteractor.execute();

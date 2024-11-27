@@ -1,6 +1,5 @@
 package use_case.login;
 
-import data_access.CurrentUsernameManager;
 import entity.User;
 
 /**

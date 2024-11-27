@@ -3,7 +3,7 @@ package interface_adapter.show_discussions;
 import interface_adapter.ViewModel;
 
 /**
- * The view model for the show topics view.
+ * The view model for the show discussions view.
  */
 public class ShowDiscussionsViewModel extends ViewModel<ShowDiscussionsState> {
     public static final String TITLE_LABEL = "Discussions in ";
@@ -11,7 +11,7 @@ public class ShowDiscussionsViewModel extends ViewModel<ShowDiscussionsState> {
     public static final String NEW_DISCUSSION_BUTTON_LABEL = "New discussion";
 
     public ShowDiscussionsViewModel() {
-        super("show topics");
+        super("show discussions");
         setState(new ShowDiscussionsState());
     }
 }

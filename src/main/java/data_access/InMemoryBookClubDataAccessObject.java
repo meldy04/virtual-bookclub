@@ -22,10 +22,23 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentDiscussion;
-    private String currentUsername;
 
     public InMemoryBookClubDataAccessObject(Map<String, BookClub> bookClubMap) {
         this.bookClubMap = bookClubMap;
+    }
+
+    @Override
+    public String getCurrentClub() {
+        return currentClub;
+    }
+
+    public void setCurrentClub(String currentClub) {
+        this.currentClub = currentClub;
+    }
+
+    @Override
+    public String getCurrentDiscussion() {
+        return currentDiscussion;
     }
 
     @Override
@@ -48,27 +61,9 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public void saveMessage(String text) {
+    public void saveMessage(String text, String currentUsername) {
         bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion)
                 .addMessage(new Message(currentUsername, text));
-    }
-
-    public void setCurrentClub(String currentClub) {
-        this.currentClub = currentClub;
-    }
-
-    @Override
-    public String getCurrentClub() {
-        return currentClub;
-    }
-
-    public void setCurrentDiscussion(String currentDiscussion) {
-        this.currentDiscussion = currentDiscussion;
-    }
-
-    @Override
-    public String getCurrentDiscussion() {
-        return currentDiscussion;
     }
 
     @Override
@@ -85,18 +80,14 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public List<String> getTopics() {
+    public List<String> getDiscussionsTopics() {
         final Set<String> keys = bookClubMap.get(currentClub).getDiscussions().keySet();
         return new ArrayList<>(keys);
     }
 
     @Override
-    public void setCurrentUsername(String currentUsername) {
-        this.currentUsername = currentUsername;
+    public void setCurrentDiscussion(String currentDiscussion) {
+        this.currentDiscussion = currentDiscussion;
     }
 
-    @Override
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
 }

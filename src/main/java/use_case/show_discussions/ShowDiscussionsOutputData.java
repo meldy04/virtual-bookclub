@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The output data for the show topics usecase.
+ * The output data for the show discussions usecase.
  */
 public class ShowDiscussionsOutputData {
 

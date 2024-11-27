@@ -1,18 +1,18 @@
 package use_case.show_discussions;
 
 /**
- * Output boundary for show topics usecase.
+ * Output boundary for show discussions usecase.
  */
 public interface ShowDiscussionsOutputBoundary {
 
     /**
-     * Prepares the success view for the show topics usecase.
+     * Prepares the success view for the show discussions usecase.
      * @param outputData the output data
      */
     void prepareSuccessView(ShowDiscussionsOutputData outputData);
 
     /**
-     * Prepares the fail view for the show topics usecase.
+     * Prepares the fail view for the show discussions usecase.
      * @param errorMessage the message that will be displayed
      */
     void prepareFailView(String errorMessage);

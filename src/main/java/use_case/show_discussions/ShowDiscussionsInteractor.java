@@ -3,7 +3,7 @@ package use_case.show_discussions;
 import java.util.List;
 
 /**
- * The show topics interactor.
+ * The show discussions interactor.
  */
 public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
 
@@ -19,7 +19,7 @@ public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
 
     @Override
     public void execute() {
-        final List<String> topics = showTopicsDataAccessInterface.getTopics();
+        final List<String> topics = showTopicsDataAccessInterface.getDiscussionsTopics();
 
         if (topics.isEmpty()) {
             showTopicsOutputBoundary.prepareFailView("There are no discussions here, create a new discussion");

@@ -5,7 +5,7 @@ package use_case.show_discussions;
  */
 public interface ShowDiscussionsInputBoundary {
     /**
-     * Executes the show topics use case.
+     * Executes the show discussions use case.
      */
     void execute();
 

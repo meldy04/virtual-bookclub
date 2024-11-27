@@ -25,7 +25,7 @@ import interface_adapter.show_discussions.ShowDiscussionsViewModel;
  * The View for the Show Topics Use Case.
  */
 public class ShowDiscussionsView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "show topics";
+    private final String viewName = "show discussions";
 
     private final ShowDiscussionsViewModel showTopicsViewModel;
     private ShowDiscussionsController showTopicsController;
@@ -81,10 +81,6 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
         this.add(buttons);
     }
 
-    public void setShowTopicsController(ShowDiscussionsController controller) {
-        this.showTopicsController = controller;
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("error")) {
@@ -101,5 +97,9 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setShowTopicsController(ShowDiscussionsController controller) {
+        this.showTopicsController = controller;
     }
 }

@@ -16,9 +16,10 @@ public class AddMessageController {
     /**
      * Executes the add message use case.
      * @param text the text in the new message
+     * @param currentUsername  the username of the sender of the message
      */
-    public void execute(String text) {
-        final AddMessageInputData addMessageInputData = new AddMessageInputData(text);
+    public void execute(String text, String currentUsername) {
+        final AddMessageInputData addMessageInputData = new AddMessageInputData(text, currentUsername);
         addMessageUseCaseInteractor.execute(addMessageInputData);
     }
 

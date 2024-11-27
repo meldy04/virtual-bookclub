@@ -5,18 +5,18 @@ import java.util.List;
 
 import data_access.CurrentClubManager;
 import data_access.CurrentDiscussionManager;
-import data_access.CurrentUsernameManager;
 
 /**
  * The interface of the DAO for the add message usecase.
  */
-public interface AddMessageDataAccessInterface extends CurrentUsernameManager, CurrentClubManager,
+public interface AddMessageDataAccessInterface extends CurrentClubManager,
         CurrentDiscussionManager {
     /**
      * Saves the message of the current user in the current discussion that is in the current book club.
      * @param text text in the message
+     * @param currentUsername  the username of the sender of the message
      */
-    void saveMessage(String text);
+    void saveMessage(String text, String currentUsername);
 
     /**
      * Gets all messages.
