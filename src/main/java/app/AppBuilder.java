@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import data_access.InMemoryUserDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_message.AddMessageViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -32,6 +33,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.AddMessageView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -63,6 +65,8 @@ public class AppBuilder {
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
+    private AddMessageViewModel addMessageViewModel;
+    private AddMessageView addMessageView;
     private LoggedInView loggedInView;
     private LoginView loginView;
 
@@ -104,6 +108,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the AddMessage View to the application.
+     * @return this builder
+     */
+    public AppBuilder addAddMessageView() {
+        addMessageViewModel = new AddMessageViewModel();
+        addMessageView = new AddMessageView(addMessageViewModel);
+        cardPanel.add(addMessageView, addMessageView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -124,7 +139,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                loggedInViewModel, loginViewModel, addMessageViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 

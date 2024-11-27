@@ -11,7 +11,8 @@ public interface AddMessageInputBoundary {
     void execute(AddMessageInputData addMessageInputData);
 
     /**
-     * Updates the add message view with new messages (doesn't require input).
+     * Updates the add message view with new messages.
+     * @param discussion the current discussion
      */
-    void refreshMessages();
+    void showMessages(String discussion);
 }

@@ -8,7 +8,6 @@ import interface_adapter.ViewModel;
 public class AddMessageViewModel extends ViewModel<AddMessageState> {
     public static final String TITLE_LABEL = "A conversation about: ";
     public static final String POST_BUTTON_LABEL = "Post";
-    public static final String REFRESH_BUTTON_LABEL = "Refresh";
 
     public AddMessageViewModel() {
         super("add message");

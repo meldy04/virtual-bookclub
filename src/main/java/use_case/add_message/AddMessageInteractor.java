@@ -5,19 +5,22 @@ package use_case.add_message;
  */
 public class AddMessageInteractor implements AddMessageInputBoundary {
 
-    private AddMessageDataAccessInterface addMessageDataAccessInterface;
-    private AddMessageOutputBoundary addMessageOutputBoundary;
+    private final AddMessageDataAccessInterface addMessageDataAccessInterface;
+    private final AddMessageOutputBoundary addMessageOutputBoundary;
 
-    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface, AddMessageOutputBoundary addMessageOutputBoundary) {
+    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface,
+                                AddMessageOutputBoundary addMessageOutputBoundary) {
         this.addMessageDataAccessInterface = addMessageDataAccessInterface;
         this.addMessageOutputBoundary = addMessageOutputBoundary;
     }
 
     @Override
     public void execute(AddMessageInputData addMessageInputData) {
-        final String text = addMessageInputData.getText();
 
-        addMessageDataAccessInterface.saveMessage(text);
+        final String text = addMessageInputData.getText();
+        final String currentUsername = addMessageInputData.getCurrentUsername();
+
+        addMessageDataAccessInterface.saveMessage(text, currentUsername);
 
         final AddMessageOutputData outputData =
                 new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
@@ -27,10 +30,9 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
     }
 
     @Override
-    public void refreshMessages() {
+    public void showMessages(String discussion) {
         final AddMessageOutputData outputData =
-                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
-                        .getCurrentDiscussion());
+                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), discussion);
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
 

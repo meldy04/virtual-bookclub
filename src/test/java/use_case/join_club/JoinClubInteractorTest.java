@@ -24,7 +24,6 @@ public class JoinClubInteractorTest {
             @Override
             public void prepareSuccessView(JoinClubOutputData outputData) {
                 assertTrue(outputData.getUsername().equals("Bob") && outputData.getClubName().equals("Cooking"));
-
             }
 
             @Override
