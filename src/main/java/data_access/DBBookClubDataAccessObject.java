@@ -1,16 +1,21 @@
 package data_access;
 
-import entity.BookClub;
-import entity.User;
-import use_case.join_club.JoinClubDataAccessInterface;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
+// Project-specific imports
+import entity.BookClub;
+import use_case.bookclub_list.BookClubDataAccessInterface;
+import use_case.join_club.JoinClubDataAccessInterface;
+
+/**
+ * DAO for bookclub data implemented using a File to persist the data.
+ */
+
+public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, BookClubDataAccessInterface {
 
     private Map<String, BookClub> bookClubMap;
 
@@ -31,22 +36,21 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
     }
 
     @Override
-    public void addUser(User user, String clubName) {
-        BookClub bookClub = bookClubMap.get(clubName);
-        bookClub.addMember(user);
+    public void addUser(String username, String clubName) {
+        final BookClub bookClub = bookClubMap.get(clubName);
+        bookClub.addMember(username);
         JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
-
-        }
-
-    @Override
-    public boolean isMember(User user, String clubName){
-        BookClub bookClub = bookClubMap.get(clubName);
-        return bookClub != null && bookClub.getMembers().contains(user);
     }
 
     @Override
-    public List<BookClub> getAllClubs(){
+    public boolean isMember(String username, String clubName) {
+        final BookClub bookClub = bookClubMap.get(clubName);
+        return bookClub != null && bookClub.getMembersname().contains(username);
+    }
+
+    @Override
+    public List<BookClub> getAllClubs() {
         return new ArrayList<>(bookClubMap.values());
     }
 

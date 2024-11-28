@@ -5,20 +5,21 @@ import entity.User;
  * Input data for join_club usecase.
  */
 public class JoinClubInputData {
-    private User user;
+
+    private String username;
     private String clubName;
 
 
 
-    public JoinClubInputData(User user ,String clubName) {
-        this.user = user;
+    public JoinClubInputData(String username, String clubName) {
         this.clubName = clubName;
 
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername(){
+        return username;
     }
+
 
     public String getClubName() {
         return clubName;

@@ -1,16 +1,21 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/**
+ * Represents a book club with details such as name, genre, members, books, and discussions.
+ *
+ * @null This object may be null if no book club data is available.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookClub {
 
     private String name;
     private String genre;
-    private List<User> members = new ArrayList<>();
+    private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private List<Discussion> discussions = new ArrayList<>();
 
@@ -41,11 +46,11 @@ public class BookClub {
         this.genre = genre;
     }
 
-    public List<User> getMembers() {
+    public List<String> getMembersname() {
         return members;
     }
 
-    public void setMembers(List<User> members) {
+    public void setMembers(List<String> members) {
         this.members = members;
     }
 
@@ -65,14 +70,28 @@ public class BookClub {
         this.books = books;
     }
 
-    // Utility methods
-    public void addMember(User user) {
-        this.members.add(user);
+    /**
+     * Adds the members to the bookclub.
+     *
+     * @param username of the user who wants to join.
+     */
+    public void addMember(String username) {
+        this.members.add(username);
     }
+    /**
+     * Adds the discussions to the bookclub.
+     *
+     * @param discussion of the user who wants to join.
+     */
 
     public void addDiscussion(Discussion discussion) {
         this.discussions.add(discussion);
     }
+    /**
+     * Adds the book to the bookclub.
+     *
+     * @param book of the user who wants to join.
+     */
 
     public void addBook(Book book) {
         this.books.add(book);

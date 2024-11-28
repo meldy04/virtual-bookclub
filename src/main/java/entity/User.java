@@ -1,11 +1,14 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 
 /**
  * A user class.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     private final String name;

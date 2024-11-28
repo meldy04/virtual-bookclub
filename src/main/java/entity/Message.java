@@ -1,9 +1,11 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A simple implementation of the Message interface.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
     private final User user;
     private final String text;

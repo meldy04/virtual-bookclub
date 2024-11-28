@@ -157,4 +157,5 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
+
 }

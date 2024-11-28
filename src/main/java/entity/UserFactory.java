@@ -1,8 +1,11 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Factory for creating User objects.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserFactory {
     /**
      * Creates new User.
