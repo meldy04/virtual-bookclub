@@ -7,8 +7,13 @@ import java.util.Map;
 import java.util.Set;
 
 import entity.BookClub;
+
+import entity.User;
+import use_case.bookclub_list.BookClubDataAccessInterface;
+
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
+
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
@@ -16,6 +21,14 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program.
  */
+
+public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, BookClubDataAccessInterface {
+
+    private Map<String, BookClub> bookClubMap;
+
+
+    @Override
+
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
         ShowDiscussionsDataAccessInterface {
 
@@ -42,19 +55,29 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
+
     public void addUser(String username, String clubName) {
         bookClubMap.get(clubName).addMember(username);
     }
 
     @Override
     public boolean isMember(String username, String clubName) {
+
+        return bookClubMap.get(clubName).getMembersname().contains(username);
+    }
+    public Map<String, BookClub> getBookClubMap() {
+        return bookClubMap;
+
         return bookClubMap.get(clubName).getMembers().contains(username);
+
     }
 
     @Override
     public List<BookClub> getAllClubs() {
         return new ArrayList<>(bookClubMap.values());
     }
+
+
 
     public Map<String, BookClub> getBookClubMap() {
         return bookClubMap;
@@ -89,5 +112,6 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     public void setCurrentDiscussion(String currentDiscussion) {
         this.currentDiscussion = currentDiscussion;
     }
+
 
 }

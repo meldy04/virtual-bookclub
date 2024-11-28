@@ -1,3 +1,4 @@
+
 package use_case.join_club;
 
 import data_access.InMemoryBookClubDataAccessObject;

@@ -1,11 +1,17 @@
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A discussion class.
  */
+
 public class Discussion {
     private final String topic;
     private List<Message> messages = new ArrayList<>();

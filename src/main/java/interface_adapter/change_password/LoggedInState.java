@@ -9,10 +9,13 @@ public class LoggedInState {
     private String password = "";
     private String passwordError;
 
-    public LoggedInState(LoggedInState copy) {
+    private String joiningError;
+
+    public LoggedInState(LoggedInState copy, String joiningError) {
         username = copy.username;
         password = copy.password;
         passwordError = copy.passwordError;
+        this.joiningError = copy.joiningError;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -39,4 +42,14 @@ public class LoggedInState {
     public String getPassword() {
         return password;
     }
+
+
+    public void  setJoiningError(String joiningError){
+        this.joiningError = joiningError;
+    }
+
+    public String getJoiningError(){
+        return joiningError;}
+
+
 }

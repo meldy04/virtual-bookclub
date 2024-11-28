@@ -1,61 +1,78 @@
 package data_access;
 
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import entity.BookClub;
-
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.BookClub;
+
+/**
+ * Jackson Translator for converting book club data to and from a JSON file.
+ */
 public class JacksonTranslator {
 
+    /**
+     * Path to the JSON file for book club data.
+     */
     private static final String FILE_PATH = "book_clubs.json";
 
-
+    /**
+     * Reads and converts the book club data from the JSON file.
+     *
+     * @return a map of book club data parsed from the JSON file, or {@code null} if an error occurs.
+     */
+    @SuppressWarnings({"checkstyle:ReturnCount", "checkstyle:SuppressWarnings"})
     public static Map<String, BookClub> getBookClubData() {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+            final ObjectMapper objectMapper = new ObjectMapper();
 
-            // Load JSON file from the classpath (resources folder)
-            InputStream inputStream = JacksonTranslator.class.getClassLoader().getResourceAsStream(FILE_PATH);
+            // Load JSON file from the classpath (resources folder).
+            final InputStream inputStream = JacksonTranslator.class.getClassLoader().getResourceAsStream(FILE_PATH);
 
             if (inputStream == null) {
-                System.err.println("Error: book_clubs.json file not found in resources.");
+                System.err.println("Error: The file " + FILE_PATH + " was not found in the resources folder.");
                 return null;
             }
 
-            // Read JSON data into a list of BookClub objects
-            Map<String, BookClub> bookClubMap = objectMapper.readValue(inputStream, new TypeReference<Map<String, BookClub>>() {});
-
-            return bookClubMap;
-
-
-        } catch (IOException e) {
-            System.err.println("Error reading or parsing the JSON file: " + e.getMessage());
-            e.printStackTrace();
+            // Parse the JSON file into a map.
+            return objectMapper.readValue(inputStream, new TypeReference<Map<String, BookClub>>() { });
+        }
+        catch (IOException exception) {
+            System.err.println("Error reading or parsing the JSON file: " + exception.getMessage());
+            exception.printStackTrace();
         }
         return null;
     }
 
-   public static void saveBookClubData(Map<String, BookClub> bookClubMap){
-        try{
-            OutputStream outputStream = Files.newOutputStream(Paths.get(FILE_PATH));
-            ObjectMapper objectMapper = new ObjectMapper();
+    /**
+     * Saves the book club data to the JSON file.
+     *
+     * @param bookClubMap the map of book club data to be saved.
+     * @throws RuntimeException if an I/O error occurs while saving the data.
+     */
+    public static void saveBookClubData(Map<String, BookClub> bookClubMap) {
+        try {
+            final OutputStream outputStream = Files.newOutputStream(Paths.get(FILE_PATH));
+            final ObjectMapper objectMapper = new ObjectMapper();
+
+            // Write the map data to the JSON file.
             objectMapper.writeValue(outputStream, bookClubMap);
             System.out.println("Book club data successfully saved to " + FILE_PATH);
-
-        } catch (StreamWriteException e) {
-            throw new RuntimeException(e);
-        } catch (DatabindException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-   }
+        catch (StreamWriteException | DatabindException exception) {
+            System.err.println("Error writing data to the JSON file: " + exception.getMessage());
+            throw new RuntimeException(exception);
+        }
+        catch (IOException exception) {
+            System.err.println("I/O error occurred while saving the data: " + exception.getMessage());
+            throw new RuntimeException(exception);
+        }
+    }
 }
