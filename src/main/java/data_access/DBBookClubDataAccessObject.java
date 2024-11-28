@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 // Project-specific imports
 import entity.BookClub;
 import use_case.bookclub_list.BookClubDataAccessInterface;
@@ -16,6 +17,15 @@ import use_case.join_club.JoinClubDataAccessInterface;
  */
 
 public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, BookClubDataAccessInterface {
+
+import entity.BookClub;
+import use_case.join_club.JoinClubDataAccessInterface;
+
+/**
+ * DAO representing book club data.
+ */
+public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
+
 
     private Map<String, BookClub> bookClubMap;
 
@@ -41,12 +51,17 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, 
         bookClub.addMember(username);
         JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
+
     }
 
     @Override
     public boolean isMember(String username, String clubName) {
         final BookClub bookClub = bookClubMap.get(clubName);
+
         return bookClub != null && bookClub.getMembersname().contains(username);
+
+        return bookClub != null && bookClub.getMembers().contains(username);
+
     }
 
     @Override

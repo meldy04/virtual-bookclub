@@ -3,20 +3,20 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * A simple implementation of the Message interface.
+ * A Message class.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
-    private final User user;
+    private final String username;
     private final String text;
 
-    public Message(User user, String text) {
-        this.user = user;
+    public Message(String username, String text) {
+        this.username = username;
         this.text = text;
     }
 
     public String getUsername() {
-        return user.getName();
+        return username;
     }
 
     public String getText() {

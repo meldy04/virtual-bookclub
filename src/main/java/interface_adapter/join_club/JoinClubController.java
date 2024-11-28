@@ -15,8 +15,13 @@ public class JoinClubController {
 
     /**
      * Executes the Join Club Use Case.
+
      * @param username of the user who wants to join
      * @param clubName of the club the user wants to join
+
+     * @param username username of the user that wants to join
+     * @param clubName name of the club the user wants to join
+
      */
     public void execute(String username, String clubName) {
         final JoinClubInputData inputData = new JoinClubInputData(username, clubName);

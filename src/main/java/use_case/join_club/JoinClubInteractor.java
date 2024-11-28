@@ -1,8 +1,10 @@
 package use_case.join_club;
 
+
 import java.util.Map;
 
 import entity.BookClub;
+
 
 /**
  * The JoinClubInteractor is responsible for handling the logic related to a user joining a book club.
@@ -33,6 +35,7 @@ public final class JoinClubInteractor implements JoinClubInputBoundary {
      * @param joinClubInputData the input data containing the username and club name
      */
     @Override
+
     public void execute(final JoinClubInputData joinClubInputData) {
         final String username = joinClubInputData.getUsername();
         final String clubName = joinClubInputData.getClubName();
@@ -48,6 +51,21 @@ public final class JoinClubInteractor implements JoinClubInputBoundary {
         else {
             // Add the user to the book club
             clubDataAccessInterface.addUser(username, clubName);
+
+    public void execute(JoinClubInputData joinClubInputData) {
+        final String username = joinClubInputData.getUsername();
+        final String clubName = joinClubInputData.getClubName();
+
+        if (clubDataAccessInterface.isMember(username, clubName)) {
+            joinclubOutputBoundary.prepareFailView("User " + username + " is already a member of the "
+                    + clubName + " Book Club");
+        }
+        else {
+            clubDataAccessInterface.addUser(username, clubName);
+            final JoinClubOutputData outputData = new JoinClubOutputData(username, clubName, false);
+            joinclubOutputBoundary.prepareSuccessView(outputData);
+        }
+
 
             // Prepare success view with updated data
             final JoinClubOutputData outputData = new JoinClubOutputData(username, bookClub, false);

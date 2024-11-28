@@ -12,6 +12,18 @@ public class JoinedClubState {
     private BookClub bookclub;
     private boolean hasjoined;
 
+
+    public JoinedClubState() {
+
+    }
+
+    public JoinedClubState(JoinedClubState copy) {
+        this.username = copy.username;
+        this.bookclub = copy.bookclub;
+        this.hasjoined = copy.hasjoined;
+    }
+
+
     public String getUsername() {
         return username;
     }
@@ -35,4 +47,5 @@ public class JoinedClubState {
     public void setHasjoined(boolean hasjoined2) {
         this.hasjoined = hasjoined2;
     }
+
 }
