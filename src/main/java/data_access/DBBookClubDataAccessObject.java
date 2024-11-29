@@ -6,18 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-// Project-specific imports
-import entity.BookClub;
-import use_case.bookclub_list.BookClubDataAccessInterface;
-import use_case.join_club.JoinClubDataAccessInterface;
-
-/**
- * DAO for bookclub data implemented using a File to persist the data.
- */
-
-public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, BookClubDataAccessInterface {
-
 import entity.BookClub;
 import use_case.join_club.JoinClubDataAccessInterface;
 
@@ -25,7 +13,6 @@ import use_case.join_club.JoinClubDataAccessInterface;
  * DAO representing book club data.
  */
 public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
-
 
     private Map<String, BookClub> bookClubMap;
 
@@ -57,11 +44,7 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
     @Override
     public boolean isMember(String username, String clubName) {
         final BookClub bookClub = bookClubMap.get(clubName);
-
-        return bookClub != null && bookClub.getMembersname().contains(username);
-
         return bookClub != null && bookClub.getMembers().contains(username);
-
     }
 
     @Override

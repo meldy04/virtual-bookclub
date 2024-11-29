@@ -5,20 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-/**
- * Represents a book club with details such as name, genre, members, books, and discussions.
- *
- * @null This object may be null if no book club data is available.
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * A class representing a book club.
  */
-
 public class BookClub {
 
     private String name;
@@ -54,11 +43,7 @@ public class BookClub {
         this.genre = genre;
     }
 
-
-    public List<String> getMembersname() {
-
     public List<String> getMembers() {
-
         return members;
     }
 
@@ -83,23 +68,12 @@ public class BookClub {
     }
 
     /**
-
-     * Adds the members to the bookclub.
-     *
-     * @param username of the user who wants to join.
-
      * Adds username to members.
      * @param username to be added to members
-
      */
     public void addMember(String username) {
         this.members.add(username);
     }
-    /**
-     * Adds the discussions to the bookclub.
-     *
-     * @param discussion of the user who wants to join.
-     */
 
     /**
      * Adds a new discussion to discussions.
@@ -109,11 +83,6 @@ public class BookClub {
     public void addDiscussion(String topic, Discussion discussion) {
         this.discussions.put(topic, discussion);
     }
-    /**
-     * Adds the book to the bookclub.
-     *
-     * @param book of the user who wants to join.
-     */
 
     /**
      * Adds a new book to books.
