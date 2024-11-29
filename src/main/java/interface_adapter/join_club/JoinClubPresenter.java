@@ -1,7 +1,6 @@
 package interface_adapter.join_club;
 
 import interface_adapter.ViewManagerModel;
-import use_case.join_club.JoinClubInputBoundary;
 import use_case.join_club.JoinClubOutputBoundary;
 import use_case.join_club.JoinClubOutputData;
 /**
@@ -32,10 +31,11 @@ public class JoinClubPresenter implements JoinClubOutputBoundary {
     }
 
     @Override
-    public void prepareFailView() {
+    public void prepareFailView(String message) {
         final JoinClubState didNotJoinClub = joinClubViewModel.getState();
         didNotJoinClub.setBookclub("");
         didNotJoinClub.setJoined(false);
+        didNotJoinClub.setErrorMessage(message);
         this.joinClubViewModel.setState(didNotJoinClub);
         joinClubViewModel.firePropertyChanged();
     }
