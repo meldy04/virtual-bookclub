@@ -14,11 +14,6 @@ public interface JoinClubOutputBoundary {
      * Prepares the fail view for the Join Club Use Case.
      * @param errorMessage to be shown
      */
-
-    @SuppressWarnings({"checkstyle:JavadocMethod", "checkstyle:SuppressWarnings"})
-    void prepareFailView(String error);
-
     void prepareFailView(String errorMessage);
-
 
 }

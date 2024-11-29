@@ -1,17 +1,10 @@
-
 package entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A representation of the reviews.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Review {
-
 
 public class Review {
-
 
     private String username;
     private Book book;

@@ -1,7 +1,5 @@
 package interface_adapter.join_club;
 
-import entity.BookClub;
-
 /**
  * The State information representing the user having joined a club.
  */
@@ -9,9 +7,8 @@ import entity.BookClub;
 public class JoinedClubState {
 
     private String username;
-    private BookClub bookclub;
+    private String bookclub;
     private boolean hasjoined;
-
 
     public JoinedClubState() {
 
@@ -23,7 +20,6 @@ public class JoinedClubState {
         this.hasjoined = copy.hasjoined;
     }
 
-
     public String getUsername() {
         return username;
     }
@@ -32,11 +28,11 @@ public class JoinedClubState {
         this.username = username2;
     }
 
-    public BookClub getBookclub() {
+    public String getBookclub() {
         return bookclub;
     }
 
-    public void setBookclub(BookClub bookclub2) {
+    public void setBookclub(String bookclub2) {
         this.bookclub = bookclub2;
     }
 

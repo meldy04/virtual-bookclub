@@ -1,11 +1,9 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * A Message class.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Message {
     private final String username;
     private final String text;
