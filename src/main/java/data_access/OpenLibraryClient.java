@@ -15,6 +15,7 @@ import java.util.List;
 
 public class OpenLibraryClient implements SearchDataAccessInterface {
     private static final String OPEN_LIBRARY_API_SEARCH_URL = "https://openlibrary.org/search.json?title=";
+    private static final String OPEN_LIBRAY_API_COVER_URL = "https://covers.openlibrary.org/b/olid/"
     private final Gson gson;
 
     public OpenLibraryClient() {
@@ -24,12 +25,18 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
     @Override
     public List<Book> searchBookByTitle(String title) {
         final List<Book> books = new ArrayList<>();
+
         String newTitle = "";
-        if (!title.isEmpty()) {
+        if (title.length() > 1) {
             final String[] wordList = title.split(" ");
-            for (String word : wordList) {
-                newTitle = newTitle + "+" + word;
+            newTitle = newTitle + wordList[0];
+            final int n = wordList.length;
+            for (int i = 1; i < n; i++) {
+                newTitle = newTitle + "+" + wordList[i];
             }
+        }
+        else if (title.length() == 1) {
+            newTitle = newTitle + title;
         }
 
         try {
@@ -48,29 +55,19 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
                 }
             }
         }
-        catch (IOException eIo) {
-            eIo.printStackTrace();
-            eIo.getCause();
-            eIo.getMessage();
+        catch (IOException exceptionInputOutput) {
+            exceptionInputOutput.getCause();
+            exceptionInputOutput.getMessage();
         }
         return books;
     }
 
-    @Override
-    public List<Book> searchBooksByAuthor(String author) {
-
-    }
-
-
-    @Override
-    public List<Book> searchBookByKey(String key) {
-        // add call to retrieve book cover
-    }
 
     private Book parseBookFromJson(JSONObject bookJson) {
         final String titre;
         final String auteur;
         final String numero;
+        final String couverture;
 
         if (bookJson.has("title")) {
             titre = bookJson.getString("title");
@@ -88,11 +85,19 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
 
         if (bookJson.has("key")) {
             numero = bookJson.getString("key");
+            couverture = OPEN_LIBRAY_API_COVER_URL + numero + "-M.jpg";
         }
         else {
             numero = "Unknown key";
+            couverture = "";
         }
-        return new Book(titre, auteur, numero);
+
+        if (couverture.isEmpty()) {
+            return new Book(titre, auteur, numero);
+        }
+        else {
+            return new Book(titre, auteur, numero, couverture);
+        }
     }
 
 }

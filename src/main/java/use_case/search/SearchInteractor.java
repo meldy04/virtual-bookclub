@@ -25,20 +25,24 @@ public class SearchInteractor implements SearchInputBoundary {
             searchOutputBoundary.prepareFailView("Search Query cannot be empty");
 
         }
+
         else {
+            try {
 
-            final List<Book> booksByTitle = searchDataAccessInterface.searchBookByTitle(searchInputData.getQuery());
-            // add booksByAuthors
-            // add booksByISBN
+                final List<Book> booksByTitle = searchDataAccessInterface.searchBookByTitle(searchInputData.getQuery());
 
-            if (booksByTitle.isEmpty()) {
-                searchOutputBoundary.prepareFailView("No results found");
-            }
-            else {
-                final SearchOutputData outputData = new SearchOutputData(booksByTitle, false);
-                searchOutputBoundary.prepareSuccessView(outputData);
+                if (booksByTitle.isEmpty()) {
+                    searchOutputBoundary.prepareFailView("No results found");
+                }
+                else {
+                    final SearchOutputData outputData = new SearchOutputData(booksByTitle, false);
+                    searchOutputBoundary.prepareSuccessView(outputData);
+                }
+            } catch (Exception e) {
+                searchOutputBoundary.prepareFailView("Search failed. Enter a valid query");
             }
         }
+
 
     }
 }

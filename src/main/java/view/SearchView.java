@@ -39,7 +39,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         final LabelTextPanel searchInfo = new LabelTextPanel(
                 new JLabel("Search Query"), queryInputField);
 
-
         final JPanel button = new JPanel();
         searchButton = new JButton("Search");
         button.add(searchButton);
