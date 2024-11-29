@@ -40,7 +40,7 @@ public class ShowDiscussionsInteractorTest {
                 fail("Use case failure is unexpected.");
             }
         };
-        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(successPresenter, inMemoryBookClubDataAccessObject);
+        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(inMemoryBookClubDataAccessObject, successPresenter);
         showDiscussionsInteractor.execute();
     }
 
@@ -71,7 +71,7 @@ public class ShowDiscussionsInteractorTest {
             }
         };
 
-        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(failPresenter, inMemoryBookClubDataAccessObject);
+        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(inMemoryBookClubDataAccessObject, failPresenter);
         showDiscussionsInteractor.execute();
     }
 }

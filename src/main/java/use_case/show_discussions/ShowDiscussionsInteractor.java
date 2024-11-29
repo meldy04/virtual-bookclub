@@ -10,8 +10,8 @@ public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
     private final ShowDiscussionsOutputBoundary showTopicsOutputBoundary;
     private final ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface;
 
-    public ShowDiscussionsInteractor(ShowDiscussionsOutputBoundary showTopicsOutputBoundary,
-                                     ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface) {
+    public ShowDiscussionsInteractor(ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface,
+                                     ShowDiscussionsOutputBoundary showTopicsOutputBoundary) {
 
         this.showTopicsOutputBoundary = showTopicsOutputBoundary;
         this.showTopicsDataAccessInterface = showTopicsDataAccessInterface;
