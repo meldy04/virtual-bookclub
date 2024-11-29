@@ -1,4 +1,9 @@
 package use_case.recommendations;
 
-public class BookRecommendationAPI {
+import java.util.List;
+
+import entity.Book;
+
+public interface BookRecommendationApi {
+    List<Book> fetchBooksByGenre(String genre);
 }

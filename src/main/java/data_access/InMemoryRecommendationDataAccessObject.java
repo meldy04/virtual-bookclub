@@ -1,64 +1,32 @@
 package data_access;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import entity.Book;
+import entity.User;
 
 /**
  * In-memory implementation for storing and retrieving user book recommendations.
  */
 public class InMemoryRecommendationDataAccessObject {
 
-    private final List<UserRecommendations> userRecommendationsList = new ArrayList<>();
-
     /**
-     * Adds recommendations for a user.
-     * @param username the username of the user
-     * @param recommendedBooks the list of recommended books for the user
+     * Removes a book from a user's recommendedBooks list.
+     * @param user The user whose recommendations to update.
+     * @param book The book to remove.
      */
-    public void addRecommendationsForUser(String username, List<Book> recommendedBooks) {
-        userRecommendationsList.add(new UserRecommendations(username, recommendedBooks));
+    public void ignoreRecommendation(User user, Book book) {
+        if (user.getRecommendedBooks() != null) {
+            user.getRecommendedBooks().remove(book);
+        }
     }
 
     /**
-     * Retrieves recommendations for a user.
-     * @param username the username of the user
-     * @return list of recommended books for the user
+     * Gets the recommended books for a user.
+     * @param user The user.
+     * @return List of recommended books.
      */
-    public List<Book> getRecommendationsForUser(String username) {
-        List<Book> recommendedBooks = new ArrayList<>();
-        for (UserRecommendations userRecommendations : userRecommendationsList) {
-            if (userRecommendations.getUsername().equals(username)) {
-                recommendedBooks = userRecommendations.getRecommendedBooks();
-                break;
-            }
-        }
-        return recommendedBooks;
-    }
-
-    // Helper class to store user recommendations
-    private static class UserRecommendations {
-        private final String username;
-        private final List<Book> recommendedBooks;
-
-        /**
-         * Constructor to create a new UserRecommendations object.
-         *
-         * @param username the username of the user
-         * @param recommendedBooks the list of books recommended for the user
-         */
-        UserRecommendations(String username, List<Book> recommendedBooks) {
-            this.username = username;
-            this.recommendedBooks = recommendedBooks;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public List<Book> getRecommendedBooks() {
-            return recommendedBooks;
-        }
+    public List<Book> getRecommendations(User user) {
+        return user.getRecommendedBooks();
     }
 }

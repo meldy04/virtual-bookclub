@@ -28,6 +28,15 @@ public class RecommendationsViewModel extends AbstractListModel<Book> {
     }
 
     /**
+     * Removes book from view of recommended books once the user has chosen to ignore recommendation.
+     * @param book the list of recommended books
+     */
+    public void removeRecommendation(Book book) {
+        recommendedBooks.remove(book);
+        fireContentsChanged(this, 0, getSize());
+    }
+
+    /**
      * Sets the list of recommended books.
      * @param recommendedBooks the new list of recommended books
      */
