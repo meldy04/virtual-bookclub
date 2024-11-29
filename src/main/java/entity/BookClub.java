@@ -85,6 +85,15 @@ public class BookClub {
     }
 
     /**
+     * Gets the discussion with corresponding topic.
+     * @param topic the topic of the discussion
+     * @return a discussion
+     */
+    public Discussion getDiscussion(String topic) {
+        return this.discussions.get(topic);
+    }
+
+    /**
      * Adds a new book to books.
      * @param book to be added
      */
