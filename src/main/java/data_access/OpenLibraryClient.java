@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OpenLibraryClient implements SearchDataAccessInterface {
     private static final String OPEN_LIBRARY_API_SEARCH_URL = "https://openlibrary.org/search.json?title=";
-    private static final String OPEN_LIBRAY_API_COVER_URL = "https://covers.openlibrary.org/b/olid/"
+    private static final String OPEN_LIBRAY_API_COVER_URL = "https://covers.openlibrary.org/b/olid/";
     private final Gson gson;
 
     public OpenLibraryClient() {

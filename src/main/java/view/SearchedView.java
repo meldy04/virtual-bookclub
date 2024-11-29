@@ -11,7 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -19,18 +18,18 @@ import java.beans.PropertyChangeListener;
  *  should show the book (maybe viewBook use case or create a nested class here). display on JScrollPane
  *  have a button to go back
  */
-public class SearchedView extends JPanel implements ActionListener, PropertyChangeListener {
+public class SearchedView extends JPanel implements PropertyChangeListener {
     private final String viewName = "SearchedView";
     private final SearchedViewModel searchedViewModel;
     private SearchController searchController;
-    private final JList<Book> resultList = new JList<Book>();
+    private final JList<Book> resultList = new JList<>();
     private final JScrollPane resultscrollPane;
 
     private final JButton backButton = new JButton("Back to Search");
 
-    public SearchedView(SearchedViewModel searchedViewModel, SearchController searchController) {
-        this.searchedViewModel = searchedViewModel;
-        this.searchController = searchController;
+    public SearchedView(SearchedViewModel searchedViewModelP, SearchController searchControllerP) {
+        this.searchedViewModel = searchedViewModelP;
+        this.searchController = searchControllerP;
 
         setLayout(new BorderLayout());
 
@@ -57,7 +56,7 @@ public class SearchedView extends JPanel implements ActionListener, PropertyChan
      * @param books The list of Book objects to display.
      */
     public void updateResults(List<Book> books) {
-        DefaultListModel<Book> model = new DefaultListModel<>();
+        final DefaultListModel<Book> model = new DefaultListModel<>();
         for (Book book : books) {
             model.addElement(book);
         }
@@ -69,11 +68,22 @@ public class SearchedView extends JPanel implements ActionListener, PropertyChan
      */
     private void goBackToSearch() {
         firePropertyChange("backToSearch", null, null);
+
     }
 
-    private static class BookCellRenderer extends JPanel implements ListCellRenderer {
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("state".equals(evt.getPropertyName())) {
+            final SearchedState state = (SearchedState) evt.getNewValue();
+            updateResults(state.getBooks());
+        }
+    }
+
+    private static final class BookCellRenderer extends JPanel implements ListCellRenderer<Book> {
         private final JLabel coverLabel = new JLabel();
         private final JLabel textLabel = new JLabel();
+
+
 
         @Override
         public Component getListCellRendererComponent(
@@ -114,12 +124,5 @@ public class SearchedView extends JPanel implements ActionListener, PropertyChan
 
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if ("state".equals(evt.getPropertyName())) {
-            final SearchedState state = (SearchedState) evt.getNewValue();
-            updateResults(state.getBooks());
-        }
-    }
 
 }
