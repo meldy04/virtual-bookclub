@@ -7,9 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.InMemoryRecommendationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.Book;
 import entity.Review;
+import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -60,6 +62,7 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryRecommendationDataAccessObject recommendationDataAccessObject = new InMemoryRecommendationDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -167,30 +170,6 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
-        return this;
-    }
-
-    /**
-     * Adds the Review View to the application.
-     * @param reviews List of reviews for a book
-     * @return this builder
-     */
-    public AppBuilder addReviewView(List<Review> reviews) {
-        final ReviewViewModel reviewViewModel = new ReviewViewModel(reviews);
-        final ReviewView view = new ReviewView(reviewViewModel);
-        cardPanel.add(view, "ReviewView");
-        return this;
-    }
-
-    /**
-     * Adds the Recommendations View to the application.
-     * @param recommendedBooks List of recommended books
-     * @return this builder
-     */
-    public AppBuilder addRecommendationsView(List<Book> recommendedBooks) {
-        final RecommendationsViewModel recommendationsViewModel = new RecommendationsViewModel(recommendedBooks);
-        recommendationsView = new RecommendationsView(recommendationsViewModel);
-        cardPanel.add(recommendationsView, "RecommendationsView");
         return this;
     }
 

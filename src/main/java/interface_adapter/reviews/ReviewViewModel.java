@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import data_access.ReviewRepository;
 import entity.Review;
 
 /**
@@ -14,9 +15,11 @@ public class ReviewViewModel extends AbstractTableModel {
 
     private final List<Review> reviews;
     private final String[] columns = {"User", "Book", "Rating", "Review"};
+    private final ReviewRepository reviewRepository;
 
-    public ReviewViewModel(List<Review> reviews) {
-        this.reviews = reviews;
+    public ReviewViewModel(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+        this.reviews = reviewRepository.getAllReviews();
     }
 
     @Override

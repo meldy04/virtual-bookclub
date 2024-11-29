@@ -1,16 +1,44 @@
 package entity;
 
+/**
+ * Interface for Reviews.
+ */
 public interface Reviews {
 
-    public String getText();
+    /**
+     * Get text content of review.
+     * @return text
+     */
+    String getText();
 
-    public User getUser();
+    /**
+     * Get user writing the review.
+     * @return text
+     */
+    User getUser();
 
-    public Book getBook();
+    /**
+     * Get book being reviewed.
+     * @return text
+     */
 
-    public double getRating();
+    Book getBook();
 
-    public void editRating(double rating);
+    /**
+     * Get star (numerical) rating for review.
+     * @return text
+     */
+    double getRating();
 
-    public void editText(String text);
+    /**
+     * Edit the star rating.
+     * @param rating returns the updated rating stars
+     */
+    void editRating(double rating);
+
+    /**
+     * Edit the rating content.
+     * @param text returns the updated rating text.
+     */
+    void editText(String text);
 }
