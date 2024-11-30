@@ -83,7 +83,7 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
      */
     private void populateBookClubList() {
         bookClubListComboBox.removeAllItems();
-        final List<String> bookClubList = joinClubViewModel.getState().getBookClubMap();
+        final List<String> bookClubList = joinClubViewModel.getState().getBookClubList();
         for (String bookClub : bookClubList) {
             bookClubListComboBox.addItem(bookClub);
         }

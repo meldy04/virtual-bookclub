@@ -1,9 +1,7 @@
 package interface_adapter.join_club;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import entity.BookClub;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the state of the JoinClub feature, holding information about the
@@ -13,7 +11,7 @@ public final class JoinClubState {
 
     private String username = "";
 
-    private Map<String, BookClub> bookClubMap = new LinkedHashMap<>();
+    private List<String> bookClubList = new ArrayList<>();
 
     private boolean joined;
 
@@ -42,20 +40,18 @@ public final class JoinClubState {
      *
      * @return a copy of the book club map
      */
-    public Map<String, BookClub> getBookClubMap() {
-        return new LinkedHashMap<>(bookClubMap);
+    public List<String> getBookClubList() {
+        return new ArrayList<>(bookClubList);
     }
 
     /**
-     * Sets the map of book clubs.
+     * Sets the list of the bookclub.
      *
-     * @param bookClubMap the map of book clubs to set
+     * @param bookClubList list of bookclubs.
      */
-    public void setBookClubMap(final Map<String, BookClub> bookClubMap) {
-        this.bookClubMap.clear();
-        if (bookClubMap != null) {
-            this.bookClubMap.putAll(bookClubMap);
-        }
+    public void setBookClubList(final List<String> bookClubList) {
+        this.bookClubList.clear();
+        this.bookClubList.addAll(bookClubList);
     }
 
     /**
