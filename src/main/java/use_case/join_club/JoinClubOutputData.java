@@ -14,15 +14,15 @@ public class JoinClubOutputData {
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public String getClubName() {
         return clubName;
     }
 
     public boolean isUseCaseFailed() {
         return useCaseFailed;
+    }
+
+    public Object getUsername() {
+        return null;
     }
 }

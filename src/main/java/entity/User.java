@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,11 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+        this.readBooks = new ArrayList<>();
+        this.booksToRead = new ArrayList<>();
+        this.recommendedBooks = new ArrayList<>();
+        this.joinedClubs = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public String getName() {

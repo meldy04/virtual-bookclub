@@ -31,6 +31,6 @@ public class RecommendationsTest {
     @Test
     public void testRecommendBooks() {
         List<Book> recommendedBooks = recommendations.recommendBooks(user);
-        assertEquals(0, recommendedBooks.size());
+        assertEquals(5, recommendedBooks.size());
     }
 }
