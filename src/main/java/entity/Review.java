@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Review {
 
+
+public class Review {
+
+
     private String username;
     private Book book;
     private String text;

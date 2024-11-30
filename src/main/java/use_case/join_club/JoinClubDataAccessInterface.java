@@ -1,10 +1,9 @@
 package use_case.join_club;
 
-import entity.BookClub;
-import entity.User;
-
 import java.util.List;
 import java.util.Map;
+
+import entity.BookClub;
 
 /**
  * DAO for Join Club Use Case.
@@ -21,10 +20,22 @@ public interface JoinClubDataAccessInterface {
 
     /**
      * Returns whether user is a member of a club.
+
      * @param username that is in the club
+
+     * @param username of user
+
      * @param clubName name of club
      * @return true if the user exists in club; false otherwise
      */
     boolean isMember(String username, String clubName);
+
+
+    /**
+     * Gets all book clubs that have been created.
+     * @return list of book clubs
+     */
+    List<BookClub> getAllClubs();
+
 
 }
