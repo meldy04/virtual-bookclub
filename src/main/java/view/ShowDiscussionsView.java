@@ -104,7 +104,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
         return viewName;
     }
 
-    public void setShowTopicsController(ShowDiscussionsController controller) {
+    public void setShowDiscussionsController(ShowDiscussionsController controller) {
         this.showTopicsController = controller;
     }
 }
