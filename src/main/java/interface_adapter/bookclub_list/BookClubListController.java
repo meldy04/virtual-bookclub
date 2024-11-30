@@ -17,7 +17,7 @@ public class BookClubListController {
     }
 
     /**
-     * Excutes the cotroller.
+     * Executes the controller.
      *
      */
 

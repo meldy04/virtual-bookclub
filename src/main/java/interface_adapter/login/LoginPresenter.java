@@ -1,6 +1,8 @@
 package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_message.AddMessageState;
+import interface_adapter.add_message.AddMessageViewModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.join_club.JoinClubState;
@@ -19,13 +21,17 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     private final JoinClubViewModel joinClubViewModel;
 
+    private final AddMessageViewModel addMessageViewModel;
+
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
-                          LoginViewModel loginViewModel, JoinClubViewModel joinClubViewModel) {
+                          LoginViewModel loginViewModel, JoinClubViewModel joinClubViewModel,
+                          AddMessageViewModel addMessageViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.joinClubViewModel = joinClubViewModel;
+        this.addMessageViewModel = addMessageViewModel;
     }
 
     @Override
@@ -34,6 +40,8 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         final LoggedInState loggedInState = loggedInViewModel.getState();
         final JoinClubState joinClubState = joinClubViewModel.getState();
+        final AddMessageState addMessageState = addMessageViewModel.getState();
+        addMessageState.setCurrentUsername(response.getUsername());
         joinClubState.setUsername(response.getUsername());
         loggedInState.setUsername(response.getUsername());
         this.loggedInViewModel.setState(loggedInState);

@@ -1,7 +1,7 @@
 package interface_adapter.bookclub_list;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import entity.BookClub;
 import interface_adapter.ViewManagerModel;
@@ -46,14 +46,14 @@ public final class BookClubListPresenter implements BookClubOutputBoundary {
         final JoinClubState joinClubState = joinClubViewModel.getState();
 
         // Format book clubs for display
-        final Map<String, BookClub> format = new LinkedHashMap<>();
+        final List<String> bookClubList = new ArrayList<>();
         for (final BookClub bookClub : outputData.getBookClubList()) {
             final String display = bookClub.getName() + " - " + bookClub.getGenre();
-            format.put(display, bookClub);
+            bookClubList.add(display);
         }
 
         // Set the formatted list into the join club state
-        joinClubState.setBookClubMap(format);
+        joinClubState.setBookClubList(bookClubList);
         joinClubViewModel.setState(joinClubState);
         joinClubViewModel.firePropertyChanged();
 

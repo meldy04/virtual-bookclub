@@ -156,7 +156,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
 
-
         }
 
     public String getViewName() {

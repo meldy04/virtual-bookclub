@@ -5,11 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Map;
+import java.util.List;
 
 import javax.swing.*;
 
-import entity.BookClub;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.join_club.JoinClubController;
 import interface_adapter.join_club.JoinClubViewModel;
@@ -34,6 +33,9 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
 
     private JoinClubController joinClubController;
 
+    private final float font = 15f;
+    private final int width = 10;
+
     /**
      * Constructs a new Join_ClubView instance.
      *
@@ -44,18 +46,18 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
         this.joinClubViewModel = joinClubViewModel;
         this.viewManagerModel = viewManagerModel;
         this.joinClubViewModel.addPropertyChangeListener(this);
-        setupUI();
+        setupU();
     }
 
     /**
      * Sets up the UI components and layout for the join club view.
      */
-    private void setupUI() {
+    private void setupU() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final JLabel title = new JLabel("Joining Club");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(title.getFont().deriveFont(15f));
+        title.setFont(title.getFont().deriveFont(font));
         this.add(title);
 
         // Add components
@@ -68,7 +70,7 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(backButton);
-        buttonPanel.add(Box.createHorizontalStrut(10));
+        buttonPanel.add(Box.createHorizontalStrut(width));
         buttonPanel.add(joinClubButton);
         this.add(buttonPanel);
 
@@ -81,9 +83,9 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
      */
     private void populateBookClubList() {
         bookClubListComboBox.removeAllItems();
-        final Map<String, BookClub> bookClubMap = joinClubViewModel.getState().getBookClubMap();
-        for (final String display : bookClubMap.keySet()) {
-            bookClubListComboBox.addItem(display);
+        final List<String> bookClubList = joinClubViewModel.getState().getBookClubMap();
+        for (String bookClub : bookClubList) {
+            bookClubListComboBox.addItem(bookClub);
         }
     }
 
@@ -118,9 +120,9 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
         if (e.getSource() == joinClubButton) {
             final String selectedOption = (String) bookClubListComboBox.getSelectedItem();
             if (selectedOption != null) {
-                final Map<String, BookClub> bookClubMap = joinClubViewModel.getState().getBookClubMap();
-                final BookClub bookClub = bookClubMap.get(selectedOption);
-                joinClubController.execute(joinClubViewModel.getState().getUsername(), bookClub.getName());
+                final String[] parts = selectedOption.split(" - ");
+                final String clubName = parts[0];
+                joinClubController.execute(joinClubViewModel.getState().getUsername(), clubName);
             }
             else {
                 JOptionPane.showMessageDialog(this, "Please select a club to join.");
