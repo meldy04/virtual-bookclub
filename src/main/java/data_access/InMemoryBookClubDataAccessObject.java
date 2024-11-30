@@ -17,12 +17,11 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program yes love that huh.
  */
-public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentDiscussion;
+    private String currentUsername;
 
     public InMemoryBookClubDataAccessObject(Map<String, BookClub> bookClubMap) {
         this.bookClubMap = bookClubMap;
@@ -72,8 +71,36 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public void saveMessage(String text, String currentUsername) {
-        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion).addMessage(new Message(currentUsername, text));
+    public void saveMessage(String text) {
+        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion)
+                .addMessage(new Message(currentUsername, text));
+    }
+
+    public void setCurrentClub(String currentClub) {
+        this.currentClub = currentClub;
+    }
+
+    @Override
+    public String getCurrentClub() {
+        return currentClub;
+    }
+
+    public void setCurrentDiscussion(String currentDiscussion) {
+        this.currentDiscussion = currentDiscussion;
+    }
+
+    @Override
+    public String getCurrentDiscussion() {
+        return currentDiscussion;
+    }
+
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return currentUsername;
     }
 
     @Override

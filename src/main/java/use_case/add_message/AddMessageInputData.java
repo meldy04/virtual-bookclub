@@ -5,18 +5,12 @@ package use_case.add_message;
  */
 public class AddMessageInputData {
     private final String text;
-    private final String currentUsername;
 
-    public AddMessageInputData(String text, String currentUsername) {
+    public AddMessageInputData(String text) {
         this.text = text;
-        this.currentUsername = currentUsername;
     }
 
     public String getText() {
         return text;
-    }
-
-    public String getCurrentUsername() {
-        return currentUsername;
     }
 }

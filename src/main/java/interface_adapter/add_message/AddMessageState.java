@@ -11,7 +11,6 @@ public class AddMessageState {
     private String text = "";
     private List<AbstractMap.SimpleEntry<String, String>> messagesList = new ArrayList<>();
     private String currentDiscussion;
-    private String currentUsername;
 
     public void setText(String text) {
         this.text = text;
@@ -35,13 +34,5 @@ public class AddMessageState {
 
     public String getCurrentDiscussion() {
         return currentDiscussion;
-    }
-
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
-
-    public void setCurrentUsername(String currentUsername) {
-        this.currentUsername = currentUsername;
     }
 }

@@ -1,11 +1,15 @@
 package use_case.join_club;
 
 import data_access.InMemoryBookClubDataAccessObject;
-import entity.Book;
 import entity.BookClub;
+import entity.User;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,18 +18,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class JoinClubInteractorTest {
     @Test
     public void successTest() {
-        Map<String, BookClub> bookClubMap = new HashMap<>();
-        bookClubMap.put("Cooking", new BookClub("Cooking", "Culinary")); // creates empty book club
 
+        Map<String, BookClub> bookClubMap = new HashMap<>();
+        BookClub cookingClub = new BookClub("Cooking", "Culinary");
+        bookClubMap.put("Cooking", cookingClub);
         JoinClubInputData inputData = new JoinClubInputData("Bob", "Cooking");
         JoinClubDataAccessInterface bookClubRepository = new InMemoryBookClubDataAccessObject(bookClubMap);
-
         JoinClubOutputBoundary successPresenter = new JoinClubOutputBoundary() {
             @Override
             public void prepareSuccessView(JoinClubOutputData outputData) {
                 assertTrue(outputData.getUsername().equals("Bob") && outputData.getClubName().equals("Cooking"));
             }
-
             @Override
             public void prepareFailView(String message) {
                 fail("Use case failure is unexpected.");
@@ -60,5 +63,4 @@ public class JoinClubInteractorTest {
         JoinClubInputBoundary joinClubInteractor = new JoinClubInteractor(failPresenter, bookClubRepository);
         joinClubInteractor.execute(inputData);
     }
-
 }

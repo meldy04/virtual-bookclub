@@ -1,5 +1,7 @@
 package use_case.join_club;
 
+import entity.User;
+
 /**
  * The Join Club Interactor.
  */

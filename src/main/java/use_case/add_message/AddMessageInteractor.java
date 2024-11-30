@@ -5,22 +5,19 @@ package use_case.add_message;
  */
 public class AddMessageInteractor implements AddMessageInputBoundary {
 
-    private final AddMessageDataAccessInterface addMessageDataAccessInterface;
-    private final AddMessageOutputBoundary addMessageOutputBoundary;
+    private AddMessageDataAccessInterface addMessageDataAccessInterface;
+    private AddMessageOutputBoundary addMessageOutputBoundary;
 
-    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface,
-                                AddMessageOutputBoundary addMessageOutputBoundary) {
+    public AddMessageInteractor(AddMessageDataAccessInterface addMessageDataAccessInterface, AddMessageOutputBoundary addMessageOutputBoundary) {
         this.addMessageDataAccessInterface = addMessageDataAccessInterface;
         this.addMessageOutputBoundary = addMessageOutputBoundary;
     }
 
     @Override
     public void execute(AddMessageInputData addMessageInputData) {
-
         final String text = addMessageInputData.getText();
-        final String currentUsername = addMessageInputData.getCurrentUsername();
 
-        addMessageDataAccessInterface.saveMessage(text, currentUsername);
+        addMessageDataAccessInterface.saveMessage(text);
 
         final AddMessageOutputData outputData =
                 new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
@@ -30,9 +27,10 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
     }
 
     @Override
-    public void showMessages(String discussion) {
+    public void refreshMessages() {
         final AddMessageOutputData outputData =
-                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), discussion);
+                new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
+                        .getCurrentDiscussion());
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
 
