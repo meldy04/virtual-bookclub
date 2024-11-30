@@ -1,6 +1,6 @@
 package use_case.create_club;
 
-import data_access.InMemoryBookClubDataAccessObject;
+import data_access.In;
 import entity.BookClub;
 import org.junit.Test;
 import use_case.join_club.*;
