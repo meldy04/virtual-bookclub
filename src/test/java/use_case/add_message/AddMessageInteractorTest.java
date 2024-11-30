@@ -4,15 +4,18 @@ import data_access.InMemoryBookClubDataAccessObject;
 import entity.BookClub;
 import entity.Discussion;
 import entity.Message;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddMessageInteractorTest {
-    @Test
-    public void addMessageTest() {
+class AddMessageInteractorTest {
+    private static InMemoryBookClubDataAccessObject inMemoryBookClubDataAccessObject;
+    @BeforeEach
+    public void setup() {
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub bookClub = new BookClub("Cooking", "Culinary");
         // adds 2 empty discussions in the book club
@@ -21,12 +24,16 @@ public class AddMessageInteractorTest {
         bookClub.getDiscussion("favourite foods").addMessage(new Message("user 1", "Pizza is my favourite"));
         bookClubMap.put("Cooking", bookClub);
 
-        InMemoryBookClubDataAccessObject inMemoryBookClubDataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
+        inMemoryBookClubDataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
         inMemoryBookClubDataAccessObject.setCurrentClub("Cooking");
         inMemoryBookClubDataAccessObject.setCurrentDiscussion("favourite foods");
         // setting current book club and current discussion which is done by other use cases.
-        AddMessageInputData inputData = new AddMessageInputData("I also like pizza", "user 2");
 
+    }
+
+    @Test
+    public void addMessageTest() {
+        AddMessageInputData inputData = new AddMessageInputData("I also like pizza", "user 2");
         AddMessageOutputBoundary addMessagePresenter = new AddMessageOutputBoundary() {
             @Override
             public void prepareShowMessageView(AddMessageOutputData outputData) {
@@ -38,6 +45,24 @@ public class AddMessageInteractorTest {
         };
         AddMessageInputBoundary addMessageInteractor = new AddMessageInteractor(inMemoryBookClubDataAccessObject, addMessagePresenter);
         addMessageInteractor.execute(inputData);
+
+    }
+
+    @Test
+    public void showMessagesTest() {
+        String discussion = "favourite foods";
+        List<AbstractMap.SimpleEntry<String, String>> expectedOutput = new ArrayList<>();
+        expectedOutput.add(new AbstractMap.SimpleEntry<>("user 1", "Pizza is my favourite"));
+        AddMessageOutputBoundary showMessagesPresenter = new AddMessageOutputBoundary() {
+            @Override
+            public void prepareShowMessageView(AddMessageOutputData outputData) {
+                Assertions.assertEquals(expectedOutput, outputData.getMessages());
+                Assertions.assertEquals(discussion, outputData.getCurrentDiscussion());
+            }
+        };
+        AddMessageInputBoundary addMessageInteractor = new AddMessageInteractor(inMemoryBookClubDataAccessObject, showMessagesPresenter);
+        addMessageInteractor.showMessages(discussion);
+
 
     }
 }

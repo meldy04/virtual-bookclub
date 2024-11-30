@@ -13,4 +13,9 @@ public interface ShowDiscussionsDataAccessInterface {
      */
     List<String> getDiscussionsTopics();
 
+    /**
+     * Sets the current discussion topic in the current club.
+     * @param discussion the discussion topic
+     */
+    void setCurrentDiscussion(String discussion);
 }

@@ -34,6 +34,7 @@ public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
 
     @Override
     public void switchToAddMessageView(String discussion) {
+        showTopicsDataAccessInterface.setCurrentDiscussion(discussion);
         showTopicsOutputBoundary.switchToAddMessageView(discussion);
     }
 }
