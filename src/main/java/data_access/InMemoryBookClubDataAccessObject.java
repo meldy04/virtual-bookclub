@@ -9,6 +9,7 @@ import java.util.Set;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
@@ -17,7 +18,7 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * NOT persist data between runs of the program yes love that huh.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -47,6 +48,16 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
+    public void addClub(String clubName) {
+        bookClubMap.put(clubName, new BookClub());
+    }
+
+    @Override
+    public boolean clubExists(String clubName) {
+        return bookClubMap.containsKey(clubName);
+    }
+
+    @Override
     public boolean isMember(String username, String clubName) {
         return bookClubMap.get(clubName).getMembers().contains(username);
     }
@@ -62,8 +73,7 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
 
     @Override
     public void saveMessage(String text, String currentUsername) {
-        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion)
-                .addMessage(new Message(currentUsername, text));
+        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion).addMessage(new Message(currentUsername, text));
     }
 
     @Override
