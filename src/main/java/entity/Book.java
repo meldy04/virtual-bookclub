@@ -80,4 +80,9 @@ public class Book {
         this.rating = newRating;
     }
 
+    @Override
+    public String toString() {
+        return title + " by " + author;
+    }
+
 }
