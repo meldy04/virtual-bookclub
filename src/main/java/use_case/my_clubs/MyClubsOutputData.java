@@ -7,13 +7,13 @@ import java.util.Map;
  */
 public class MyClubsOutputData {
     // map of club name to description
-    private final Map<String, String> myClubsList;
+    private final Map<String, String> myClubs;
 
     public MyClubsOutputData(Map<String, String> myClubsList) {
-        this.myClubsList = myClubsList;
+        this.myClubs = myClubsList;
     }
 
-    public Map<String, String> getMyClubsList() {
-        return myClubsList;
+    public Map<String, String> getMyClubs() {
+        return myClubs;
     }
 }

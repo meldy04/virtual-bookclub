@@ -5,12 +5,17 @@ package entity;
  */
 
 public class Message {
-    private final String username;
-    private final String text;
+    private String username;
+    private String text;
 
     public Message(String username, String text) {
         this.username = username;
         this.text = text;
+    }
+
+    // Default constructor (required for deserialization)
+    public Message() {
+
     }
 
     public String getUsername() {
@@ -26,4 +31,11 @@ public class Message {
         return "Message from" + getUsername() + ":" + text;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

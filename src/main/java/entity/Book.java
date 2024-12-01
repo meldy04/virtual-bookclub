@@ -22,6 +22,10 @@ public class Book {
         this.reviews = new ArrayList<>();
     }
 
+    // Default constructor (required for deserialization)
+    public Book() {
+    }
+
     public String getTitle() {
         return title;
     }

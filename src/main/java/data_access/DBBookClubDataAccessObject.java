@@ -1,22 +1,19 @@
 package data_access;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
+import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
 /**
  * DAO representing book club data.
  */
 public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
 
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -100,5 +97,16 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, 
     public List<String> getDiscussionsTopics() {
         final Set<String> keys = bookClubMap.get(currentClub).getDiscussions().keySet();
         return new ArrayList<>(keys);
+    }
+
+    @Override
+    public Map<String, String> getMyClubs(String currentUsername) {
+        final Map<String, String> result = new HashMap<>();
+        for (BookClub bookClub : bookClubMap.values()) {
+            if (bookClub.isMember(currentUsername)) {
+                result.put(bookClub.getName(), bookClub.getDescription());
+            }
+        }
+        return result;
     }
 }

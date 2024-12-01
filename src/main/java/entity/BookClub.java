@@ -11,7 +11,7 @@ import java.util.Map;
 public class BookClub {
 
     private String name;
-    private String genre;
+    private String description;
     private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private Map<String, Discussion> discussions = new HashMap<>();
@@ -23,7 +23,7 @@ public class BookClub {
     // Parameterized constructor
     public BookClub(String name, String genre) {
         this.name = name;
-        this.genre = genre;
+        this.description = genre;
     }
 
     // Getters and Setters
@@ -35,12 +35,12 @@ public class BookClub {
         this.name = name;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getDescription() {
+        return description;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getMembers() {
@@ -99,5 +99,14 @@ public class BookClub {
      */
     public void addBook(Book book) {
         this.books.add(book);
+    }
+
+    /**
+     * Returns true if the username is in members, false otherwise.
+     * @param username the username
+     * @return if members contains username
+     */
+    public Boolean isMember(String username) {
+        return members.contains(username);
     }
 }

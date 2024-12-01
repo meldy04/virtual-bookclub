@@ -18,6 +18,11 @@ public class Review {
         this.rating = rating;
     }
 
+    // Default constructor (required for deserialization)
+    public Review() {
+
+    }
+
     public String getText() {
         return text;
     }
