@@ -47,7 +47,6 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, 
     public boolean isMember(String username, String clubName) {
         final BookClub bookClub = bookClubMap.get(clubName);
         return bookClub != null && bookClub.getMembers().contains(username);
-
     }
 
     @Override

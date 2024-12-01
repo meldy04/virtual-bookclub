@@ -8,7 +8,7 @@ import interface_adapter.ViewModel;
 public class JoinedClubViewModel extends ViewModel<JoinedClubState> {
 
     public JoinedClubViewModel() {
-        super("JoinedClub");
+        super("joined club");
         setState(new JoinedClubState());
     }
 }

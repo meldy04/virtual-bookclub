@@ -1,10 +1,7 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
-@JsonIgnoreProperties(ignoreUnknown = true)
 
 /**
  * Class representing a book.
@@ -16,6 +13,8 @@ public class Book {
     private String genre;
     private double rating;
     private List<Review> reviews;
+    private String iSbn;
+    private String coverUrl;
 
     public Book(String title, String author, String genre, double rating) {
         this.title = title;
@@ -23,6 +22,21 @@ public class Book {
         this.genre = genre;
         this.rating = rating;
         this.reviews = new ArrayList<>();
+        this.iSbn = "";
+        this.coverUrl = "";
+    }
+
+    public Book(String title, String author, String Isbn) {
+        this.title = title;
+        this.author = author;
+        this.iSbn = Isbn;
+    }
+
+    public Book(String title, String author, String Isbn, String coverUrl) {
+        this.title = title;
+        this.author = author;
+        this.iSbn = Isbn;
+        this.coverUrl = coverUrl;
     }
 
     public String getTitle() {
@@ -43,6 +57,10 @@ public class Book {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
     /**

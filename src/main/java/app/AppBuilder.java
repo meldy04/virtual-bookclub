@@ -1,28 +1,16 @@
 package app;
 
 import java.awt.CardLayout;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.*;
-import interface_adapter.bookclub_list.BookClubListController;
-import interface_adapter.join_club.JoinClubViewModel;
-import use_case.bookclub_list.BookClubInputBoundary;
-import use_case.bookclub_list.BookClubInteractor;
-import use_case.bookclub_list.BookClubOutputBoundary;
-import view.Join_ClubView;
-
+import data_access.InMemoryUserDataAccessObject;
+import data_access.OpenLibraryClient;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-
-import interface_adapter.bookclub_list.BookClubListPresenter;
-
 import interface_adapter.add_message.AddMessageViewModel;
-
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -31,6 +19,10 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.search.SearchedViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -43,18 +35,13 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInteractor;
+import use_case.search.SearchOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
- 
 import view.*;
-
-import view.AddMessageView;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
-
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -75,12 +62,9 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    private JacksonTranslator jacksonTranslator = new JacksonTranslator();
-
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
-    private final DBBookClubDataAccessObject dbBookClubDataAccessObject = new DBBookClubDataAccessObject(jacksonTranslator);
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
@@ -89,34 +73,21 @@ public class AppBuilder {
     private AddMessageView addMessageView;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private SearchViewModel searchViewModel = new SearchViewModel();
+    private SearchedViewModel searchedViewModel  = new SearchedViewModel();
+    private SearchView searchView;
+    private SearchedView searchedView;
+    private SearchInteractor searchInteractor;
+    private SearchController searchController = new SearchController(searchInteractor, searchViewModel);
 
-    private JoinClubViewModel joinClubViewModel;
-
-
-
-    private Join_ClubView joinClubView;
-
-    public AppBuilder() throws URISyntaxException, IOException {
+    public AppBuilder() {
         cardPanel.setLayout(cardLayout);
-    }
-
-
-
-    public AppBuilder addJoin_ClubView(){
-
-        joinClubViewModel = new JoinClubViewModel();
-        joinClubView = new Join_ClubView(joinClubViewModel, viewManagerModel);
-        cardPanel.add(joinClubView, joinClubView.getViewName());
-        return this;
-
     }
 
     /**
      * Adds the Signup View to the application.
      * @return this builder
      */
-
-
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
@@ -141,7 +112,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel, joinClubViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -158,20 +129,40 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Search View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchView() {
+        searchView = new SearchView(searchViewModel, searchController);
+        cardPanel.add(searchView, searchView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Search View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchedView() {
+        searchedView = new SearchedView(searchedViewModel, searchController);
+        cardPanel.add(searchedView, searchView.getViewName());
+        return this;
+    }
+
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
-   public AppBuilder addSignupUseCase() {
-     final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-              signupViewModel, loginViewModel);
-      final SignupInputBoundary userSignupInteractor = new SignupInteractor(userDataAccessObject, signupOutputBoundary, userFactory);
+    public AppBuilder addSignupUseCase() {
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
+                signupViewModel, loginViewModel);
+        final SignupInputBoundary userSignupInteractor = new SignupInteractor(
+                userDataAccessObject, signupOutputBoundary, userFactory);
 
-       final SignupController controller = new SignupController(userSignupInteractor);
-       signupView.setSignupController(controller);
-       return this;
-   }
-
-
+        final SignupController controller = new SignupController(userSignupInteractor);
+        signupView.setSignupController(controller);
+        return this;
+    }
 
     /**
      * Adds the Login Use Case to the application.
@@ -179,11 +170,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-
-                loggedInViewModel, loginViewModel, joinClubViewModel);
-
                 loggedInViewModel, loginViewModel, addMessageViewModel);
-
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -225,14 +212,19 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addBookClubListUseCase() {
+    /**
+     * Adds the Search Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchUseCase() {
+        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(
+                searchViewModel, viewManagerModel, searchedViewModel);
 
-        final BookClubOutputBoundary bookClubOutputBoundary =
-                new BookClubListPresenter(loggedInViewModel, viewManagerModel, joinClubViewModel);
+        final OpenLibraryClient apiCaller = new OpenLibraryClient();
 
-        final BookClubInputBoundary bookClubInteractor = new BookClubInteractor(bookClubOutputBoundary, dbBookClubDataAccessObject);
-        final BookClubListController bookClubListController = new BookClubListController(bookClubInteractor);
-        loggedInView.setBookClubListController(bookClubListController);
+        searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
+        searchController = new SearchController(searchInteractor, searchViewModel);
+        searchView.setSearchController(searchController);
         return this;
     }
 

@@ -1,6 +1,6 @@
 package interface_adapter.bookclub_list;
 
-import java.util.ArrayList;
+import gijava.util.ArrayList;
 import java.util.List;
 
 import entity.BookClub;
