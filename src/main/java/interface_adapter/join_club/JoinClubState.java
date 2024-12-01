@@ -1,93 +1,52 @@
-
 package interface_adapter.join_club;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Represents the state of the JoinClub feature, holding information about the
- * current user, book clubs, whether the user has joined, and any error messages.
- */
-public final class JoinClubState {
-
+public class JoinClubState {
     private String username = "";
-
-    private List<String> bookClubList = new ArrayList<>();
-
+    private String bookclub = "";
     private boolean joined;
-
     private String errorMessage = "";
 
-    /**
-     * Gets the username of the user.
-     *
-     * @return the current username
-     */
+    public JoinClubState() {
+
+    }
+
+    public JoinClubState(JoinClubState copy) {
+        this.username = copy.username;
+        this.bookclub = copy.bookclub;
+        this.joined = copy.joined;
+        this.errorMessage = copy.errorMessage;
+    }
+
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Sets the username of the user.
-     *
-     * @param username1 the username to be set
-     */
-    public void setUsername(final String username1) {
+    public void setUsername(String username1) {
         this.username = username1;
     }
 
-    /**
-     * Gets a copy of the map of book clubs.
-     *
-     * @return a copy of the book club map
-     */
-    public List<String> getBookClubList() {
-        return new ArrayList<>(bookClubList);
+    public String getBookclub() {
+        return bookclub;
     }
 
-    /**
-     * Sets the list of the bookclub.
-     *
-     * @param bookClubList list of bookclubs.
-     */
-    public void setBookClubList(final List<String> bookClubList) {
-        this.bookClubList.clear();
-        this.bookClubList.addAll(bookClubList);
+    public void setBookclub(String bookclub1) {
+        this.bookclub = bookclub1;
     }
 
-    /**
-     * Checks if the user has joined a book club.
-     *
-     * @return true if the user has joined a book club, false otherwise
-     */
     public boolean isJoined() {
         return joined;
     }
 
-    /**
-     * Sets the joined status of the user.
-     *
-     * @param joined1 true if the user has joined a book club, false otherwise
-     */
-    public void setJoined(final boolean joined1) {
+    public void setJoined(boolean joined1) {
         this.joined = joined1;
     }
 
-    /**
-     * Gets the error message associated with the join club process.
-     *
-     * @return the error message
-     */
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    /**
-     * Sets the error message.
-     *
-     * @param errorMessage1 the error message to set
-     */
-    public void setErrorMessage(final String errorMessage1) {
+    public void setErrorMessage(String errorMessage1) {
         this.errorMessage = errorMessage1;
     }
+
 }
