@@ -11,29 +11,29 @@ import use_case.show_discussions.ShowDiscussionsOutputData;
  */
 public class ShowDiscussionsPresenter implements ShowDiscussionsOutputBoundary {
 
-    private final ShowDiscussionsViewModel showTopicsViewModel;
+    private final ShowDiscussionsViewModel showDiscussionsViewModel;
     private final AddMessageViewModel addMessageViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public ShowDiscussionsPresenter(ShowDiscussionsViewModel showDiscussionsViewModel,
                                     ViewManagerModel viewManagerModel, AddMessageViewModel addMessageViewModel) {
-        this.showTopicsViewModel = showDiscussionsViewModel;
+        this.showDiscussionsViewModel = showDiscussionsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.addMessageViewModel = addMessageViewModel;
     }
 
     @Override
     public void prepareSuccessView(ShowDiscussionsOutputData outputData) {
-        final ShowDiscussionsState state = showTopicsViewModel.getState();
+        final ShowDiscussionsState state = showDiscussionsViewModel.getState();
         state.setTopics(outputData.getTopics());
-        showTopicsViewModel.firePropertyChanged("topics");
+        showDiscussionsViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-        final ShowDiscussionsState state = showTopicsViewModel.getState();
+        final ShowDiscussionsState state = showDiscussionsViewModel.getState();
         state.setErrorMessage(errorMessage);
-        showTopicsViewModel.firePropertyChanged("error");
+        showDiscussionsViewModel.firePropertyChanged("error");
     }
 
     @Override

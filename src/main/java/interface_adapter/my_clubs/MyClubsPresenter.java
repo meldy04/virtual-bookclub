@@ -42,7 +42,7 @@ public class MyClubsPresenter implements MyClubsOutputBoundary {
         final ShowDiscussionsState showDiscussionsState = showDiscussionsViewModel.getState();
         showDiscussionsState.setCurrentClub(currentClub);
         showDiscussionsViewModel.setState(showDiscussionsState);
-        showDiscussionsViewModel.firePropertyChanged();
+        showDiscussionsViewModel.firePropertyChanged("current club");
 
         viewManagerModel.setState(showDiscussionsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

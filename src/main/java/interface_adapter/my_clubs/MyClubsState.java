@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class MyClubsState {
     private String currentUsername;
+    private String currentClub;
     private Map<String, String> myClubs = new HashMap<>();
     private String errorMessage;
 
@@ -33,5 +34,13 @@ public class MyClubsState {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getCurrentClub() {
+        return currentClub;
+    }
+
+    public void setCurrentClub(String currentClub) {
+        this.currentClub = currentClub;
     }
 }

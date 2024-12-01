@@ -246,7 +246,7 @@ public class AppBuilder {
         final JFrame application = new JFrame("Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(showDiscussionsView.getViewName());
         viewManagerModel.firePropertyChanged();
         return application;
     }

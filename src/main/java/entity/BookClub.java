@@ -21,9 +21,9 @@ public class BookClub {
     }
 
     // Parameterized constructor
-    public BookClub(String name, String genre) {
+    public BookClub(String name, String description) {
         this.name = name;
-        this.description = genre;
+        this.description = description;
     }
 
     // Getters and Setters
