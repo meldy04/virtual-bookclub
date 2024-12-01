@@ -8,15 +8,18 @@ import java.util.List;
  */
 public class AddMessageOutputData {
     private final List<AbstractMap.SimpleEntry<String, String>> messages;
-    private final String currentTopic;
+    private final String currentDiscussion;
 
     public AddMessageOutputData(List<AbstractMap.SimpleEntry<String, String>> messages, String currentTopic) {
         this.messages = messages;
-        this.currentTopic = currentTopic;
+        this.currentDiscussion = currentTopic;
     }
 
     public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
         return messages;
     }
 
+    public String getCurrentDiscussion() {
+        return currentDiscussion;
+    }
 }

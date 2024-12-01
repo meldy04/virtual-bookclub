@@ -48,7 +48,7 @@ public class JoinClubInteractorTest {
         JoinClubOutputBoundary failPresenter = new JoinClubOutputBoundary() {
             @Override
             public void prepareSuccessView(JoinClubOutputData outputData) {
-                fail("Use case failure is unexpected");
+                fail("Use case success is unexpected");
             }
 
             @Override

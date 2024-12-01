@@ -1,8 +1,6 @@
 package app;
 
 import java.awt.CardLayout;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,9 +9,12 @@ import javax.swing.WindowConstants;
 import data_access.DBBookClubDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.JacksonTranslator;
+import data_access.JacksonTranslator;
 import data_access.OpenLibraryClient;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_message.AddMessageController;
+import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
 import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.bookclub_list.BookClubListPresenter;
@@ -26,10 +27,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.search.SearchController;
-import interface_adapter.search.SearchPresenter;
-import interface_adapter.search.SearchViewModel;
-import interface_adapter.search.SearchedViewModel;
+import interface_adapter.show_discussions.ShowDiscussionsController;
+import interface_adapter.show_discussions.ShowDiscussionsPresenter;
+import interface_adapter.show_discussions.ShowDiscussionsViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -45,9 +45,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.search.SearchInputBoundary;
-import use_case.search.SearchInteractor;
-import use_case.search.SearchOutputBoundary;
+import use_case.show_discussions.ShowDiscussionsInputBoundary;
+import use_case.show_discussions.ShowDiscussionsInteractor;
+import use_case.show_discussions.ShowDiscussionsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -71,11 +71,6 @@ public class AppBuilder {
     private final UserFactory userFactory = new UserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
-
-    private JacksonTranslator jacksonTranslator = new JacksonTranslator();
-
-    private final DBBookClubDataAccessObject dbBookClubDataAccessObject =
-            new DBBookClubDataAccessObject(jacksonTranslator);
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -160,22 +155,13 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Search View to the application.
+     * Adds the ShowDiscussions view to the application.
      * @return this builder
      */
-    public AppBuilder addSearchView() {
-        searchView = new SearchView(searchViewModel, searchController);
-        cardPanel.add(searchView, searchView.getViewName());
-        return this;
-    }
-
-    /**
-     * Adds the Search View to the application.
-     * @return this builder
-     */
-    public AppBuilder addSearchedView() {
-        searchedView = new SearchedView(searchedViewModel, searchController);
-        cardPanel.add(searchedView, searchView.getViewName());
+    public AppBuilder addShowDiscussionsView() {
+        showDiscussionsViewModel = new ShowDiscussionsViewModel();
+        showDiscussionsView = new ShowDiscussionsView(showDiscussionsViewModel);
+        cardPanel.add(showDiscussionsView, showDiscussionsView.getViewName());
         return this;
     }
 
@@ -213,7 +199,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel);
+                loggedInViewModel, loginViewModel, addMessageViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -256,18 +242,30 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Search Use Case to the application.
+     * Adds the AddMessage Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addSearchUseCase() {
-        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(
-                searchViewModel, viewManagerModel, searchedViewModel);
+    public AppBuilder addAddMessagesUseCase() {
+        final AddMessageOutputBoundary addMessageOutputBoundary = new AddMessagePresenter(addMessageViewModel);
+        final AddMessageInputBoundary addMessageInteractor = new AddMessageInteractor(bookClubDataAccessObject,
+                addMessageOutputBoundary);
+        final AddMessageController addMessageController = new AddMessageController(addMessageInteractor);
+        addMessageView.setAddMessageController(addMessageController);
+        return this;
+    }
 
-        final OpenLibraryClient apiCaller = new OpenLibraryClient();
-
-        searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
-        searchController = new SearchController(searchInteractor, searchViewModel);
-        searchView.setSearchController(searchController);
+    /**
+     * Adds the ShowDiscussions Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addShowDiscussionsUseCase() {
+        final ShowDiscussionsOutputBoundary showDiscussionsOutputBoundary =
+                new ShowDiscussionsPresenter(showDiscussionsViewModel, viewManagerModel, addMessageViewModel);
+        final ShowDiscussionsInputBoundary showDiscussionsInteractor =
+                new ShowDiscussionsInteractor(bookClubDataAccessObject, showDiscussionsOutputBoundary);
+        final ShowDiscussionsController showDiscussionsController =
+                new ShowDiscussionsController(showDiscussionsInteractor);
+        showDiscussionsView.setShowDiscussionsController(showDiscussionsController);
         return this;
     }
 

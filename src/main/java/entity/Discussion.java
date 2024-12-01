@@ -7,11 +7,24 @@ import java.util.List;
  * A discussion class.
  */
 public class Discussion {
-    private final String topic;
+    private String topic;
     private List<Message> messages = new ArrayList<>();
 
     public Discussion(String topic, List<Message> messages) {
         this.topic = topic;
+        this.messages = messages;
+    }
+
+    // Default constructor (required for deserialization)
+    public Discussion() {
+
+    }
+
+    public Discussion(String topic) {
+        this.topic = topic;
+    }
+
+    public Discussion(List<Message> messages) {
         this.messages = messages;
     }
 
@@ -32,4 +45,15 @@ public class Discussion {
         return "Discussion about " + topic;
     }
 
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 }

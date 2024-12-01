@@ -1,15 +1,12 @@
 package data_access;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
+import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
 /**
@@ -17,7 +14,7 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * NOT persist data between runs of the program.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -90,4 +87,14 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
         this.currentDiscussion = currentDiscussion;
     }
 
+    @Override
+    public Map<String, String> getMyClubs(String currentUsername) {
+        final Map<String, String> result = new HashMap<>();
+        for (BookClub bookClub : bookClubMap.values()) {
+            if (bookClub.isMember(currentUsername)) {
+                result.put(bookClub.getName(), bookClub.getDescription());
+            }
+        }
+        return result;
+    }
 }

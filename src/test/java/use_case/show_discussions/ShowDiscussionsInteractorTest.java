@@ -37,10 +37,10 @@ public class ShowDiscussionsInteractorTest {
 
             @Override
             public void switchToAddMessageView(String discussion) {
-                fail("Use case failure is unexpected.");
+                fail("Use case switch view is unexpected.");
             }
         };
-        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(successPresenter, inMemoryBookClubDataAccessObject);
+        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(inMemoryBookClubDataAccessObject, successPresenter);
         showDiscussionsInteractor.execute();
     }
 
@@ -57,7 +57,7 @@ public class ShowDiscussionsInteractorTest {
         ShowDiscussionsOutputBoundary failPresenter = new ShowDiscussionsOutputBoundary() {
             @Override
             public void prepareSuccessView(ShowDiscussionsOutputData outputData) {
-                fail("Use case failure is unexpected.");
+                fail("Use case success is unexpected.");
             }
 
             @Override
@@ -67,11 +67,43 @@ public class ShowDiscussionsInteractorTest {
 
             @Override
             public void switchToAddMessageView(String discussion) {
-                fail("Use case failure is unexpected.");
+                fail("Use case switch view is unexpected.");
             }
         };
 
-        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(failPresenter, inMemoryBookClubDataAccessObject);
+        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(inMemoryBookClubDataAccessObject, failPresenter);
         showDiscussionsInteractor.execute();
+    }
+
+    @Test
+    public void SwitchViewTest() {
+        Map<String, BookClub> bookClubMap = new HashMap<>();
+        BookClub bookClub = new BookClub("Cooking", "Culinary");
+        bookClub.addDiscussion("favourite foods", new Discussion("favourite foods", new ArrayList<>()));
+        bookClub.addDiscussion("cooking tips", new Discussion("cooking tips", new ArrayList<>()));
+        bookClubMap.put("Cooking", bookClub);
+
+        InMemoryBookClubDataAccessObject inMemoryBookClubDataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
+        inMemoryBookClubDataAccessObject.setCurrentClub("Cooking");
+        String discussion = "favourite foods";
+
+        ShowDiscussionsOutputBoundary switchPresenter = new ShowDiscussionsOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ShowDiscussionsOutputData outputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("use case failure is unexpected");
+            }
+
+            @Override
+            public void switchToAddMessageView(String discussion) {
+                assertEquals(inMemoryBookClubDataAccessObject.getCurrentDiscussion(), discussion);
+            }
+        };
+        ShowDiscussionsInputBoundary showDiscussionsInteractor = new ShowDiscussionsInteractor(inMemoryBookClubDataAccessObject, switchPresenter);
+        showDiscussionsInteractor.switchToAddMessageView(discussion);
     }
 }

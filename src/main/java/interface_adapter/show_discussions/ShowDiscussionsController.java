@@ -8,8 +8,8 @@ import use_case.show_discussions.ShowDiscussionsInputBoundary;
 public class ShowDiscussionsController {
     private final ShowDiscussionsInputBoundary showTopicsInteractor;
 
-    public ShowDiscussionsController(ShowDiscussionsInputBoundary showTopicsInteractor) {
-        this.showTopicsInteractor = showTopicsInteractor;
+    public ShowDiscussionsController(ShowDiscussionsInputBoundary showDiscussionsInteractor) {
+        this.showTopicsInteractor = showDiscussionsInteractor;
     }
 
     /**

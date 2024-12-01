@@ -10,8 +10,8 @@ public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
     private final ShowDiscussionsOutputBoundary showTopicsOutputBoundary;
     private final ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface;
 
-    public ShowDiscussionsInteractor(ShowDiscussionsOutputBoundary showTopicsOutputBoundary,
-                                     ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface) {
+    public ShowDiscussionsInteractor(ShowDiscussionsDataAccessInterface showTopicsDataAccessInterface,
+                                     ShowDiscussionsOutputBoundary showTopicsOutputBoundary) {
 
         this.showTopicsOutputBoundary = showTopicsOutputBoundary;
         this.showTopicsDataAccessInterface = showTopicsDataAccessInterface;
@@ -34,6 +34,7 @@ public class ShowDiscussionsInteractor implements ShowDiscussionsInputBoundary {
 
     @Override
     public void switchToAddMessageView(String discussion) {
+        showTopicsDataAccessInterface.setCurrentDiscussion(discussion);
         showTopicsOutputBoundary.switchToAddMessageView(discussion);
     }
 }
