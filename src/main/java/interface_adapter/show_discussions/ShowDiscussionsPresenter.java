@@ -15,9 +15,9 @@ public class ShowDiscussionsPresenter implements ShowDiscussionsOutputBoundary {
     private final AddMessageViewModel addMessageViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public ShowDiscussionsPresenter(ShowDiscussionsViewModel showTopicsViewModel,
+    public ShowDiscussionsPresenter(ShowDiscussionsViewModel showDiscussionsViewModel,
                                     ViewManagerModel viewManagerModel, AddMessageViewModel addMessageViewModel) {
-        this.showTopicsViewModel = showTopicsViewModel;
+        this.showTopicsViewModel = showDiscussionsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.addMessageViewModel = addMessageViewModel;
     }

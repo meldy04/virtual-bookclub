@@ -1,5 +1,8 @@
 package data_access;
 
+/**
+ * Manager for the current discussion.
+ */
 public interface CurrentDiscussionManager {
     /**
      * Sets the current discussion the user wants to open.
