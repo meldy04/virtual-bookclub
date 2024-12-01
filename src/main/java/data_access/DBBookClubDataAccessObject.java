@@ -6,26 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-// Project-specific imports
 import entity.BookClub;
-import use_case.bookclub_list.BookClubDataAccessInterface;
+import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 
 /**
  * DAO for bookclub data implemented using a File to persist the data.
  */
 
-public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, BookClubDataAccessInterface {
-
-import entity.BookClub;
-import use_case.join_club.JoinClubDataAccessInterface;
-
-/**
- * DAO representing book club data.
- */
-public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
-
+public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, ExitClubDataAccessInterface {
 
     private Map<String, BookClub> bookClubMap;
 
@@ -57,9 +46,6 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
     @Override
     public boolean isMember(String username, String clubName) {
         final BookClub bookClub = bookClubMap.get(clubName);
-
-        return bookClub != null && bookClub.getMembersname().contains(username);
-
         return bookClub != null && bookClub.getMembers().contains(username);
 
     }
@@ -69,4 +55,10 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface {
         return new ArrayList<>(bookClubMap.values());
     }
 
+    @Override
+    public void removeUser(String userName, String clubName) {
+        final BookClub bookClub = bookClubMap.get(clubName);
+        bookClub.removeMember(userName);
+        JacksonTranslator.saveBookClubData(bookClubMap);
+    }
 }

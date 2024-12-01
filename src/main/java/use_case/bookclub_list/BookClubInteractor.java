@@ -16,7 +16,7 @@ public final class BookClubInteractor implements BookClubInputBoundary {
     /**
      * Constructs a new BookClubInteractor with the required dependencies.
      *
-     * @param bookClubOutputBoundary      the output boundary to prepare the success view
+     * @param bookClubOutputBoundary the output boundary to prepare the success view
      * @param bookClubDataAccessInterface the data access interface for retrieving book clubs
      */
     public BookClubInteractor(final BookClubOutputBoundary bookClubOutputBoundary,
