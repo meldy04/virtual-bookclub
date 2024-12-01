@@ -34,7 +34,7 @@ public class SearchController {
             searchViewModel.setState(searchState);
             searchViewModel.firePropertyChanged();
 
-            SearchInputData inputData = new SearchInputData(query);
+            final SearchInputData inputData = new SearchInputData(query);
             searchUseCaseInteractor.search(inputData);
 
 }
