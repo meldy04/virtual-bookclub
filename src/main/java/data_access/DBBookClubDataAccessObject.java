@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import entity.BookClub;
+import use_case.bookclub_list.BookClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 
 /**
  * DAO for bookclub data implemented using a File to persist the data.
  */
-
-public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, ExitClubDataAccessInterface {
-
+public class DBBookClubDataAccessObject implements
+        JoinClubDataAccessInterface, ExitClubDataAccessInterface, BookClubDataAccessInterface {
     private Map<String, BookClub> bookClubMap;
 
     private final JacksonTranslator jacksonTranslator;

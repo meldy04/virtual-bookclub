@@ -1,9 +1,5 @@
 package interface_adapter.bookclub_list;
 
-import gijava.util.ArrayList;
-import java.util.List;
-
-import entity.BookClub;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.join_club.JoinClubState;
@@ -45,15 +41,7 @@ public final class BookClubListPresenter implements BookClubOutputBoundary {
         // Get current states
         final JoinClubState joinClubState = joinClubViewModel.getState();
 
-        // Format book clubs for display
-        final List<String> bookClubList = new ArrayList<>();
-        for (final BookClub bookClub : outputData.getBookClubList()) {
-            final String display = bookClub.getName() + " - " + bookClub.getGenre();
-            bookClubList.add(display);
-        }
-
-        // Set the formatted list into the join club state
-        joinClubState.setBookClubList(bookClubList);
+        joinClubState.setBookClubList(outputData.getBookClubListName());
         joinClubViewModel.setState(joinClubState);
         joinClubViewModel.firePropertyChanged();
 

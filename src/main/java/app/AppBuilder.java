@@ -1,19 +1,26 @@
 package app;
 
 import java.awt.CardLayout;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.DBBookClubDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
+import data_access.JacksonTranslator;
 import data_access.OpenLibraryClient;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageViewModel;
+import interface_adapter.bookclub_list.BookClubListController;
+import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -26,6 +33,9 @@ import interface_adapter.search.SearchedViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.bookclub_list.BookClubInputBoundary;
+import use_case.bookclub_list.BookClubInteractor;
+import use_case.bookclub_list.BookClubOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -62,6 +72,11 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+    private JacksonTranslator jacksonTranslator = new JacksonTranslator();
+
+    private final DBBookClubDataAccessObject dbBookClubDataAccessObject =
+            new DBBookClubDataAccessObject(jacksonTranslator);
+
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
@@ -73,15 +88,31 @@ public class AppBuilder {
     private AddMessageView addMessageView;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private Join_ClubView joinClubView;
     private SearchViewModel searchViewModel = new SearchViewModel();
-    private SearchedViewModel searchedViewModel  = new SearchedViewModel();
+    private SearchedViewModel searchedViewModel = new SearchedViewModel();
+
+    private JoinClubViewModel joinClubViewModel = new JoinClubViewModel();
     private SearchView searchView;
     private SearchedView searchedView;
     private SearchInteractor searchInteractor;
     private SearchController searchController = new SearchController(searchInteractor, searchViewModel);
 
-    public AppBuilder() {
+
+
+    public AppBuilder() throws URISyntaxException, IOException {
         cardPanel.setLayout(cardLayout);
+    }
+    /**
+     * Adds the Join Club view to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinedClubView() {
+        loggedInViewModel = new LoggedInViewModel();
+        loggedInView = new LoggedInView(loggedInViewModel);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
     }
 
     /**
@@ -148,6 +179,18 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the JoinClub to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinClubView() {
+        joinClubViewModel = new JoinClubViewModel();
+        joinClubView = new Join_ClubView(joinClubViewModel, viewManagerModel);
+        cardPanel.add(joinClubView, joinClubView.getViewName());
+        return this;
+
+    }
 
     /**
      * Adds the Signup Use Case to the application.
@@ -170,7 +213,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, addMessageViewModel);
+                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -225,6 +268,23 @@ public class AppBuilder {
         searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
         searchController = new SearchController(searchInteractor, searchViewModel);
         searchView.setSearchController(searchController);
+        return this;
+    }
+
+    /**
+     * Adds the bookClub usecase to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addBookClubListUseCase() {
+
+        final BookClubOutputBoundary bookClubOutputBoundary =
+                new BookClubListPresenter(loggedInViewModel, viewManagerModel, joinClubViewModel);
+
+        final BookClubInputBoundary bookClubInteractor = new BookClubInteractor(bookClubOutputBoundary,
+                dbBookClubDataAccessObject);
+        final BookClubListController bookClubListController = new BookClubListController(bookClubInteractor);
+        loggedInView.setBookClubListController(bookClubListController);
         return this;
     }
 

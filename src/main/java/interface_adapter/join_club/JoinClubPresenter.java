@@ -1,42 +1,66 @@
-package interface_adapter.join_club;
+    package interface_adapter.join_club;
 
-import interface_adapter.ViewManagerModel;
-import use_case.join_club.JoinClubOutputBoundary;
-import use_case.join_club.JoinClubOutputData;
-/**
- * The Presenter for the Join Club Use Case.
- */
+    import interface_adapter.ViewManagerModel;
+    import interface_adapter.change_password.LoggedInState;
+    import interface_adapter.change_password.LoggedInViewModel;
+    import use_case.join_club.JoinClubOutputBoundary;
+    import use_case.join_club.JoinClubOutputData;
 
-public class JoinClubPresenter implements JoinClubOutputBoundary {
+    /**
+     * The Presenter for the Join Club Use Case.
+     */
 
-    private final JoinClubViewModel joinClubViewModel;
-    private final ViewManagerModel viewManagerModel;
+    public class JoinClubPresenter implements JoinClubOutputBoundary {
 
-    public JoinClubPresenter(JoinClubViewModel joinClubViewModel,
-                             ViewManagerModel viewManagerModel) {
-        this.joinClubViewModel = joinClubViewModel;
-        this.viewManagerModel = viewManagerModel;
+        private final ViewManagerModel viewManagerModel;
+
+        private final LoggedInViewModel loggedInViewModel;
+
+        public JoinClubPresenter( ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
+            this.viewManagerModel = viewManagerModel;
+            this.loggedInViewModel = loggedInViewModel;
+        }
+
+        @Override
+        public void prepareSuccessView(JoinClubOutputData response) {
+            final String name = response.getUsername();
+            final String clubName = response.getClubName();
+            final javax.swing.Timer timer = new javax.swing.Timer(10000, actionEvent -> {
+                // After 10 seconds, switch to LoggedInView
+                final LoggedInState loggedInState = loggedInViewModel.getState();
+                loggedInViewModel.setState(loggedInState);
+                this.viewManagerModel.setState(loggedInViewModel.getViewName());
+                this.viewManagerModel.firePropertyChanged();
+            });
+
+            timer.setRepeats(false);
+            timer.start();
+
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "Congratulations, " + name + "! You have successfully joined the club \""
+                            + clubName + "\". Redirecting to the logged-in view where you can all your current "
+                            + "bookclub "
+                            + "by pressing the MyBookClubs");
+        }
+        @Override
+        public void prepareFailView(String errorMessage) {
+            final javax.swing.Timer timer = new javax.swing.Timer(10000, actionEvent -> {
+                // After 10 seconds, switch to LoggedInView
+                final LoggedInState loggedInState = loggedInViewModel.getState();
+                loggedInViewModel.setState(loggedInState);
+                this.viewManagerModel.setState(loggedInViewModel.getViewName());
+                this.viewManagerModel.firePropertyChanged();
+            });
+
+            timer.setRepeats(false);
+            timer.start();
+
+            javax.swing.JOptionPane.showMessageDialog(null, errorMessage);
+
+        }
+
+        @Override
+        public void switchToLoggedInView() {
+
+        }
     }
-
-    @Override
-    public void prepareSuccessView(JoinClubOutputData response) {
-        final JoinClubState joinclubState = joinClubViewModel.getState();
-        joinclubState.setBookclub(response.getClubName());
-        joinclubState.setJoined(true);
-        this.joinClubViewModel.setState(joinclubState);
-        this.joinClubViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setState(joinClubViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
-    public void prepareFailView(String message) {
-        final JoinClubState didNotJoinClub = joinClubViewModel.getState();
-        didNotJoinClub.setBookclub("");
-        didNotJoinClub.setJoined(false);
-        didNotJoinClub.setErrorMessage(message);
-        this.joinClubViewModel.setState(didNotJoinClub);
-        joinClubViewModel.firePropertyChanged();
-    }
-}

@@ -1,5 +1,6 @@
 package use_case.bookclub_list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.BookClub;
@@ -31,7 +32,12 @@ public final class BookClubInteractor implements BookClubInputBoundary {
     @Override
     public void execute() {
         final List<BookClub> bookClubs = bookClubDataAccessInterface.getAllClubs();
-        final BookClubOutputData bookClubOutputData = new BookClubOutputData(bookClubs);
+        final List<String> bookClubListName = new ArrayList<>();
+        for (final BookClub bookClub : bookClubs) {
+            final String display = bookClub.getName() + " - " + bookClub.getGenre();
+            bookClubListName.add(display);
+        }
+        final BookClubOutputData bookClubOutputData = new BookClubOutputData(bookClubListName);
         bookClubOutputBoundary.prepareSuccessView(bookClubOutputData);
     }
 }

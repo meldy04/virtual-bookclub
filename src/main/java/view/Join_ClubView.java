@@ -109,6 +109,12 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
         if ("state".equals(evt.getPropertyName())) {
             populateBookClubList();
         }
+        else if (evt.getPropertyName().equals("error")) {
+
+        }
+
+        else
+
     }
 
     /**
