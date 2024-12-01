@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import data_access.DBBookClubDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.JacksonTranslator;
+import data_access.OpenLibraryClient;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
@@ -22,6 +23,10 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.search.SearchedViewModel;
 import interface_adapter.show_discussions.ShowDiscussionsController;
 import interface_adapter.show_discussions.ShowDiscussionsPresenter;
 import interface_adapter.show_discussions.ShowDiscussionsViewModel;
@@ -40,18 +45,15 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.search.SearchInteractor;
+import use_case.search.SearchOutputBoundary;
 import use_case.show_discussions.ShowDiscussionsInputBoundary;
 import use_case.show_discussions.ShowDiscussionsInteractor;
 import use_case.show_discussions.ShowDiscussionsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.AddMessageView;
-import view.LoggedInView;
-import view.LoginView;
-import view.ShowDiscussionsView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -87,6 +89,13 @@ public class AppBuilder {
     private ShowDiscussionsView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
     private AddMessageView addMessageView;
+
+    private SearchViewModel searchViewModel = new SearchViewModel();
+    private SearchedViewModel searchedViewModel  = new SearchedViewModel();
+    private SearchView searchView;
+    private SearchedView searchedView;
+    private SearchInteractor searchInteractor;
+    private SearchController searchController = new SearchController(searchInteractor, searchViewModel);
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -124,6 +133,27 @@ public class AppBuilder {
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
+
+    /**
+     * Adds the Search View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchView() {
+        searchView = new SearchView(searchViewModel, searchController);
+        cardPanel.add(searchView, searchView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Search View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchedView() {
+        searchedView = new SearchedView(searchedViewModel, searchController);
+        cardPanel.add(searchedView, searchView.getViewName());
+        return this;
+    }
+
 
     /**
      * Adds the AddMessage View to the application.
@@ -207,6 +237,18 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    public AppBuilder addSearchUseCase() {
+        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(
+                searchViewModel, viewManagerModel, searchedViewModel);
+
+        final OpenLibraryClient apiCaller = new OpenLibraryClient();
+
+        searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
+        searchController = new SearchController(searchInteractor, searchViewModel);
+        searchView.setSearchController(searchController);
         return this;
     }
 
