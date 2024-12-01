@@ -39,7 +39,11 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.RecommendationsView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -62,7 +66,8 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-    private final InMemoryRecommendationDataAccessObject recommendationDataAccessObject = new InMemoryRecommendationDataAccessObject();
+    private final InMemoryRecommendationDataAccessObject recommendationDataAccessObject =
+            new InMemoryRecommendationDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
