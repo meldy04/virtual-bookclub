@@ -75,6 +75,7 @@ public class BookClub {
         this.members.add(username);
     }
 
+
     /**
      * Adds a new discussion to discussions.
      * @param topic of the discussion
@@ -108,5 +109,13 @@ public class BookClub {
      */
     public Boolean isMember(String username) {
         return members.contains(username);
+    }
+
+    /**
+     * Removes userName from the list.
+     * @param userName to removed.
+     */
+    public void removeMember(String userName) {
+        this.members.remove(userName);
     }
 }

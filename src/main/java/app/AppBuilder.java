@@ -14,9 +14,14 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
+import interface_adapter.bookclub_list.BookClubListController;
+import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.join_club.JoinClubController;
+import interface_adapter.join_club.JoinClubPresenter;
+import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -34,9 +39,15 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.add_message.AddMessageInputBoundary;
 import use_case.add_message.AddMessageInteractor;
 import use_case.add_message.AddMessageOutputBoundary;
+import use_case.bookclub_list.BookClubInputBoundary;
+import use_case.bookclub_list.BookClubInteractor;
+import use_case.bookclub_list.BookClubOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.join_club.JoinClubInputBoundary;
+import use_case.join_club.JoinClubInteractor;
+import use_case.join_club.JoinClubOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -90,9 +101,25 @@ public class AppBuilder {
     private ShowDiscussionsView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
     private AddMessageView addMessageView;
+    private Join_ClubView joinClubView;
+
+    private JoinClubViewModel joinClubViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Adds the JoinClub to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinClubView() {
+        joinClubViewModel = new JoinClubViewModel();
+        joinClubView = new Join_ClubView(joinClubViewModel, viewManagerModel);
+        cardPanel.add(joinClubView, joinClubView.getViewName());
+        return this;
+
     }
 
     /**
@@ -103,6 +130,18 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Join Club view to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinedClubView() {
+        loggedInViewModel = new LoggedInViewModel();
+        loggedInView = new LoggedInView(loggedInViewModel);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
 
@@ -271,6 +310,37 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the bookClub usecase to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addBookClubListUseCase() {
+
+        final BookClubOutputBoundary bookClubOutputBoundary =
+                new BookClubListPresenter(loggedInViewModel, viewManagerModel, joinClubViewModel);
+
+        final BookClubInputBoundary bookClubInteractor = new BookClubInteractor(bookClubOutputBoundary,
+                bookClubDataAccessObject);
+        final BookClubListController bookClubListController = new BookClubListController(bookClubInteractor);
+        loggedInView.setBookClubListController(bookClubListController);
+        return this;
+    }
+    /**
+     * Adds the joinclub usecase to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinedClubUseCase() {
+        final JoinClubOutputBoundary joinClubOutputBoundary =
+                new JoinClubPresenter(viewManagerModel, loggedInViewModel, joinClubViewModel);
+        final JoinClubInputBoundary joinClubInteractor =
+                new JoinClubInteractor(joinClubOutputBoundary, bookClubDataAccessObject);
+        final JoinClubController joinClubController = new JoinClubController(joinClubInteractor);
+        joinClubView.setJoinClubController(joinClubController);
+        return this;
+    }
+
+    /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
      */
@@ -278,7 +348,7 @@ public class AppBuilder {
         final JFrame application = new JFrame("Virtual Book Club application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(showDiscussionsView.getViewName());
         viewManagerModel.firePropertyChanged();
         return application;
     }

@@ -15,9 +15,11 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
@@ -36,10 +38,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private MyClubsController myClubsController;
     private LogoutController logoutController;
 
+    private BookClubListController bookClubListController;
+
     private final JLabel username;
 
     private final JButton logOut;
     private final JButton myClubs;
+
+    private final JButton joinClub;
+
+    private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
     private final JTextField passwordInputField = new JTextField(15);
@@ -65,6 +73,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         buttons.add(myClubs);
 
         changePassword = new JButton("Change Password");
+        buttons.add(changePassword);
+
+        joinClub = new JButton("Proceed to Join a Club");
+        buttons.add(joinClub);
+
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -116,6 +130,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+        joinClub.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        bookClubListController.execute();
+                    }
+                }
+        );
+
 
         myClubs.addActionListener(new ActionListener() {
             @Override
@@ -169,4 +192,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void setMyClubsController(MyClubsController myClubsController) {
         this.myClubsController = myClubsController;
     }
+
+    public void setBookClubListController(BookClubListController bookClubListController) {
+        this.bookClubListController = bookClubListController;
+    }
+
 }
