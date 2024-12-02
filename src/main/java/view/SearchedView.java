@@ -1,6 +1,7 @@
 package view;
 
-import entity.Book;
+
+import interface_adapter.search.BookViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchedState;
 import interface_adapter.search.SearchedViewModel;
@@ -22,7 +23,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
     private final String viewName = "SearchedView";
     private final SearchedViewModel searchedViewModel;
     private SearchController searchController;
-    private final JList<Book> resultList = new JList<>();
+    private final JList<BookViewModel> resultList = new JList<>();
     private final JScrollPane resultscrollPane;
 
     private final JButton backButton = new JButton("Back to Search");
@@ -30,6 +31,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
     public SearchedView(SearchedViewModel searchedViewModelP, SearchController searchControllerP) {
         this.searchedViewModel = searchedViewModelP;
         this.searchController = searchControllerP;
+        searchedViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
@@ -40,6 +42,8 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
 
         resultscrollPane = new JScrollPane(resultList);
         add(resultscrollPane, BorderLayout.CENTER);
+        revalidate();
+        repaint();
 
         searchedViewModel.addPropertyChangeListener(evt -> {
             if ("state".equals(evt.getPropertyName())) {
@@ -55,9 +59,9 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
      *
      * @param books The list of Book objects to display.
      */
-    public void updateResults(List<Book> books) {
-        final DefaultListModel<Book> model = new DefaultListModel<>();
-        for (Book book : books) {
+    public void updateResults(List<BookViewModel> books) {
+        final DefaultListModel<BookViewModel> model = new DefaultListModel<>();
+        for (BookViewModel book : books) {
             model.addElement(book);
         }
         resultList.setModel(model);
@@ -79,7 +83,11 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private static final class BookCellRenderer extends JPanel implements ListCellRenderer<Book> {
+    public String getViewName() {
+        return viewName;
+    }
+
+    private static final class BookCellRenderer extends JPanel implements ListCellRenderer<BookViewModel> {
         private final JLabel coverLabel = new JLabel();
         private final JLabel textLabel = new JLabel();
 
@@ -87,7 +95,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
 
         @Override
         public Component getListCellRendererComponent(
-                JList<? extends Book> list, Book book, int index, boolean isSelected, boolean hasFocus) {
+                JList<? extends BookViewModel> list, BookViewModel book, int index, boolean isSelected, boolean hasFocus) {
             setLayout(new BorderLayout());
 
             if (book.getCoverUrl() != null && !book.getCoverUrl().isEmpty()) {
@@ -95,7 +103,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
                     final ImageIcon cover = new ImageIcon(new URL(book.getCoverUrl()));
                     coverLabel.setIcon(cover);
                 }
-                catch (MalformedURLException e) {
+                catch (MalformedURLException exceptionMalformed) {
                     coverLabel.setIcon(null);
                 }
             }
@@ -123,6 +131,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
         }
 
     }
+
 
 
 }

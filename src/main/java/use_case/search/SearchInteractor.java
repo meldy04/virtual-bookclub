@@ -1,5 +1,6 @@
 package use_case.search;
 
+import data_access.BookDataTransferObject;
 import entity.Book;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class SearchInteractor implements SearchInputBoundary {
 
     @Override
     public void search(SearchInputData searchInputData) {
+        System.out.println("Interactor received query: " + searchInputData.getQuery());
+
         if (searchInputData.getQuery() == null || searchInputData.getQuery().isBlank()) {
             searchOutputBoundary.prepareFailView("Search Query cannot be empty");
 
@@ -28,21 +31,29 @@ public class SearchInteractor implements SearchInputBoundary {
 
         else {
             try {
+                // change it to string of book title
+                final List<BookDataTransferObject> bookDtO = searchDataAccessInterface
+                        .searchBookByTitle(searchInputData.getQuery());
+                final BookDataTransferObject bookDtOonly = bookDtO.get(0);
 
-                final List<Book> booksByTitle = searchDataAccessInterface.searchBookByTitle(searchInputData.getQuery());
-
-                if (booksByTitle.isEmpty()) {
+                if (bookDtO.isEmpty()) {
                     searchOutputBoundary.prepareFailView("No results found");
+
                 }
                 else {
-                    final SearchOutputData outputData = new SearchOutputData(booksByTitle, false);
+                    final String title = bookDtOonly.getTitle();
+                    final String author = bookDtOonly.getAuthor();
+                    final String key = bookDtOonly.getKey();
+                    final String coverUrl = bookDtOonly.getCoverUrl();
+
+                    final SearchOutputData outputData = new SearchOutputData(title, author, key, coverUrl,
+                            false);
                     searchOutputBoundary.prepareSuccessView(outputData);
                 }
             } catch (Exception e) {
                 searchOutputBoundary.prepareFailView("Search failed. Enter a valid query");
             }
         }
-
 
     }
 }

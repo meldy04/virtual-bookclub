@@ -1,9 +1,8 @@
 package data_access;
 
 import com.google.gson.Gson;
-import entity.Book;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
@@ -23,8 +22,9 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
     }
 
     @Override
-    public List<Book> searchBookByTitle(String title) {
-        final List<Book> books = new ArrayList<>();
+    public List<BookDataTransferObject> searchBookByTitle(String title) {
+
+        final List<BookDataTransferObject> books = new ArrayList<>();
 
         String newTitle = "";
         if (title.length() > 1) {
@@ -45,13 +45,18 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
             connection.setRequestMethod("GET");
 
             try (InputStreamReader reader = new InputStreamReader(connection.getInputStream())) {
-                final JSONObject responseJSON = gson.fromJson(reader, JSONObject.class);
-                final JSONArray docs = responseJSON.getJSONArray("docs");
+                final JsonObject responseJSON = gson.fromJson(reader, JsonObject.class);
+                final JsonArray docs = responseJSON.getAsJsonArray("docs");
 
-                for (int i = 0; i < docs.length(); i++) {
-                    final JSONObject bookJson = docs.getJSONObject(i);
-                    final Book book = parseBookFromJson(bookJson);
+                if (!docs.isEmpty()) {
+                    final JsonObject bookDetails = docs.get(0).getAsJsonObject();
+                    final BookDataTransferObject book = parseBookFromJson(bookDetails, title);
                     books.add(book);
+                }
+                else {
+                    final BookDataTransferObject newBook = new BookDataTransferObject(title,
+                            "unknown author", "unknown key", "");
+                    books.add(newBook);
                 }
             }
         }
@@ -63,41 +68,30 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
     }
 
 
-    private Book parseBookFromJson(JSONObject bookJson) {
-        final String titre;
+    private BookDataTransferObject parseBookFromJson(JsonObject bookJson, String bookTitle) {
+        final String titre = bookTitle;
         final String auteur;
         final String numero;
         final String couverture;
 
-        if (bookJson.has("title")) {
-            titre = bookJson.getString("title");
-        }
-        else {
-            titre = "Unknown title";
-        }
-
         if (bookJson.has("author_name")) {
-            auteur = bookJson.getString("author");
+            final JsonArray authors = bookJson.getAsJsonArray("author_name");
+            auteur = authors.get(0).getAsString();
         }
         else {
             auteur = "Unknown author";
         }
 
-        if (bookJson.has("key")) {
-            numero = bookJson.getString("key");
+        if (bookJson.has("cover_edition_key")) {
+            numero = bookJson.get("cover_edition_key").getAsString();
             couverture = OPEN_LIBRAY_API_COVER_URL + numero + "-M.jpg";
         }
         else {
-            numero = "Unknown key";
+            numero = "Unknown  key";
             couverture = "";
         }
 
-        if (couverture.isEmpty()) {
-            return new Book(titre, auteur, numero);
-        }
-        else {
-            return new Book(titre, auteur, numero, couverture);
-        }
+        return new BookDataTransferObject(titre, auteur, numero, couverture);
     }
 
 }

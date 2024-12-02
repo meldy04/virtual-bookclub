@@ -1,5 +1,6 @@
 package use_case.search;
 
+import data_access.BookDataTransferObject;
 import entity.Book;
 
 import java.util.List;
@@ -14,6 +15,6 @@ public interface SearchDataAccessInterface {
      *
      * @param title .
      */
-    List<Book> searchBookByTitle(String title);
+    List<BookDataTransferObject> searchBookByTitle(String title);
 
 }
