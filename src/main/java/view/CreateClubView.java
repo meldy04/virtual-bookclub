@@ -1,8 +1,12 @@
 package view;
 
+import data_access.DBBookClubDataAccessObject;
 import data_access.InMemoryBookClubDataAccessObject;
+import data_access.JacksonTranslator;
 import entity.BookClub;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_message.AddMessageViewModel;
+import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_club.CreateClubController;
 import interface_adapter.create_club.CreateClubPresenter;
 import interface_adapter.create_club.CreateClubState;
@@ -139,7 +143,8 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
 
     public static void main(String[] args) {
         final CreateClubViewModel model = new CreateClubViewModel();
-
+        final LoggedInViewModel model2 = new LoggedInViewModel();
+        final AddMessageViewModel model3 = new AddMessageViewModel();
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub club = new BookClub("Cooking", "Culinary");
         bookClubMap.put("Cooking", club);
@@ -151,7 +156,7 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
         dataAccessObject.addClub(clubName);
         dataAccessObject.addUser(username, clubName);
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        final CreateClubOutputBoundary presenter = new CreateClubPresenter(model, viewManagerModel);
+        final CreateClubOutputBoundary presenter = new CreateClubPresenter(model, viewManagerModel, model2);
         final CreateClubInputBoundary interactor = new CreateClubInteractor(presenter, dataAccessObject);
         final CreateClubController controller = new CreateClubController(interactor); // Create the controller
 

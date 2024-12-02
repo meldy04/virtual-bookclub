@@ -5,6 +5,7 @@ import java.util.*;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
@@ -13,7 +14,7 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * DAO representing book club data.
  */
 public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
 
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -41,6 +42,16 @@ public class DBBookClubDataAccessObject implements JoinClubDataAccessInterface, 
         JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
 
+    }
+
+    @Override
+    public void addClub(String clubName) {
+        bookClubMap.put(clubName, new BookClub());
+    }
+
+    @Override
+    public boolean clubExists(String clubName) {
+        return bookClubMap.containsKey(clubName);
     }
 
     @Override
