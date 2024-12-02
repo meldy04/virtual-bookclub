@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -122,6 +122,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
+
+        title.setBackground(Color.WHITE);
+        usernameInfo.setBackground(Color.WHITE);
+        usernameErrorField.setBackground(Color.WHITE);
+        passwordInfo.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
 
         this.add(title);
         this.add(usernameInfo);

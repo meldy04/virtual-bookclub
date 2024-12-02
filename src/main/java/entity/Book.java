@@ -1,11 +1,16 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Class representing a book.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
 
     private String title;
