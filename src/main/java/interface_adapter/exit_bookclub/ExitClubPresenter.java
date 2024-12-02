@@ -1,7 +1,6 @@
 package interface_adapter.exit_bookclub;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import use_case.exit_bookclub.ExitClubOutputBoundary;
 
@@ -22,9 +21,6 @@ public class ExitClubPresenter implements ExitClubOutputBoundary {
 
     @Override
     public void prepareSuccessView() {
-        final LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInViewModel.setState(loggedInState);
-        loggedInViewModel.firePropertyChanged();
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
