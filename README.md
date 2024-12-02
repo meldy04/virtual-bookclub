@@ -37,12 +37,12 @@ collaborate and share their literary journeys.
 
 * * *
 ## Table of Contents
-1. Features
-2. Installation Instructions
-3. Usage Guide
-4. License
-5. Feedback
-6. Contributions
+1. [Features](#features)
+2. [Installation Instructions](#installation-instructions)
+3. [Usage Guide](#usage-guide)
+4. [License](#license)
+5. [Feedback](#feedback)
+6. [Contributions](#contributions)
 * * *
 
 ## Features
@@ -68,7 +68,8 @@ collaborate and share their literary journeys.
 
 #### Requirements
 * Java: JDK 11 or later.
-* Maven.
+* Maven: We have used the Project Object Model (POM) xml file to configure the project. You may need to right-click
+the `pom.xml` file and select 'Maven -> Reload Project'.
 
 #### Steps
 
@@ -95,8 +96,7 @@ TODO
 * * *
 
 ## License
-TODO:
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the Creative Commons Legal Code. See the [LICENSE](LICENSE) file for details.
 
 * * *
 

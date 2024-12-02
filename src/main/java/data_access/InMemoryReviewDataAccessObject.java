@@ -54,7 +54,7 @@ public class InMemoryReviewDataAccessObject implements ReviewDataAccessInterface
     public List<Review> getUserReviews(User user) {
         final List<Review> userReviews = new ArrayList<>();
         for (Review review : reviews) {
-            if (review.getUser().equals(user)) {
+            if (review.getUsername().equals(user)) {
                 userReviews.add(review);
             }
         }

@@ -1,5 +1,6 @@
 package use_case.reviews;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,13 +37,12 @@ public class ReviewInteractorTest {
         verify(mockDataAccess).saveReview(reviewCaptor.capture());
         Review capturedReview = reviewCaptor.getValue();
 
-        assert capturedReview.getUser().equals(testUser);
-        assert capturedReview.getBook().equals(testBook);
-        assert capturedReview.getText().equals("Great Book!");
-        assert capturedReview.getRating() == 4.5;
+        Assert.assertEquals("testUser", capturedReview.getUsername());
+        Assert.assertEquals(testBook, capturedReview.getBook());
+        Assert.assertEquals("Great Book!", capturedReview.getText());
+        Assert.assertEquals(4.5, capturedReview.getRating(), 0);
 
-        verify(mockOutputBoundary).presentReviewSubmissionResult(true, Collections.
-                singletonList("Review submitted successfully."));
+        verify(mockOutputBoundary).presentReviewSubmissionResult(true, Collections.singletonList("Review submitted successfully."));
     }
 
     @Test

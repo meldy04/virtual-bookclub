@@ -26,8 +26,12 @@ public class ReviewInteractor implements ReviewInputBoundary {
             messages = List.of("Failed to submit review: Rating must be between 0 and 5");
         }
         else {
-            final Review review = new Review(reviewInputData.getUser(), reviewInputData.getBook(),
-                    reviewInputData.getReviewText(), rating);
+            final Review review = new Review(
+                    reviewInputData.getUser().getName(),
+                    reviewInputData.getBook(),
+                    reviewInputData.getReviewText(),
+                    rating
+            );
 
             dataAccess.saveReview(review);
             isSuccess = true;
