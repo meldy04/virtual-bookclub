@@ -1,6 +1,9 @@
+
 package view;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -13,9 +16,11 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.logout.LogoutController;
 /**
  * The View for when the user is logged into the program.
@@ -25,13 +30,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
+
     private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
 
+    private BookClubListController bookClubListController;
+
     private final JLabel username;
 
     private final JButton logOut;
+
+    private final JButton joinClub;
 
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
@@ -39,7 +49,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
-
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -55,6 +64,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         changePassword = new JButton("Change Password");
         buttons.add(changePassword);
+
+        joinClub = new JButton("Proceed to Join a Club");
+        buttons.add(joinClub);
+
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -106,6 +120,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+        joinClub.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        bookClubListController.execute();
+                    }
+                }
+        );
+
 
         this.add(title);
         this.add(usernameInfo);
@@ -140,4 +163,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
+
+    public void setBookClubListController(BookClubListController bookClubListController) {
+        this.bookClubListController = bookClubListController;
+    }
+
 }

@@ -30,6 +30,11 @@ public class JoinClubInteractorTest {
             public void prepareFailView(String message) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToLoggedInView() {
+
+            }
         };
         JoinClubInputBoundary joinClubInteractor = new JoinClubInteractor(successPresenter, bookClubRepository);
         joinClubInteractor.execute(inputData);
@@ -54,6 +59,11 @@ public class JoinClubInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("User Bob is already a member of the Cooking Book Club", error);
+
+            }
+
+            @Override
+            public void switchToLoggedInView() {
 
             }
         };
