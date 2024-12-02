@@ -56,6 +56,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
                     final ShowDiscussionsState currentState = showTopicsViewModel.getState();
                     currentState.setCurrentDiscussion(selectedTopic);
                     showTopicsViewModel.setState(currentState);
+
                 }
             }
         });

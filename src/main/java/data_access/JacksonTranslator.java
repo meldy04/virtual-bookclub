@@ -1,22 +1,20 @@
 package data_access;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import entity.BookClub;
 
 /**
  * Converts between a Map of BookClub objects and JSON data.
  */
 public class JacksonTranslator {
-    private static final String FILE_PATH = "book_clubs.json";
+    private static final String FILE_PATH = "Data/book_clubs.json";
 
     /**
      * Translates JSON book club data into a map of book club names to corresponding BookClub objects.
@@ -27,7 +25,7 @@ public class JacksonTranslator {
         try {
             final ObjectMapper objectMapper = new ObjectMapper();
             // Load JSON file from the classpath (resources folder)
-            final InputStream inputStream = JacksonTranslator.class.getClassLoader().getResourceAsStream(FILE_PATH);
+            final InputStream inputStream = new FileInputStream(new File(FILE_PATH));
 
             if (inputStream == null) {
                 System.err.println("Error: book_clubs.json file not found in resources.");
@@ -51,9 +49,9 @@ public class JacksonTranslator {
      */
     public static void saveBookClubData(Map<String, BookClub> bookClubMap) {
         try {
-            final OutputStream outputStream = Files.newOutputStream(Paths.get(FILE_PATH));
             final ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(outputStream, bookClubMap);
+            final ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(new File(FILE_PATH), bookClubMap);
             System.out.println("Book club data successfully saved to " + FILE_PATH);
 
         }

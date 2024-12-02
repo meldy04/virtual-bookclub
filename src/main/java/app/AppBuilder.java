@@ -22,6 +22,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.my_clubs.MyClubsController;
+import interface_adapter.my_clubs.MyClubsPresenter;
+import interface_adapter.my_clubs.MyClubsViewModel;
 import interface_adapter.show_discussions.ShowDiscussionsController;
 import interface_adapter.show_discussions.ShowDiscussionsPresenter;
 import interface_adapter.show_discussions.ShowDiscussionsViewModel;
@@ -40,18 +43,16 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.my_clubs.MyClubsInputBoundary;
+import use_case.my_clubs.MyClubsInteractor;
+import use_case.my_clubs.MyClubsOutputBoundary;
 import use_case.show_discussions.ShowDiscussionsInputBoundary;
 import use_case.show_discussions.ShowDiscussionsInteractor;
 import use_case.show_discussions.ShowDiscussionsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.AddMessageView;
-import view.LoggedInView;
-import view.LoginView;
-import view.ShowDiscussionsView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -80,9 +81,11 @@ public class AppBuilder {
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
+    private LoginView loginView;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
-    private LoginView loginView;
+    private MyClubsViewModel myClubsViewModel;
+    private MyClubsView myClubsView;
     private ShowDiscussionsViewModel showDiscussionsViewModel;
     private ShowDiscussionsView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
@@ -122,6 +125,17 @@ public class AppBuilder {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the MyClubs view to the application.
+     * @return this builder
+     */
+    public AppBuilder addMyClubsView() {
+        myClubsViewModel = new MyClubsViewModel();
+        myClubsView = new MyClubsView(myClubsViewModel);
+        cardPanel.add(myClubsView, myClubsView.getViewName());
         return this;
     }
 
@@ -195,6 +209,24 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the MyClubs Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addMyClubsUsecase() {
+        final MyClubsOutputBoundary myClubsOutputBoundary = new MyClubsPresenter(myClubsViewModel,
+                showDiscussionsViewModel, loggedInViewModel, viewManagerModel);
+
+        final MyClubsInputBoundary myClubsInteractor = new MyClubsInteractor(bookClubDataAccessObject,
+                myClubsOutputBoundary);
+
+        final MyClubsController myClubsController = new MyClubsController(myClubsInteractor);
+
+        myClubsView.setMyClubsController(myClubsController);
+        loggedInView.setMyClubsController(myClubsController);
+        return this;
+    }
+
+    /**
      * Adds the Logout Use Case to the application.
      * @return this builder
      */
@@ -246,7 +278,7 @@ public class AppBuilder {
         final JFrame application = new JFrame("Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        viewManagerModel.setState(showDiscussionsView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
         return application;
     }

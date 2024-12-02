@@ -15,6 +15,7 @@ public class Main {
         final JFrame application = appBuilder
                                             .addLoginView()
                                             .addSignupView()
+                                            .addMyClubsView()
                                             .addLoggedInView()
                                             .addShowDiscussionsView()
                                             .addAddMessageView()
@@ -22,6 +23,7 @@ public class Main {
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
+                                            .addMyClubsUsecase()
                                             .addShowDiscussionsUseCase()
                                             .addAddMessagesUseCase()
                                             .build();

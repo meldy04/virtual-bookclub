@@ -10,7 +10,6 @@ public class MyClubsState {
     private String currentUsername;
     private String currentClub;
     private Map<String, String> myClubs = new HashMap<>();
-    private String errorMessage;
 
     public String getCurrentUsername() {
         return currentUsername;
@@ -26,14 +25,6 @@ public class MyClubsState {
 
     public void setMyClubs(Map<String, String> myClubs) {
         this.myClubs = myClubs;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
     }
 
     public String getCurrentClub() {

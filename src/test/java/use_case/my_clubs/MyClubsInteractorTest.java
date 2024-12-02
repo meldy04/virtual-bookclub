@@ -33,7 +33,7 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void prepareFailView(String errorMessage) {
+            public void prepareFailView() {
                 fail("Use case failure is unexpected.");
             }
 
@@ -63,8 +63,8 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void prepareFailView(String errorMessage) {
-                assertEquals("You are not a member of any book clubs", errorMessage);
+            public void prepareFailView() {
+                // expected
             }
 
             @Override
@@ -95,7 +95,7 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void prepareFailView(String errorMessage) {
+            public void prepareFailView() {
                 fail("Use case failure is unexpected");
             }
 
