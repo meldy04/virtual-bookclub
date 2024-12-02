@@ -109,12 +109,28 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
         if ("state".equals(evt.getPropertyName())) {
             populateBookClubList();
         }
-        else if (evt.getPropertyName().equals("error")) {
-
+        else if ("error".equals(evt.getPropertyName())) {
+            final String error = joinClubViewModel.getState().getErrorMessage();
+            JOptionPane.showMessageDialog(this, error);
         }
+        else if ("success".equals(evt.getPropertyName())) {
+            final String successMessage = joinClubViewModel.getState().getSucceesMessage();
 
-        else
+            // Custom success message with OK button using showOptionDialog
+            final int option = JOptionPane.showOptionDialog(this,
+                    successMessage,
+                    "Success",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"OK"},
+                    "OK");
 
+            // Check if OK was clicked
+            if (option == 0) {
+                joinClubController.switchToLoggedInView();
+            }
+        }
     }
 
     /**

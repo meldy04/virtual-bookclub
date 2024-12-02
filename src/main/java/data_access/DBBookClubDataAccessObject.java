@@ -2,11 +2,11 @@ package data_access;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import entity.BookClub;
+import entity.Message;
+import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.bookclub_list.BookClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
@@ -17,7 +17,9 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * DAO representing book club data.
  */
 public class DBBookClubDataAccessObject implements
-        JoinClubDataAccessInterface, ExitClubDataAccessInterface, BookClubDataAccessInterface {
+        JoinClubDataAccessInterface, ExitClubDataAccessInterface,
+        BookClubDataAccessInterface, AddMessageDataAccessInterface,
+        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentDiscussion;
@@ -111,5 +113,12 @@ public class DBBookClubDataAccessObject implements
             }
         }
         return result;
+    }
+
+    @Override
+    public void removeUser(String userName, String clubName) {
+        final BookClub bookClub = bookClubMap.get(clubName);
+        bookClub.removeMember(userName);
+        JacksonTranslator.saveBookClubData(bookClubMap);
     }
 }

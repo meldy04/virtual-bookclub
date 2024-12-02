@@ -16,5 +16,9 @@ public interface JoinClubOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
+    /**
+     * Prepares the swtich logged in view.
+     *
+     */
     void switchToLoggedInView();
 }

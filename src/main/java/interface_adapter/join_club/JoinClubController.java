@@ -23,6 +23,12 @@ public class JoinClubController {
         joinClubUseCaseInteractor.execute(inputData);
 
     }
+    /**
+     * Executes the Join Club Use Case.
+     */
 
+    public void switchToLoggedInView() {
+        joinClubUseCaseInteractor.switchToLoggedInView();
+    }
 
 }

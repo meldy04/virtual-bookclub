@@ -11,5 +11,9 @@ public interface JoinClubInputBoundary {
      */
     void execute(JoinClubInputData joinClubInputData);
 
+    /**
+     * Executes the join_club usecase (adds user to a club).
+     *
+     */
     void switchToLoggedInView();
 }

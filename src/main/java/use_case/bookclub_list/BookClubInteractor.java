@@ -34,7 +34,7 @@ public final class BookClubInteractor implements BookClubInputBoundary {
         final List<BookClub> bookClubs = bookClubDataAccessInterface.getAllClubs();
         final List<String> bookClubListName = new ArrayList<>();
         for (final BookClub bookClub : bookClubs) {
-            final String display = bookClub.getName() + " - " + bookClub.getGenre();
+            final String display = bookClub.getName() + " - " + bookClub.getDescription();
             bookClubListName.add(display);
         }
         final BookClubOutputData bookClubOutputData = new BookClubOutputData(bookClubListName);
