@@ -14,7 +14,7 @@ import entity.BookClub;
  * Converts between a Map of BookClub objects and JSON data.
  */
 public class JacksonTranslator {
-    private static final String FILE_PATH = "Data/book_clubs.json";
+    private static final String FILE_PATH = "data/book_clubs.json";
 
     /**
      * Translates JSON book club data into a map of book club names to corresponding BookClub objects.

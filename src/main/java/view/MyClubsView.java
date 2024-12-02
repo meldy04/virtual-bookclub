@@ -55,7 +55,11 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
                 if (!evt.getValueIsAdjusting()) {
                     final int selectedColumn = myClubs.getSelectedColumn();
                     if (selectedColumn == 1) {
-                        myClubs.clearSelection();
+                        final int selectedRow = myClubs.getSelectedRow();
+                        final String selectedClub = (String) myClubs.getValueAt(selectedRow, 0);
+                        final MyClubsState myClubsState = myClubsViewModel.getState();
+                        myClubsState.setCurrentClub(selectedClub);
+                        myClubsViewModel.setState(myClubsState);
                     }
                     else {
                         final int selectedRow = myClubs.getSelectedRow();

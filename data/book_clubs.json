@@ -2,7 +2,7 @@
   "Reading Club" : {
     "name" : "Reading Club",
     "description" : "Literature",
-    "members" : [ "user1", "User2" ],
+    "members" : [ "user1", "user2" ],
     "books" : [ {
       "title" : "book1",
       "author" : "author1",
@@ -34,6 +34,12 @@
         }, {
           "username" : "user1",
           "text" : "lessgooo"
+        }, {
+          "username" : "user1",
+          "text" : "sup"
+        }, {
+          "username" : "user2",
+          "text" : "hi"
         } ]
       }
     }
