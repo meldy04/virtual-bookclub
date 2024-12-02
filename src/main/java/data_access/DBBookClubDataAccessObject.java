@@ -13,6 +13,7 @@ import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 
+
 /**
  * DAO representing book club data.
  */
@@ -117,8 +118,8 @@ public class DBBookClubDataAccessObject implements
 
     @Override
     public void removeUser(String userName, String clubName) {
-        final BookClub bookClub = bookClubMap.get(clubName);
-        bookClub.removeMember(userName);
+        bookClubMap.get(clubName).removeMember(userName);
         JacksonTranslator.saveBookClubData(bookClubMap);
     }
+
 }

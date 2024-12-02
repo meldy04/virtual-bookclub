@@ -2,10 +2,10 @@
   "Reading Club": {
     "name": "Reading Club",
     "description": "Literature",
-    "members": [],
+    "members": ["user1", "User2"],
     "books": [{"title":  "book1", "author": "author1", "genre":  "action", "rating":  9, "reviews": []}],
     "discussions": {"topic1": {"topic": "topic1",
-                              "messages":[{"username": "user1", "text":  "hello"}]}}
+                              "messages": [{"username":  "user1", "text":  "hello"}]}}
   }
 }
 
