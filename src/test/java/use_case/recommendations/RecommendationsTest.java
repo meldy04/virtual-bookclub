@@ -25,7 +25,7 @@ public class RecommendationsTest {
         }
 
         openLibraryApi = new OpenLibraryApi();
-        recommendations = new Recommendations(openLibraryApi);
+        recommendations = new Recommendations((BookRecommendationApi) openLibraryApi);
     }
 
     @Test

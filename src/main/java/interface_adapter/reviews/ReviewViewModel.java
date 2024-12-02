@@ -1,62 +1,37 @@
 package interface_adapter.reviews;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
-
-import data_access.ReviewRepository;
-import entity.Review;
-
 /**
- * Extends AbstractTableModel to provide a table representation of a list of Review objects.
+ * Manages review state for UI updates.
  */
+public class ReviewViewModel {
+    private final PropertyChangeSupport support;
+    private List<String> reviews;
 
-public class ReviewViewModel extends AbstractTableModel {
-
-    private final List<Review> reviews;
-    private final String[] columns = {"User", "Book", "Rating", "Review"};
-    private final ReviewRepository reviewRepository;
-
-    public ReviewViewModel(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
-        this.reviews = reviewRepository.getAllReviews();
+    public ReviewViewModel() {
+        this.support = new PropertyChangeSupport(this);
+        this.reviews = new ArrayList<>();
     }
 
-    @Override
-    public int getRowCount() {
-        return reviews.size();
+    public List<String> getReviews() {
+        return reviews;
     }
 
-    @Override
-    public int getColumnCount() {
-        return columns.length;
+    public void setReviews(List<String> reviews) {
+        final List<String> oldReviews = this.reviews;
+        this.reviews = reviews;
+        support.firePropertyChange("reviews", oldReviews, reviews);
     }
 
-    @Override
-    public String getColumnName(int columnIndex) {
-        return columns[columnIndex];
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        final Review review = reviews.get(rowIndex);
-        Object value = null;
-        switch (columnIndex) {
-            case 0:
-                value = review.getUser().getName();
-                break;
-            case 1:
-                value = review.getBook().getTitle();
-                break;
-            case 2:
-                value = review.getRating();
-                break;
-            case 3:
-                value = review.getText();
-                break;
-            default:
-                value = null;
-        }
-        return value;
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 }

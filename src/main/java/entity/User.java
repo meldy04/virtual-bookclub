@@ -1,7 +1,9 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A user class.
@@ -80,6 +82,17 @@ public class User {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    /**
+     * Gets the user's favourite genres based off their read books.
+     */
+    public Set<String> getFavoriteGenres() {
+        final Set<String> genres = new HashSet<>();
+        for (Book book : readBooks) {
+            genres.add(book.getGenre());
+        }
+        return genres;
     }
 
     /**

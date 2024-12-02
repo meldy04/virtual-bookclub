@@ -1,7 +1,6 @@
 package app;
 
 import java.awt.CardLayout;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,9 +8,6 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryRecommendationDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.Book;
-import entity.Review;
-import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -41,7 +37,7 @@ import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
-import view.RecommendationsView;
+import view.RecommendationView;
 import view.SignupView;
 import view.ViewManager;
 
@@ -66,8 +62,6 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-    private final InMemoryRecommendationDataAccessObject recommendationDataAccessObject =
-            new InMemoryRecommendationDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -76,7 +70,7 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private ReviewViewModel reviewView;
-    private RecommendationsView recommendationsView;
+    private RecommendationView recommendationView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);

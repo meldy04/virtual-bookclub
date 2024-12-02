@@ -1,33 +1,75 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.JTableHeader;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import interface_adapter.reviews.ReviewViewModel;
 
-/**
- * Displays a table of reviews in the Swing application.
- */
-public class ReviewView extends JPanel {
-    private JTable reviewTable;
+public class ReviewView extends JPanel implements PropertyChangeListener {
+    private final ReviewViewModel reviewViewModel;
+    private final JTextArea reviewsArea = new JTextArea(25, 25);
+    private final JTextField newReviewInputField = new JTextField(25);
+    private final JButton addReview;
+    private final JButton refreshReviews;
 
-    public ReviewView(ReviewViewModel viewModel) {
-        setLayout(new BorderLayout());
+    public ReviewView(ReviewViewModel reviewViewModel) {
+        this.reviewViewModel = reviewViewModel;
+        reviewViewModel.addPropertyChangeListener(this);
 
-        reviewTable = new JTable(viewModel);
+        final JLabel title = new JLabel("Reviews");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final JTableHeader tableHeader = reviewTable.getTableHeader();
-        tableHeader.setReorderingAllowed(false);
+        addReview = new JButton("Add Review");
+        refreshReviews = new JButton("Refresh Reviews");
 
-        final JScrollPane scrollPane = new JScrollPane(reviewTable);
-        add(scrollPane, BorderLayout.CENTER);
+        reviewsArea.setLineWrap(true);
+        reviewsArea.setWrapStyleWord(true);
+        reviewsArea.setEditable(false);
+        reviewsArea.setFont(new Font("Arial", Font.PLAIN, 20));
+        final JScrollPane scrollPane = new JScrollPane(reviewsArea);
+        final JPanel reviewsPanel = new JPanel();
+        reviewsPanel.add(scrollPane);
+
+        final JPanel inputPanel = new JPanel();
+        inputPanel.add(newReviewInputField);
+        inputPanel.add(addReview);
+
+        addReview.addActionListener(evt -> {
+            // Logic to add a new review - call a controller method if available
+        });
+
+        refreshReviews.addActionListener(evt -> {
+            // Logic to refresh reviews - call a controller method if available
+        });
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(reviewsPanel);
+        this.add(inputPanel);
+        this.add(refreshReviews);
     }
 
-    public String getViewName() {
-        return "ReviewView";
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("reviews".equals(evt.getPropertyName())) {
+            updateReviewsArea();
+        }
+    }
+
+    private void updateReviewsArea() {
+        reviewsArea.setText("");
+        for (String review : reviewViewModel.getReviews()) {
+            reviewsArea.append(review + "\n");
+        }
     }
 }
