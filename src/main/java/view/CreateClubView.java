@@ -144,7 +144,6 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
     public static void main(String[] args) {
         final CreateClubViewModel model = new CreateClubViewModel();
         final LoggedInViewModel model2 = new LoggedInViewModel();
-        final AddMessageViewModel model3 = new AddMessageViewModel();
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub club = new BookClub("Cooking", "Culinary");
         bookClubMap.put("Cooking", club);
