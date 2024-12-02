@@ -9,6 +9,8 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.join_club.JoinClubState;
 import interface_adapter.join_club.JoinClubViewModel;
+import interface_adapter.my_clubs.MyClubsState;
+import interface_adapter.my_clubs.MyClubsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -20,20 +22,20 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
-
     private final JoinClubViewModel joinClubViewModel;
-
     private final AddMessageViewModel addMessageViewModel;
+    private final MyClubsViewModel myClubsViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel, JoinClubViewModel joinClubViewModel,
-                          AddMessageViewModel addMessageViewModel) {
+                          AddMessageViewModel addMessageViewModel, MyClubsViewModel myClubsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.joinClubViewModel = joinClubViewModel;
         this.addMessageViewModel = addMessageViewModel;
+        this.myClubsViewModel = myClubsViewModel;
     }
 
     @Override
@@ -43,12 +45,13 @@ public class LoginPresenter implements LoginOutputBoundary {
         final LoggedInState loggedInState = loggedInViewModel.getState();
         final JoinClubState joinClubState = joinClubViewModel.getState();
         final AddMessageState addMessageState = addMessageViewModel.getState();
+        final MyClubsState myClubsState = myClubsViewModel.getState();
         addMessageState.setCurrentUsername(response.getUsername());
         joinClubState.setUsername(response.getUsername());
         loggedInState.setUsername(response.getUsername());
+        myClubsState.setCurrentUsername(response.getUsername());
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
-
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }

@@ -19,6 +19,8 @@ import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.exit_bookclub.ExitClubController;
+import interface_adapter.exit_bookclub.ExitClubPresenter;
 import interface_adapter.join_club.JoinClubController;
 import interface_adapter.join_club.JoinClubPresenter;
 import interface_adapter.join_club.JoinClubViewModel;
@@ -45,6 +47,9 @@ import use_case.bookclub_list.BookClubOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.exit_bookclub.ExitClubInputBoundary;
+import use_case.exit_bookclub.ExitClubInteractor;
+import use_case.exit_bookclub.ExitClubOutputBoundary;
 import use_case.join_club.JoinClubInputBoundary;
 import use_case.join_club.JoinClubInteractor;
 import use_case.join_club.JoinClubOutputBoundary;
@@ -134,18 +139,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Join Club view to the application.
-     * @return this builder
-     */
-
-    public AppBuilder addJoinedClubView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
-        return this;
-    }
-
-    /**
      * Adds the Login View to the application.
      * @return this builder
      */
@@ -221,7 +214,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, addMessageViewModel);
+                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel, myClubsViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -323,6 +316,7 @@ public class AppBuilder {
                 bookClubDataAccessObject);
         final BookClubListController bookClubListController = new BookClubListController(bookClubInteractor);
         loggedInView.setBookClubListController(bookClubListController);
+
         return this;
     }
     /**
@@ -330,13 +324,27 @@ public class AppBuilder {
      * @return this builder
      */
 
-    public AppBuilder addJoinedClubUseCase() {
+    public AppBuilder addJoinClubUseCase() {
         final JoinClubOutputBoundary joinClubOutputBoundary =
                 new JoinClubPresenter(viewManagerModel, loggedInViewModel, joinClubViewModel);
         final JoinClubInputBoundary joinClubInteractor =
                 new JoinClubInteractor(joinClubOutputBoundary, bookClubDataAccessObject);
         final JoinClubController joinClubController = new JoinClubController(joinClubInteractor);
         joinClubView.setJoinClubController(joinClubController);
+        return this;
+    }
+
+    /**
+     * Adds the exit club usecase to the application.
+     * @return this builder
+     */
+    public AppBuilder addExitBookClubUseCase() {
+        final ExitClubOutputBoundary exitClubOutputBoundary =
+                new ExitClubPresenter(loggedInViewModel, viewManagerModel);
+        final ExitClubInputBoundary exitClubInteractor =
+                new ExitClubInteractor(exitClubOutputBoundary, bookClubDataAccessObject);
+        final ExitClubController exitClubController = new ExitClubController(exitClubInteractor);
+        myClubsView.setExitClubController(exitClubController);
         return this;
     }
 
@@ -348,7 +356,7 @@ public class AppBuilder {
         final JFrame application = new JFrame("Virtual Book Club application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
-        viewManagerModel.setState(showDiscussionsView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
         return application;
     }

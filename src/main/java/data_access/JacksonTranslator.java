@@ -59,4 +59,5 @@ public class JacksonTranslator {
             throw new RuntimeException(ioException);
         }
    }
+
 }

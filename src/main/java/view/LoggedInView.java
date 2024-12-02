@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -50,7 +50,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    private final JTextField passwordInputField = new JTextField(15);
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -77,8 +76,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         joinClub = new JButton("Proceed to Join a Club");
         buttons.add(joinClub);
-
-
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -139,7 +136,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 }
         );
 
-
         myClubs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,14 +143,23 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        this.add(title);
-        final JPanel usernameInfoPanel = new JPanel();
-        usernameInfoPanel.add(usernameInfo);
-        usernameInfoPanel.add(username);
         final JPanel changePasswordPanel = new JPanel();
         changePasswordPanel.add(passwordInfo);
         changePasswordPanel.add(passwordErrorField);
         changePasswordPanel.add(changePassword);
+
+        final JPanel usernameInfoPanel = new JPanel();
+        usernameInfoPanel.add(usernameInfo);
+        usernameInfoPanel.add(username);
+
+        title.setBackground(Color.WHITE);
+        usernameInfoPanel.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
+        changePasswordPanel.setBackground(Color.WHITE);
+        passwordInfo.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+
+        this.add(title);
         this.add(usernameInfoPanel);
         this.add(buttons);
         this.add(changePasswordPanel);

@@ -11,7 +11,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
+import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
 import interface_adapter.my_clubs.MyClubsViewModel;
@@ -24,10 +26,12 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
 
     private final MyClubsViewModel myClubsViewModel;
     private MyClubsController myClubsController;
+    private ExitClubController exitClubController;
 
     private final JLabel title;
     private final JButton discussions;
     private final JButton books;
+    private final JButton exit;
 
     private final JTable myClubs;
     private final String[] columnNames = {"Club Name", "Description"};
@@ -39,14 +43,21 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
 
         title = new JLabel(myClubsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        title.setFont(new Font("Arial", Font.BOLD, 24));
         tableModel = new DefaultTableModel(columnNames, 0);
+
         myClubs = new JTable(tableModel);
         myClubs.setCellSelectionEnabled(true);
         myClubs.setRowSelectionAllowed(false);
         myClubs.setColumnSelectionAllowed(false);
         discussions = new JButton(MyClubsViewModel.DISCUSSIONS_LABEL);
         books = new JButton(MyClubsViewModel.BOOKS_LABEL);
+        exit = new JButton(MyClubsViewModel.EXIT_LABEL);
+
+        final JTableHeader tableHeader = myClubs.getTableHeader();
+        tableHeader.setFont(new Font("Arial", Font.BOLD, 18));
+        tableHeader.setBackground(Color.WHITE);
+        myClubs.setBackground(Color.WHITE);
 
         myClubs.getColumnModel().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -81,14 +92,31 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final String currentClub = myClubsViewModel.getState().getCurrentClub();
+                final String currentUsername = myClubsViewModel.getState().getCurrentUsername();
+                exitClubController.execute(currentUsername, currentClub);
+                JOptionPane.showMessageDialog(null, "You have left " + currentClub);
+            }
+        });
+
         final JScrollPane scrollPane = new JScrollPane(myClubs);
         final JPanel buttons = new JPanel();
         buttons.add(discussions);
         buttons.add(books);
+        buttons.add(exit);
+
+        title.setBackground(Color.WHITE);
+        scrollPane.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(buttons);
         this.add(scrollPane);
+        this.add(buttons);
     }
 
     @Override
@@ -109,5 +137,9 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setExitClubController(ExitClubController exitClubController) {
+        this.exitClubController = exitClubController;
     }
 }

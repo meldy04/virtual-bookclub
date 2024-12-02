@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 /**
  * A class representing a book club.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookClub {
 
     private String name;

@@ -7,7 +7,7 @@ package use_case.exit_bookclub;
 public interface ExitClubDataAccessInterface {
 
     /**
-     * Adds user to club.
+     * Removes user from club.
      * @param userName that leaves the club
      * @param clubName name of club user is removed from.
      */

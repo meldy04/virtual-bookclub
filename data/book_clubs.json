@@ -2,7 +2,7 @@
   "Reading Club" : {
     "name" : "Reading Club",
     "description" : "Literature",
-    "members" : [ "user1", "user2" ],
+    "members" : [ "user2", "user1" ],
     "books" : [ {
       "title" : "book1",
       "author" : "author1",

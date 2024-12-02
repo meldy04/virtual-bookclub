@@ -31,11 +31,9 @@ public class JoinClubPresenter implements JoinClubOutputBoundary {
         final String clubName = response.getClubName();
         final JoinClubState joinClubState = joinClubViewModel.getState();
         joinClubState.setSucceesMessage("Congratulations, " + name + "! You have successfully joined the club \""
-                + clubName + "\". Redirecting to the logged-in view where you can all your current "
-                + "bookclub "
-                + "by pressing the MyBookClubs");
+                + clubName + "\". Click Ok to see your book clubs in \"My Clubs\"");
         joinClubViewModel.setState(joinClubState);
-        joinClubViewModel.firePropertyChanged("succees");
+        joinClubViewModel.firePropertyChanged("success");
     }
 
     @Override
