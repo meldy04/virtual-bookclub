@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
 import java.util.AbstractMap;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
     private AddMessageController addMessageController;
     private JTextArea messagesArea = new JTextArea(ROWS, COLUMNS);
     private final JLabel title;
+    private final Timer timer;
     private final JButton post;
 
     public AddMessageView(AddMessageViewModel addMessageViewModel) {
@@ -74,15 +76,13 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
                 }
         );
 
-        final Timer timer = new Timer(500, new ActionListener() {
+        timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 // This code runs every 500ms
                 addMessageController.showMessages(addMessageViewModel.getState().getCurrentDiscussion());
             }
         });
-
-        timer.start();
 
         addMessageListener();
 
@@ -120,6 +120,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        timer.start();
         final AddMessageState state = (AddMessageState) evt.getNewValue();
         final List<AbstractMap.SimpleEntry<String, String>> messagesList = state.getMessagesList();
         messagesArea.setText("");

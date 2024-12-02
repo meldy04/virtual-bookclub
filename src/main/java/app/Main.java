@@ -18,11 +18,21 @@ public class Main {
         final JFrame application = appBuilder
                                             .addLoginView()
                                             .addSignupView()
+                                            .addMyClubsView()
                                             .addLoggedInView()
+                                            .addJoinClubView()
+                                            .addShowDiscussionsView()
+                                            .addAddMessageView()
+                                            .addBookClubListUseCase()
                                             .addLogoutUseCase()
                                             .addSignupUseCase()
-                                            .addLoginUseCase()
                                             .addChangePasswordUseCase()
+                                            .addExitBookClubUseCase()
+                                            .addMyClubsUsecase()
+                                            .addJoinClubUseCase()
+                                            .addShowDiscussionsUseCase()
+                                            .addAddMessagesUseCase()
+                                            .addLoginUseCase()
                                             .build();
 
         application.pack();
