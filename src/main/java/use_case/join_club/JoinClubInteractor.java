@@ -31,4 +31,9 @@ public class JoinClubInteractor implements JoinClubInputBoundary {
         }
 
     }
+
+    @Override
+    public void switchToLoggedInView() {
+        joinclubOutputBoundary.switchToLoggedInView();
+    }
 }
