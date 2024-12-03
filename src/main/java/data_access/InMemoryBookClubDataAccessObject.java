@@ -15,7 +15,7 @@ import use_case.show_Notes.ShowNotesDataAccessInterface;
  * NOT persist data between runs of the program.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowNotesDataAccessInterface, MyClubsDataAccessInterface {
+        ShowNotesDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -47,11 +47,6 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     @Override
     public void addClub(String clubName, String ClubDes) {
         bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
-    }
-
-    @Override
-    public void saveClub() {
-        JacksonTranslator.saveBookClubData(bookClubMap);
     }
 
     @Override

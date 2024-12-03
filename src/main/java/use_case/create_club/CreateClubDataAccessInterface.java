@@ -19,11 +19,6 @@ public interface CreateClubDataAccessInterface {
     void addClub(String clubName, String clubDes);
 
     /**
-     * Saves the club to the json file.
-     */
-    void saveClub();
-
-    /**
      * Checks if the club already exists.
      * @param clubName name of the club.
      * @return true or false.

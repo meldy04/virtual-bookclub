@@ -14,16 +14,13 @@ import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_Notes.ShowNotesDataAccessInterface;
 
-import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
-
 /**
  * DAO representing book club data.
  */
 public class DBBookClubDataAccessObject implements
         JoinClubDataAccessInterface, ExitClubDataAccessInterface,
         BookClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowNotesDataAccessInterface, MyClubsDataAccessInterface {
-        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
+        ShowNotesDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentNote;
@@ -54,12 +51,8 @@ public class DBBookClubDataAccessObject implements
     @Override
     public void addClub(String clubName, String ClubDes) {
         bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
-
-    }
-
-    @Override
-    public void saveClub() {
         JacksonTranslator.saveBookClubData(bookClubMap);
+
     }
 
     @Override
