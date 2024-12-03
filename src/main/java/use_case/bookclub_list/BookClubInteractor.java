@@ -20,8 +20,8 @@ public final class BookClubInteractor implements BookClubInputBoundary {
      * @param bookClubOutputBoundary the output boundary to prepare the success view
      * @param bookClubDataAccessInterface the data access interface for retrieving book clubs
      */
-    public BookClubInteractor(final BookClubOutputBoundary bookClubOutputBoundary,
-                              final BookClubDataAccessInterface bookClubDataAccessInterface) {
+    public BookClubInteractor(BookClubOutputBoundary bookClubOutputBoundary,
+                              BookClubDataAccessInterface bookClubDataAccessInterface) {
         this.bookClubOutputBoundary = bookClubOutputBoundary;
         this.bookClubDataAccessInterface = bookClubDataAccessInterface;
     }

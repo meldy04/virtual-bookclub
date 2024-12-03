@@ -21,7 +21,7 @@ public class MyClubsInteractor implements MyClubsInputBoundary {
         final Map<String, String> myClubs = myClubsDataAccessInterface.getMyClubs(currentUsername);
 
         if (myClubs.isEmpty()) {
-            myClubsOutputBoundary.prepareFailView("You are not a member of any book clubs");
+            myClubsOutputBoundary.prepareFailView();
         }
         else {
             final MyClubsOutputData myClubsOutputData = new MyClubsOutputData(myClubs);

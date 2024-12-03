@@ -1,3 +1,4 @@
+
 package app;
 
 import java.io.IOException;
@@ -16,14 +17,31 @@ public class Main {
     public static void main(String[] args) throws URISyntaxException, IOException {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addLogoutUseCase()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .build();
+                .addLoginView()
+                .addSearchedView()
+                .addSearchView()
+                .addSignupView()
+                .addMyClubsView()
+                .addLoggedInView()
+                .addJoinClubView()
+                .addShowDiscussionsView()
+                .addAddMessageView()
+                .addCreateClubView()
+                .addShowBooksView()
+                .addLogoutUseCase()
+                .addSignupUseCase()
+                .addChangePasswordUseCase()
+                .addExitBookClubUseCase()
+                .addBooksListUseCase()
+                .addMyClubsUsecase()
+                .addJoinClubUseCase()
+                .addShowDiscussionsUseCase()
+                .addAddMessagesUseCase()
+                .addLoginUseCase()
+                .addCreateClubUseCase()
+                .addBookClubListUseCase()
+                .addSearchUseCase()
+                .build();
 
         application.pack();
         application.setVisible(true);

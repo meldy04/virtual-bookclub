@@ -12,9 +12,8 @@ public interface MyClubsOutputBoundary {
 
     /**
      * Prepares the fail view for my clubs usecase.
-     * @param errorMessage the error message
      */
-    void prepareFailView(String errorMessage);
+    void prepareFailView();
 
     /**
      * Switches to the show discussions view.

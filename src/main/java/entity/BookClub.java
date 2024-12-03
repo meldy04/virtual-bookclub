@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,22 +10,23 @@ import java.util.Map;
 /**
  * A class representing a book club.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookClub {
 
     private String name;
     private String description;
     private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
-    private Map<String, Discussion> discussions = new HashMap<>();
+    private Map<String, Notes> notes = new HashMap<>();
 
     // No-argument constructor
     public BookClub() {
     }
 
     // Parameterized constructor
-    public BookClub(String name, String genre) {
+    public BookClub(String name, String description) {
         this.name = name;
-        this.description = genre;
+        this.description = description;
     }
 
     // Getters and Setters
@@ -35,14 +38,6 @@ public class BookClub {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<String> getMembers() {
         return members;
     }
@@ -51,12 +46,12 @@ public class BookClub {
         this.members = members;
     }
 
-    public Map<String, Discussion> getDiscussions() {
-        return discussions;
+    public Map<String, Notes> getNotes() {
+        return notes;
     }
 
-    public void setDiscussions(Map<String, Discussion> discussions) {
-        this.discussions = discussions;
+    public void setNotes(Map<String, Notes> notes) {
+        this.notes = notes;
     }
 
     public List<Book> getBooks() {
@@ -81,8 +76,8 @@ public class BookClub {
      * @param topic of the discussion
      * @param discussion to be added
      */
-    public void addDiscussion(String topic, Discussion discussion) {
-        this.discussions.put(topic, discussion);
+    public void addNotes(String topic, Notes discussion) {
+        this.notes.put(topic, discussion);
     }
 
     /**
@@ -90,8 +85,8 @@ public class BookClub {
      * @param topic the topic of the discussion
      * @return a discussion
      */
-    public Discussion getDiscussion(String topic) {
-        return this.discussions.get(topic);
+    public Notes getNote(String topic) {
+        return this.notes.get(topic);
     }
 
     /**
@@ -117,5 +112,13 @@ public class BookClub {
      */
     public void removeMember(String userName) {
         this.members.remove(userName);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

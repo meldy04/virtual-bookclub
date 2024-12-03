@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -18,6 +18,7 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.search.*;
 
 /**
  * The View for when the user is logging into the program.
@@ -37,8 +38,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JButton cancel;
     private LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel) {
 
+    public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
@@ -123,11 +124,19 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
+        title.setBackground(Color.WHITE);
+        usernameInfo.setBackground(Color.WHITE);
+        usernameErrorField.setBackground(Color.WHITE);
+        passwordInfo.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+
         this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
         this.add(buttons);
+
     }
 
     /**
@@ -157,4 +166,5 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
+
 }
