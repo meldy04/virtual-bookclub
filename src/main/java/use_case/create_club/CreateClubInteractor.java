@@ -26,7 +26,6 @@ public class CreateClubInteractor implements CreateClubInputBoundary {
             final CreateClubOutputData outputData = new CreateClubOutputData(username, clubName, clubDescription,
                     false);
             createclubDataAccessInterface.addClub(clubName, clubDescription);
-            createclubDataAccessInterface.saveClub();
             createclubDataAccessInterface.addUser(username, clubName);
             createclubOutputBoundary.prepareSuccessView(outputData);
         }

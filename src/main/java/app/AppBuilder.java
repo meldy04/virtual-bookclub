@@ -35,9 +35,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsPresenter;
 import interface_adapter.my_clubs.MyClubsViewModel;
-import interface_adapter.show_discussions.ShowDiscussionsController;
-import interface_adapter.show_discussions.ShowDiscussionsPresenter;
-import interface_adapter.show_discussions.ShowDiscussionsViewModel;
+import interface_adapter.show_notes.ShowNotesController;
+import interface_adapter.show_notes.ShowNotesPresenter;
+import interface_adapter.show_notes.ShowNotesViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -68,9 +68,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.my_clubs.MyClubsInputBoundary;
 import use_case.my_clubs.MyClubsInteractor;
 import use_case.my_clubs.MyClubsOutputBoundary;
-import use_case.show_discussions.ShowDiscussionsInputBoundary;
-import use_case.show_discussions.ShowDiscussionsInteractor;
-import use_case.show_discussions.ShowDiscussionsOutputBoundary;
+import use_case.show_Notes.ShowNotesInputBoundary;
+import use_case.show_Notes.ShowNotesInteractor;
+import use_case.show_Notes.ShowNotesOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -108,8 +108,8 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private MyClubsViewModel myClubsViewModel;
     private MyClubsView myClubsView;
-    private ShowDiscussionsViewModel showDiscussionsViewModel;
-    private ShowDiscussionsView showDiscussionsView;
+    private ShowNotesViewModel showDiscussionsViewModel;
+    private ShowNotesView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
     private AddMessageView addMessageView;
     private Join_ClubView joinClubView;
@@ -202,8 +202,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addShowDiscussionsView() {
-        showDiscussionsViewModel = new ShowDiscussionsViewModel();
-        showDiscussionsView = new ShowDiscussionsView(showDiscussionsViewModel);
+        showDiscussionsViewModel = new ShowNotesViewModel();
+        showDiscussionsView = new ShowNotesView(showDiscussionsViewModel);
         cardPanel.add(showDiscussionsView, showDiscussionsView.getViewName());
         return this;
     }
@@ -308,13 +308,13 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addShowDiscussionsUseCase() {
-        final ShowDiscussionsOutputBoundary showDiscussionsOutputBoundary =
-                new ShowDiscussionsPresenter(showDiscussionsViewModel, viewManagerModel, addMessageViewModel);
-        final ShowDiscussionsInputBoundary showDiscussionsInteractor =
-                new ShowDiscussionsInteractor(bookClubDataAccessObject, showDiscussionsOutputBoundary);
-        final ShowDiscussionsController showDiscussionsController =
-                new ShowDiscussionsController(showDiscussionsInteractor);
-        showDiscussionsView.setShowDiscussionsController(showDiscussionsController);
+        final ShowNotesOutputBoundary showDiscussionsOutputBoundary =
+                new ShowNotesPresenter(showDiscussionsViewModel, viewManagerModel, addMessageViewModel);
+        final ShowNotesInputBoundary showDiscussionsInteractor =
+                new ShowNotesInteractor(bookClubDataAccessObject, showDiscussionsOutputBoundary);
+        final ShowNotesController showDiscussionsController =
+                new ShowNotesController(showDiscussionsInteractor);
+        showDiscussionsView.setShowNotesController(showDiscussionsController);
         return this;
     }
 

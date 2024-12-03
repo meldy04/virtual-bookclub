@@ -1,39 +1,39 @@
-package interface_adapter.show_discussions;
+package interface_adapter.show_notes;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageState;
 import interface_adapter.add_message.AddMessageViewModel;
-import use_case.show_discussions.ShowDiscussionsOutputBoundary;
-import use_case.show_discussions.ShowDiscussionsOutputData;
+import use_case.show_Notes.ShowNotesOutputBoundary;
+import use_case.show_Notes.ShowNotesOutputData;
 
 /**
  * The presenter for the show topics usecase.
  */
-public class ShowDiscussionsPresenter implements ShowDiscussionsOutputBoundary {
+public class ShowNotesPresenter implements ShowNotesOutputBoundary {
 
-    private final ShowDiscussionsViewModel showDiscussionsViewModel;
+    private final ShowNotesViewModel showNotesViewModel;
     private final AddMessageViewModel addMessageViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public ShowDiscussionsPresenter(ShowDiscussionsViewModel showDiscussionsViewModel,
-                                    ViewManagerModel viewManagerModel, AddMessageViewModel addMessageViewModel) {
-        this.showDiscussionsViewModel = showDiscussionsViewModel;
+    public ShowNotesPresenter(ShowNotesViewModel showDiscussionsViewModel,
+                              ViewManagerModel viewManagerModel, AddMessageViewModel addMessageViewModel) {
+        this.showNotesViewModel = showDiscussionsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.addMessageViewModel = addMessageViewModel;
     }
 
     @Override
-    public void prepareSuccessView(ShowDiscussionsOutputData outputData) {
-        final ShowDiscussionsState state = showDiscussionsViewModel.getState();
+    public void prepareSuccessView(ShowNotesOutputData outputData) {
+        final ShowNotesState state = showNotesViewModel.getState();
         state.setTopics(outputData.getTopics());
-        showDiscussionsViewModel.firePropertyChanged();
+        showNotesViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-        final ShowDiscussionsState state = showDiscussionsViewModel.getState();
+        final ShowNotesState state = showNotesViewModel.getState();
         state.setErrorMessage(errorMessage);
-        showDiscussionsViewModel.firePropertyChanged("error");
+        showNotesViewModel.firePropertyChanged("error");
     }
 
     @Override

@@ -17,44 +17,44 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import interface_adapter.show_discussions.ShowDiscussionsController;
-import interface_adapter.show_discussions.ShowDiscussionsState;
-import interface_adapter.show_discussions.ShowDiscussionsViewModel;
+import interface_adapter.show_notes.ShowNotesController;
+import interface_adapter.show_notes.ShowNotesState;
+import interface_adapter.show_notes.ShowNotesViewModel;
 
 /**
  * The View for the Show Topics Use Case.
  */
-public class ShowDiscussionsView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "show discussions";
+public class ShowNotesView extends JPanel implements PropertyChangeListener {
+    private final String viewName = "show Notes";
 
-    private final ShowDiscussionsViewModel showTopicsViewModel;
-    private ShowDiscussionsController showDiscussionsController;
+    private final ShowNotesViewModel showTopicsViewModel;
+    private ShowNotesController showNotesController;
 
     private final JList<String> topicsList = new JList<>();
     private final JLabel title;
     private final JButton viewMessages;
-    private final JButton newDiscussion;
+    private final JButton newNote;
 
-    public ShowDiscussionsView(ShowDiscussionsViewModel showTopicsViewModel) {
+    public ShowNotesView(ShowNotesViewModel showTopicsViewModel) {
         this.showTopicsViewModel = showTopicsViewModel;
         showTopicsViewModel.addPropertyChangeListener(this);
 
-        title = new JLabel(ShowDiscussionsViewModel.TITLE_LABEL);
+        title = new JLabel(ShowNotesViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         topicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         final JScrollPane scrollPane = new JScrollPane(topicsList);
 
-        viewMessages = new JButton(ShowDiscussionsViewModel.VIEW_MESSAGES_BUTTON_LABEL);
-        newDiscussion = new JButton(ShowDiscussionsViewModel.NEW_DISCUSSION_BUTTON_LABEL);
+        viewMessages = new JButton(ShowNotesViewModel.VIEW_MESSAGES_BUTTON_LABEL);
+        newNote = new JButton(ShowNotesViewModel.NEW_DISCUSSION_BUTTON_LABEL);
 
         topicsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
                 if (!evt.getValueIsAdjusting()) {
                     final String selectedTopic = topicsList.getSelectedValue();
-                    final ShowDiscussionsState currentState = showTopicsViewModel.getState();
-                    currentState.setCurrentDiscussion(selectedTopic);
+                    final ShowNotesState currentState = showTopicsViewModel.getState();
+                    currentState.setCurrentNotes(selectedTopic);
                     showTopicsViewModel.setState(currentState);
 
                 }
@@ -65,15 +65,16 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        final String currentDiscussion = showTopicsViewModel.getState().getCurrentDiscussion();
-                        showDiscussionsController.switchToAddMessageView(currentDiscussion);
+                        final String currentNote = showTopicsViewModel.getState().getCurrentNotes();
+                        showNotesController.switchToAddMessageView(currentNote);
                     }
                 }
+
         );
 
         final JPanel buttons = new JPanel();
         buttons.add(viewMessages);
-        buttons.add(newDiscussion);
+        buttons.add(newNote);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -86,18 +87,18 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
     public void propertyChange(PropertyChangeEvent evt) {
 
         if (evt.getPropertyName().equals("current club")) {
-            // corresponds to the switch to show discussions view
-            showDiscussionsController.execute();
+            // corresponds to the switch to show notes view
+            showNotesController.execute();
         }
         else if (evt.getPropertyName().equals("error")) {
-            final ShowDiscussionsState state = (ShowDiscussionsState) evt.getNewValue();
+            final ShowNotesState state = (ShowNotesState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, state.getErrorMessage());
         }
 
         else {
-            final ShowDiscussionsState state = (ShowDiscussionsState) evt.getNewValue();
+            final ShowNotesState state = (ShowNotesState) evt.getNewValue();
             topicsList.setListData(state.getTopics().toArray(new String[0]));
-            title.setText(ShowDiscussionsViewModel.TITLE_LABEL + showTopicsViewModel.getState().getCurrentClub());
+            title.setText(ShowNotesViewModel.TITLE_LABEL + showTopicsViewModel.getState().getCurrentClub());
         }
     }
 
@@ -105,7 +106,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
         return viewName;
     }
 
-    public void setShowDiscussionsController(ShowDiscussionsController controller) {
-        this.showDiscussionsController = controller;
+    public void setShowNotesController(ShowNotesController controller) {
+        this.showNotesController = controller;
     }
 }
