@@ -8,8 +8,8 @@ import java.util.Map;
  */
 public class MyClubsState {
     private String currentUsername;
+    private String currentClub;
     private Map<String, String> myClubs = new HashMap<>();
-    private String errorMessage;
 
     public String getCurrentUsername() {
         return currentUsername;
@@ -27,11 +27,11 @@ public class MyClubsState {
         this.myClubs = myClubs;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getCurrentClub() {
+        return currentClub;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setCurrentClub(String currentClub) {
+        this.currentClub = currentClub;
     }
 }

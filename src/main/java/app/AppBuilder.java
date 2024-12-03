@@ -15,14 +15,24 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
+import interface_adapter.bookclub_list.BookClubListController;
+import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.exit_bookclub.ExitClubController;
+import interface_adapter.exit_bookclub.ExitClubPresenter;
+import interface_adapter.join_club.JoinClubController;
+import interface_adapter.join_club.JoinClubPresenter;
+import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.my_clubs.MyClubsController;
+import interface_adapter.my_clubs.MyClubsPresenter;
+import interface_adapter.my_clubs.MyClubsViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchViewModel;
@@ -36,15 +46,28 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.add_message.AddMessageInputBoundary;
 import use_case.add_message.AddMessageInteractor;
 import use_case.add_message.AddMessageOutputBoundary;
+import use_case.bookclub_list.BookClubInputBoundary;
+import use_case.bookclub_list.BookClubInteractor;
+import use_case.bookclub_list.BookClubOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.exit_bookclub.ExitClubInputBoundary;
+import use_case.exit_bookclub.ExitClubInteractor;
+import use_case.exit_bookclub.ExitClubOutputBoundary;
+import use_case.join_club.JoinClubInputBoundary;
+import use_case.join_club.JoinClubInteractor;
+import use_case.join_club.JoinClubOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.my_clubs.MyClubsInputBoundary;
+import use_case.my_clubs.MyClubsInteractor;
+import use_case.my_clubs.MyClubsOutputBoundary;
+import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
 import use_case.show_discussions.ShowDiscussionsInputBoundary;
@@ -82,23 +105,40 @@ public class AppBuilder {
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
+    private LoginView loginView;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
-    private LoginView loginView;
+    private MyClubsViewModel myClubsViewModel;
+    private MyClubsView myClubsView;
     private ShowDiscussionsViewModel showDiscussionsViewModel;
     private ShowDiscussionsView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
     private AddMessageView addMessageView;
+    private Join_ClubView joinClubView;
+    private JoinClubViewModel joinClubViewModel;
 
-    private SearchViewModel searchViewModel = new SearchViewModel();
-    private SearchedViewModel searchedViewModel  = new SearchedViewModel();
-    private SearchView searchView;
+    private SearchedViewModel searchedViewModel = new SearchedViewModel();
     private SearchedView searchedView;
-    private SearchInteractor searchInteractor;
-    private SearchController searchController = new SearchController(searchInteractor, searchViewModel);
+    private SearchViewModel searchViewModel = new SearchViewModel();
+    private SearchView searchView;
+    private SearchController searchController;
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Adds the JoinClub to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinClubView() {
+        joinClubViewModel = new JoinClubViewModel();
+        joinClubView = new Join_ClubView(joinClubViewModel, viewManagerModel);
+        cardPanel.add(joinClubView, joinClubView.getViewName());
+        return this;
+
     }
 
     /**
@@ -129,31 +169,21 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, searchedViewModel, searchViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
 
     /**
-     * Adds the Search View to the application.
+     * Adds the MyClubs view to the application.
      * @return this builder
      */
-    public AppBuilder addSearchView() {
-        searchView = new SearchView(searchViewModel, searchController);
-        cardPanel.add(searchView, searchView.getViewName());
+    public AppBuilder addMyClubsView() {
+        myClubsViewModel = new MyClubsViewModel();
+        myClubsView = new MyClubsView(myClubsViewModel);
+        cardPanel.add(myClubsView, myClubsView.getViewName());
         return this;
     }
-
-    /**
-     * Adds the Search View to the application.
-     * @return this builder
-     */
-    public AppBuilder addSearchedView() {
-        searchedView = new SearchedView(searchedViewModel, searchController);
-        cardPanel.add(searchedView, searchView.getViewName());
-        return this;
-    }
-
 
     /**
      * Adds the AddMessage View to the application.
@@ -178,6 +208,35 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Searched view to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchedView() {
+        searchedView = new SearchedView(searchedViewModel);
+
+        searchedView.addPropertyChangeListener(evt -> {
+            if ("backToSearch".equals(evt.getPropertyName())) {
+                viewManagerModel.setState(loginView.getViewName());
+                viewManagerModel.firePropertyChanged();
+            }
+        });
+
+        cardPanel.add(searchedView, searchedView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Searched view to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchView() {
+        searchView = new SearchView(searchViewModel);
+        cardPanel.add(searchView, searchView.getViewName());
+        return this;
+    }
+
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -198,7 +257,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, addMessageViewModel);
+                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel, myClubsViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -225,6 +284,24 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the MyClubs Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addMyClubsUsecase() {
+        final MyClubsOutputBoundary myClubsOutputBoundary = new MyClubsPresenter(myClubsViewModel,
+                showDiscussionsViewModel, loggedInViewModel, viewManagerModel);
+
+        final MyClubsInputBoundary myClubsInteractor = new MyClubsInteractor(bookClubDataAccessObject,
+                myClubsOutputBoundary);
+
+        final MyClubsController myClubsController = new MyClubsController(myClubsInteractor);
+
+        myClubsView.setMyClubsController(myClubsController);
+        loggedInView.setMyClubsController(myClubsController);
+        return this;
+    }
+
+    /**
      * Adds the Logout Use Case to the application.
      * @return this builder
      */
@@ -237,18 +314,6 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
-        return this;
-    }
-
-    public AppBuilder addSearchUseCase() {
-        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(
-                searchViewModel, viewManagerModel, searchedViewModel);
-
-        final OpenLibraryClient apiCaller = new OpenLibraryClient();
-
-        searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
-        searchController = new SearchController(searchInteractor, searchViewModel);
-        searchView.setSearchController(searchController);
         return this;
     }
 
@@ -281,11 +346,73 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the bookClub usecase to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addBookClubListUseCase() {
+
+        final BookClubOutputBoundary bookClubOutputBoundary =
+                new BookClubListPresenter(loggedInViewModel, viewManagerModel, joinClubViewModel);
+
+        final BookClubInputBoundary bookClubInteractor = new BookClubInteractor(bookClubOutputBoundary,
+                bookClubDataAccessObject);
+        final BookClubListController bookClubListController = new BookClubListController(bookClubInteractor);
+        loggedInView.setBookClubListController(bookClubListController);
+
+        return this;
+    }
+    /**
+     * Adds the joinclub usecase to the application.
+     * @return this builder
+     */
+
+    public AppBuilder addJoinClubUseCase() {
+        final JoinClubOutputBoundary joinClubOutputBoundary =
+                new JoinClubPresenter(viewManagerModel, loggedInViewModel, joinClubViewModel);
+        final JoinClubInputBoundary joinClubInteractor =
+                new JoinClubInteractor(joinClubOutputBoundary, bookClubDataAccessObject);
+        final JoinClubController joinClubController = new JoinClubController(joinClubInteractor);
+        joinClubView.setJoinClubController(joinClubController);
+        return this;
+    }
+
+    /**
+     * Adds the exit club usecase to the application.
+     * @return this builder
+     */
+    public AppBuilder addExitBookClubUseCase() {
+        final ExitClubOutputBoundary exitClubOutputBoundary =
+                new ExitClubPresenter(loggedInViewModel, viewManagerModel);
+        final ExitClubInputBoundary exitClubInteractor =
+                new ExitClubInteractor(exitClubOutputBoundary, bookClubDataAccessObject);
+        final ExitClubController exitClubController = new ExitClubController(exitClubInteractor);
+        myClubsView.setExitClubController(exitClubController);
+        return this;
+    }
+
+    /**
+     * Adds the exit club usecase to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchUseCase() {
+        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel,
+                viewManagerModel, searchedViewModel);
+        final OpenLibraryClient apiCaller = new OpenLibraryClient();
+        final SearchInputBoundary searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
+        final SearchController searchControllerP = new SearchController(searchInteractor);
+        searchView.setSearchController(searchControllerP);
+        searchedView.setSearchController(searchControllerP);
+        loggedInView.setSearchController(searchControllerP);
+        return this;
+    }
+
+    /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Login Example");
+        final JFrame application = new JFrame("Virtual Book Club application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(cardPanel);
         viewManagerModel.setState(signupView.getViewName());

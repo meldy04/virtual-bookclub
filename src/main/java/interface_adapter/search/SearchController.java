@@ -15,6 +15,7 @@ public class SearchController {
 
     // Method to handle a search request
     public void startSearch(String query) {
+        System.out.println(query);
         final SearchInputData inputData = new SearchInputData(query);
         searchUseCaseInteractor.search(inputData);
 

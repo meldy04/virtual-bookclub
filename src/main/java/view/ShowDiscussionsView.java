@@ -28,7 +28,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
     private final String viewName = "show discussions";
 
     private final ShowDiscussionsViewModel showTopicsViewModel;
-    private ShowDiscussionsController showTopicsController;
+    private ShowDiscussionsController showDiscussionsController;
 
     private final JList<String> topicsList = new JList<>();
     private final JLabel title;
@@ -56,6 +56,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
                     final ShowDiscussionsState currentState = showTopicsViewModel.getState();
                     currentState.setCurrentDiscussion(selectedTopic);
                     showTopicsViewModel.setState(currentState);
+
                 }
             }
         });
@@ -65,7 +66,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         final String currentDiscussion = showTopicsViewModel.getState().getCurrentDiscussion();
-                        showTopicsController.switchToAddMessageView(currentDiscussion);
+                        showDiscussionsController.switchToAddMessageView(currentDiscussion);
                     }
                 }
         );
@@ -86,7 +87,7 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
 
         if (evt.getPropertyName().equals("current club")) {
             // corresponds to the switch to show discussions view
-            showTopicsController.execute();
+            showDiscussionsController.execute();
         }
         else if (evt.getPropertyName().equals("error")) {
             final ShowDiscussionsState state = (ShowDiscussionsState) evt.getNewValue();
@@ -105,6 +106,6 @@ public class ShowDiscussionsView extends JPanel implements PropertyChangeListene
     }
 
     public void setShowDiscussionsController(ShowDiscussionsController controller) {
-        this.showTopicsController = controller;
+        this.showDiscussionsController = controller;
     }
 }
