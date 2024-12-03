@@ -115,7 +115,7 @@ public class InMemoryBookClubDataAccessObject implements
         final Map<String, String> result = new HashMap<>();
         for (BookClub bookClub : bookClubMap.values()) {
             if (bookClub.isMember(currentUsername)) {
-                result.put(bookClub.getName(), bookClub.getName());
+                result.put(bookClub.getName(), bookClub.getDescription());
             }
         }
         return result;
