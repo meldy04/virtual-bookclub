@@ -1,9 +1,9 @@
-package use_case.show_discussions;
+package use_case.show_Notes;
 
 /**
  * Input boundary for actions related to showing discussion topics of the current book club.
  */
-public interface ShowDiscussionsInputBoundary {
+public interface ShowNotesInputBoundary {
     /**
      * Executes the show discussions use case.
      */

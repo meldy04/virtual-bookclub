@@ -10,7 +10,7 @@
       "rating" : 9.0,
       "reviews" : [ ]
     } ],
-    "discussions" : {
+    "notes" : {
       "topic1" : {
         "topic" : "topic1",
         "messages" : [ {
@@ -37,6 +37,12 @@
         }, {
           "username" : "user1",
           "text" : "sup"
+        }, {
+          "username" : "user2",
+          "text" : "hi"
+        }, {
+          "username" : "user2",
+          "text" : "hey"
         }, {
           "username" : "user2",
           "text" : "hi"
