@@ -12,14 +12,15 @@ import use_case.my_clubs.MyClubsOutputData;
  */
 public class MyClubsPresenter implements MyClubsOutputBoundary {
     private final MyClubsViewModel myClubsViewModel;
-    private final ShowNotesViewModel showDiscussionsViewModel;
+    private final ShowNotesViewModel showNotesViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public MyClubsPresenter(MyClubsViewModel myClubsViewModel, ShowNotesViewModel showDiscussionsViewModel, LoggedInViewModel loggedInViewModel,
+    public MyClubsPresenter(MyClubsViewModel myClubsViewModel, ShowNotesViewModel showNotesViewModel,
+                            LoggedInViewModel loggedInViewModel,
                             ViewManagerModel viewManagerModel) {
         this.myClubsViewModel = myClubsViewModel;
-        this.showDiscussionsViewModel = showDiscussionsViewModel;
+        this.showNotesViewModel = showNotesViewModel;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -41,13 +42,13 @@ public class MyClubsPresenter implements MyClubsOutputBoundary {
     }
 
     @Override
-    public void switchToShowDiscussionsView(String currentClub) {
-        final ShowNotesState showDiscussionsState = showDiscussionsViewModel.getState();
-        showDiscussionsState.setCurrentClub(currentClub);
-        showDiscussionsViewModel.setState(showDiscussionsState);
-        showDiscussionsViewModel.firePropertyChanged("current club");
+    public void switchToShowNotesView(String currentClub) {
+        final ShowNotesState showNotesState = showNotesViewModel.getState();
+        showNotesState.setCurrentClub(currentClub);
+        showNotesViewModel.setState(showNotesState);
+        showNotesViewModel.firePropertyChanged("current club");
 
-        viewManagerModel.setState(showDiscussionsViewModel.getViewName());
+        viewManagerModel.setState(showNotesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

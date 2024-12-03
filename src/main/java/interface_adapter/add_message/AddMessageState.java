@@ -10,7 +10,7 @@ import java.util.List;
 public class AddMessageState {
     private String text = "";
     private List<AbstractMap.SimpleEntry<String, String>> messagesList = new ArrayList<>();
-    private String currentDiscussion;
+    private String currentNote;
     private String currentUsername;
 
     public void setText(String text) {
@@ -21,8 +21,8 @@ public class AddMessageState {
         this.messagesList = messagesList;
     }
 
-    public void setCurrentDiscussion(String currentDiscussion) {
-        this.currentDiscussion = currentDiscussion;
+    public void setCurrentNote(String currentNote) {
+        this.currentNote = currentNote;
     }
 
     public String getText() {
@@ -33,8 +33,8 @@ public class AddMessageState {
         return messagesList;
     }
 
-    public String getCurrentDiscussion() {
-        return currentDiscussion;
+    public String getCurrentNote() {
+        return currentNote;
     }
 
     public String getCurrentUsername() {

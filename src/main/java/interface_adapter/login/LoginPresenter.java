@@ -7,7 +7,6 @@ import interface_adapter.add_message.AddMessageState;
 import interface_adapter.add_message.AddMessageViewModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.create_club.CreateClubController;
 import interface_adapter.create_club.CreateClubState;
 import interface_adapter.create_club.CreateClubViewModel;
 import interface_adapter.join_club.JoinClubState;
@@ -33,7 +32,8 @@ public class LoginPresenter implements LoginOutputBoundary {
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel, JoinClubViewModel joinClubViewModel,
-                          AddMessageViewModel addMessageViewModel, MyClubsViewModel myClubsViewModel, CreateClubViewModel createClubViewModel) {
+                          AddMessageViewModel addMessageViewModel, MyClubsViewModel myClubsViewModel,
+                          CreateClubViewModel createClubViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;

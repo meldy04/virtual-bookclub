@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,12 +20,9 @@ import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
-import interface_adapter.my_clubs.MyClubsState;
-import interface_adapter.my_clubs.MyClubsViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -62,7 +60,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton searchButton;
 
     private SearchController searchController;
-
 
     public LoggedInView(LoggedInViewModel loggedInViewModel,
                         SearchedViewModel searchedViewModel, SearchViewModel searchViewModel) {

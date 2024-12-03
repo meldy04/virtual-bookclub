@@ -21,9 +21,9 @@ public class ShowNotesController {
 
     /**
      * Switches to AddMessageView corresponding to the discussion.
-     * @param currentDiscussion the discussion chosen by user
+     * @param currentNote the discussion chosen by user
      */
-    public void switchToAddMessageView(String currentDiscussion) {
-        showNotesInteractor.switchToAddMessageView(currentDiscussion);
+    public void switchToAddMessageView(String currentNote) {
+        showNotesInteractor.switchToAddMessageView(currentNote);
     }
 }

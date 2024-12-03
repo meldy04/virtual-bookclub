@@ -1,5 +1,8 @@
 package use_case.search;
 
+/**
+ * Input data for the search usecase.
+ */
 public class SearchInputData {
     private final String query;
 

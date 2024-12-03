@@ -11,7 +11,6 @@ import entity.Book;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
-import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.bookclub_list.BookClubDataAccessInterface;
 import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;

@@ -30,8 +30,8 @@ public class MyClubsInteractor implements MyClubsInputBoundary {
     }
 
     @Override
-    public void switchToShowDiscussionsView(String currentClub) {
+    public void switchToShowNotesView(String currentClub) {
         myClubsDataAccessInterface.setCurrentClub(currentClub);
-        myClubsOutputBoundary.switchToShowDiscussionsView(currentClub);
+        myClubsOutputBoundary.switchToShowNotesView(currentClub);
     }
 }

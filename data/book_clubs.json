@@ -56,6 +56,9 @@
         }, {
           "username" : "user1",
           "text" : "will continue next week"
+        }, {
+          "username" : "user1",
+          "text" : "will continue later"
         } ]
       }
     }
@@ -70,7 +73,7 @@
   "club3" : {
     "name" : "club3",
     "description" : "desc",
-    "members" : [ "user3" ],
+    "members" : [ "user3", "user1" ],
     "books" : [ ],
     "notes" : { }
   },
@@ -84,6 +87,13 @@
   "csc236 club" : {
     "name" : "csc236 club",
     "description" : "a csc236 club",
+    "members" : [ "user1" ],
+    "books" : [ ],
+    "notes" : { }
+  },
+  "new club" : {
+    "name" : "new club",
+    "description" : "new club description ",
     "members" : [ "user1" ],
     "books" : [ ],
     "notes" : { }

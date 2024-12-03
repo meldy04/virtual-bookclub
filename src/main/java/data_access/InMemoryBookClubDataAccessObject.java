@@ -1,7 +1,13 @@
 package data_access;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import entity.Book;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
@@ -11,6 +17,7 @@ import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_Notes.ShowNotesDataAccessInterface;
+import use_case.show_books.ShowBooksDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
@@ -19,7 +26,8 @@ import use_case.show_Notes.ShowNotesDataAccessInterface;
 public class InMemoryBookClubDataAccessObject implements
         JoinClubDataAccessInterface, AddMessageDataAccessInterface, MyClubsDataAccessInterface,
         ExitClubDataAccessInterface,
-        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface {
+        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface,
+        ShowBooksDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -117,5 +125,16 @@ public class InMemoryBookClubDataAccessObject implements
     public void removeUser(String userName, String clubName) {
         bookClubMap.get(clubName).removeMember(userName);
         JacksonTranslator.saveBookClubData(bookClubMap);
+    }
+
+    @Override
+    public List<String> getBooks(String clubName) {
+        final List<String> title = new ArrayList<>();
+        final BookClub bookClub = bookClubMap.get(clubName);
+        final List<Book> book = bookClub.getBooks();
+        for (Book books : book) {
+            title.add(books.getTitle());
+        }
+        return title;
     }
 }

@@ -1,11 +1,11 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A class representing a book club.
@@ -70,20 +70,19 @@ public class BookClub {
         this.members.add(username);
     }
 
-
     /**
-     * Adds a new discussion to discussions.
-     * @param topic of the discussion
-     * @param discussion to be added
+     * Adds a new Note to Notes.
+     * @param topic of the Note
+     * @param note to be added
      */
-    public void addNotes(String topic, Notes discussion) {
-        this.notes.put(topic, discussion);
+    public void addNotes(String topic, Notes note) {
+        this.notes.put(topic, note);
     }
 
     /**
-     * Gets the discussion with corresponding topic.
-     * @param topic the topic of the discussion
-     * @return a discussion
+     * Gets the Note with corresponding topic.
+     * @param topic the topic of the Note
+     * @return a Note
      */
     public Notes getNote(String topic) {
         return this.notes.get(topic);

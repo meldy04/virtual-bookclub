@@ -1,17 +1,20 @@
 package view;
 
-
-import interface_adapter.search.SearchController;
-import interface_adapter.search.SearchState;
-import interface_adapter.search.SearchViewModel;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
+import interface_adapter.search.SearchViewModel;
 
 /**
  * The View for when the user is searching for a book.
@@ -29,7 +32,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private SearchController searchController;
     private final JLabel messageLabel = new JLabel();
-
 
     public SearchView(SearchViewModel searchViewModel) {
         this.searchViewModel = searchViewModel;

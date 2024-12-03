@@ -1,17 +1,33 @@
 package view;
 
-
-import interface_adapter.ViewManagerModel;
-import interface_adapter.search.*;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.beans.PropertyChangeListener;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.search.BookViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchedState;
+import interface_adapter.search.SearchedViewModel;
 
 /**
  *  Displays view after searching
@@ -26,7 +42,6 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
     private final JScrollPane resultscrollPane;
 
     private final JTextField queryInputField = new JTextField(50);
-
 
     private final JButton backButton = new JButton("Back to Search");
 
@@ -68,6 +83,7 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
      *
      * @param books The Book object to display.
      */
+
     public void updateResults(BookViewModel books) {
         final DefaultListModel<BookViewModel> model = new DefaultListModel<>();
         model.addElement(books);
@@ -98,15 +114,16 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
         this.searchController = searchController;
     }
 
+    /**
+     * Renders the book cover pages.
+     */
     private static final class BookCellRenderer extends JPanel implements ListCellRenderer<BookViewModel> {
         private final JLabel coverLabel = new JLabel();
         private final JLabel textLabel = new JLabel();
 
-        public BookCellRenderer() {
+        BookCellRenderer() {
             setLayout(new GridBagLayout());
         }
-
-
 
         @Override
         public Component getListCellRendererComponent(

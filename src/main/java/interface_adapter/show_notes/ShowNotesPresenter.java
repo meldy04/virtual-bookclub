@@ -15,9 +15,9 @@ public class ShowNotesPresenter implements ShowNotesOutputBoundary {
     private final AddMessageViewModel addMessageViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public ShowNotesPresenter(ShowNotesViewModel showDiscussionsViewModel,
+    public ShowNotesPresenter(ShowNotesViewModel showNotesViewModel,
                               ViewManagerModel viewManagerModel, AddMessageViewModel addMessageViewModel) {
-        this.showNotesViewModel = showDiscussionsViewModel;
+        this.showNotesViewModel = showNotesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.addMessageViewModel = addMessageViewModel;
     }
@@ -39,7 +39,7 @@ public class ShowNotesPresenter implements ShowNotesOutputBoundary {
     @Override
     public void switchToAddMessageView(String discussion) {
         final AddMessageState state = addMessageViewModel.getState();
-        state.setCurrentDiscussion(discussion);
+        state.setCurrentNote(discussion);
         addMessageViewModel.firePropertyChanged();
 
         viewManagerModel.setState(addMessageViewModel.getViewName());

@@ -11,8 +11,8 @@ public interface MyClubsInputBoundary {
     void execute(MyClubsInputData myClubsInputData);
 
     /**
-     * Switches to the show discussions view of the current club.
+     * Switches to the show notes view of the current club.
      * @param currentClub the club the user selected
      */
-    void switchToShowDiscussionsView(String currentClub);
+    void switchToShowNotesView(String currentClub);
 }

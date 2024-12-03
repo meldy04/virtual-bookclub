@@ -9,7 +9,6 @@ import use_case.show_books.ShowBooksInputData;
 
 public class ShowBooksController {
 
-
     private final ShowBooksInputBoundary showBooksInputBoundary;
 
     public ShowBooksController(ShowBooksInputBoundary showBooksInputBoundary) {

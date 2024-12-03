@@ -13,7 +13,6 @@ public class SearchOutputData {
     private String query = "";
     private boolean useCaseFailed;
 
-
     public SearchOutputData(String title, String author, String key, String coverUrl, boolean useCaseFailed) {
         this.title = title;
         this.author = author;

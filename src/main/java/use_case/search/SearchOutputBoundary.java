@@ -1,7 +1,5 @@
 package use_case.search;
 
-
-
 /**
  * The output boundary for the Search Use Case.
  */

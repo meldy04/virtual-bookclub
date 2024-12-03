@@ -33,8 +33,8 @@ public class ShowNotesInteractor implements ShowNotesInputBoundary {
     }
 
     @Override
-    public void switchToAddMessageView(String discussion) {
-        showNotesDataAccessInterface.setCurrentNote(discussion);
-        showNotesOutputBoundary.switchToAddMessageView(discussion);
+    public void switchToAddMessageView(String Note) {
+        showNotesDataAccessInterface.setCurrentNote(Note);
+        showNotesOutputBoundary.switchToAddMessageView(Note);
     }
 }
