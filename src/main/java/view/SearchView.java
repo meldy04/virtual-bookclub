@@ -1,6 +1,5 @@
 package view;
 
-
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -29,7 +28,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private SearchController searchController;
     private final JLabel messageLabel = new JLabel();
-
 
     public SearchView(SearchViewModel searchViewModel) {
         this.searchViewModel = searchViewModel;
