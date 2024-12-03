@@ -1,3 +1,4 @@
+
 package app;
 
 import java.io.IOException;
@@ -17,25 +18,26 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
-                .addSearchedView()
-                .addSearchView()
                 .addSignupView()
                 .addMyClubsView()
                 .addLoggedInView()
                 .addJoinClubView()
                 .addShowDiscussionsView()
                 .addAddMessageView()
-                .addBookClubListUseCase()
+                .addCreateClubView()
+                .addShowBooksView()
                 .addLogoutUseCase()
                 .addSignupUseCase()
                 .addChangePasswordUseCase()
                 .addExitBookClubUseCase()
+                .addBooksListUseCase()
                 .addMyClubsUsecase()
                 .addJoinClubUseCase()
                 .addShowDiscussionsUseCase()
                 .addAddMessagesUseCase()
                 .addLoginUseCase()
-                .addSearchUseCase()
+                .addCreateClubUseCase()
+                .addBookClubListUseCase()
                 .build();
 
         application.pack();

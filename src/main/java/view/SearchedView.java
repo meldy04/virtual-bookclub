@@ -1,14 +1,12 @@
 package view;
 
-
-import interface_adapter.search.*;
+import entity.Book;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchedState;
+import interface_adapter.search.SearchedViewModel;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,21 +19,17 @@ import java.beans.PropertyChangeListener;
  *  have a button to go back
  */
 public class SearchedView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "searched";
+    private final String viewName = "SearchedView";
     private final SearchedViewModel searchedViewModel;
     private SearchController searchController;
-    private final JList<BookViewModel> resultList = new JList<>();
+    private final JList<Book> resultList = new JList<>();
     private final JScrollPane resultscrollPane;
-
-    private final JTextField queryInputField = new JTextField(50);
-
 
     private final JButton backButton = new JButton("Back to Search");
 
-    public SearchedView(SearchedViewModel searchedViewModelP) {
+    public SearchedView(SearchedViewModel searchedViewModelP, SearchController searchControllerP) {
         this.searchedViewModel = searchedViewModelP;
-
-        searchedViewModel.addPropertyChangeListener(this);
+        this.searchController = searchControllerP;
 
         setLayout(new BorderLayout());
 
@@ -53,16 +47,19 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
                 updateResults(state.getBooks());
             }
         });
+
     }
 
     /**
      * Updates the results displayed in the JList.
      *
-     * @param books The Book object to display.
+     * @param books The list of Book objects to display.
      */
-    public void updateResults(BookViewModel books) {
-        final DefaultListModel<BookViewModel> model = new DefaultListModel<>();
-        model.addElement(books);
+    public void updateResults(List<Book> books) {
+        final DefaultListModel<Book> model = new DefaultListModel<>();
+        for (Book book : books) {
+            model.addElement(book);
+        }
         resultList.setModel(model);
     }
 
@@ -82,47 +79,23 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    public String getViewName() {
-        return viewName;
-    }
-
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-    }
-
-    private static final class BookCellRenderer extends JPanel implements ListCellRenderer<BookViewModel> {
+    private static final class BookCellRenderer extends JPanel implements ListCellRenderer<Book> {
         private final JLabel coverLabel = new JLabel();
         private final JLabel textLabel = new JLabel();
-
-        public BookCellRenderer() {
-            setLayout(new GridBagLayout());
-        }
 
 
 
         @Override
         public Component getListCellRendererComponent(
-                JList<? extends BookViewModel> list, BookViewModel book, int index,
-                boolean isSelected, boolean hasFocus) {
-            final int height = 150;
-            final int width1 = 100;
-            final int width2 = 300;
-            final int padding = 5;
-            setLayout(new BorderLayout(padding, padding));
+                JList<? extends Book> list, Book book, int index, boolean isSelected, boolean hasFocus) {
+            setLayout(new BorderLayout());
 
             if (book.getCoverUrl() != null && !book.getCoverUrl().isEmpty()) {
                 try {
                     final ImageIcon cover = new ImageIcon(new URL(book.getCoverUrl()));
-                    final Image scaledImage = cover.getImage().getScaledInstance(width1, height, Image.SCALE_SMOOTH);
-                    if (cover.getIconWidth() == -1) {
-                        coverLabel.setIcon(null);
-                    }
-                    else {
-                        coverLabel.setIcon(new ImageIcon(scaledImage));
-
-                    }
+                    coverLabel.setIcon(cover);
                 }
-                catch (MalformedURLException exceptionMalformed) {
+                catch (MalformedURLException e) {
                     coverLabel.setIcon(null);
                 }
             }
@@ -131,7 +104,6 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
             }
 
             textLabel.setText("<html><b>" + book.getTitle() + "</b><br>" + book.getAuthor() + "</html>");
-            textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
@@ -146,13 +118,11 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
             removeAll();
             add(coverLabel, BorderLayout.WEST);
             add(textLabel, BorderLayout.CENTER);
-            setPreferredSize(new Dimension(width2, height));
 
             return this;
         }
 
     }
-
 
 
 }

@@ -1,6 +1,5 @@
 package interface_adapter.search;
 
-import data_access.BookDataTransferObject;
 import entity.Book;
 
 import java.util.ArrayList;
@@ -10,27 +9,27 @@ import java.util.List;
  * The State information representing the searched books.
  */
 public class SearchedState {
-    private BookViewModel books;
+    private List<Book> books;
     private String message;
     private String query;
 
     // Default constructor
     public SearchedState() {
-        this(new BookViewModel(), "", "");
+        this(new ArrayList<>(), "", "");
     }
 
-    public SearchedState(BookViewModel books, String message, String query) {
-        this.books = books;
-        this.message = message;
-        this.query = query;
+    public SearchedState(List<Book> books, String message, String query) {
+        this.books = new ArrayList<>();
+        this.message = "";
+        this.query = "";
     }
 
 
-    public BookViewModel getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(BookViewModel books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

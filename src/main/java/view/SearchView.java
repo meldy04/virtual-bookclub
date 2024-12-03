@@ -19,7 +19,7 @@ import java.beans.PropertyChangeListener;
  */
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "searching";
+    private final String viewName = "Search";
     private final SearchViewModel searchViewModel;
 
     private final JTextField queryInputField = new JTextField(30);
@@ -31,7 +31,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JLabel messageLabel = new JLabel();
 
 
-    public SearchView(SearchViewModel searchViewModel) {
+    public SearchView(SearchViewModel searchViewModel, SearchController searchController) {
+        this.searchController = searchController;
         this.searchViewModel = searchViewModel;
         this.searchViewModel.addPropertyChangeListener(this);
 

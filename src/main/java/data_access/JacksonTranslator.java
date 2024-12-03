@@ -1,3 +1,4 @@
+
 package data_access;
 
 import java.io.*;
@@ -58,6 +59,6 @@ public class JacksonTranslator {
         catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
-   }
+    }
 
 }
