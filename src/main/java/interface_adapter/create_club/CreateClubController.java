@@ -25,6 +25,9 @@ public class CreateClubController {
         createClubUseCaseInteractor.execute(inputData);
     }
 
+    /**
+     * Switches to LoggedInView.
+     */
     public void switchToLoggedInView() {
         createClubUseCaseInteractor.switchToLoggedInView();
     }

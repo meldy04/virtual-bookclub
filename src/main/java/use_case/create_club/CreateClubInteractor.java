@@ -1,12 +1,8 @@
 package use_case.create_club;
 
-import data_access.InMemoryUserDataAccessObject;
-import data_access.JacksonTranslator;
-import entity.BookClub;
-
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * CreateClub Interactor.
+ */
 public class CreateClubInteractor implements CreateClubInputBoundary {
 
     private final CreateClubOutputBoundary createclubOutputBoundary;

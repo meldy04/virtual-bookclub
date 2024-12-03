@@ -1,5 +1,9 @@
 package use_case.create_club;
 
+/**
+ * Output data for the CreateClub usecase.
+ *
+ */
 public class CreateClubOutputData {
     private final String username;
     private final String clubname;
@@ -23,9 +27,5 @@ public class CreateClubOutputData {
 
     public String getClubname() {
         return clubname;
-    }
-
-    public boolean isUsecaseFailed() {
-        return usecaseFailed;
     }
 }

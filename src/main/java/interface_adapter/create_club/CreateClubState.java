@@ -1,11 +1,14 @@
 package interface_adapter.create_club;
 
+/**
+ * CreateClubState for the CreateClub usecase.
+ */
 public class CreateClubState {
-    private String username = " ";
-    private String clubName = " ";
-    private String successMessage = " ";
-    private String clubDescription = " ";
-    private String errorMessage = "";
+    private String username;
+    private String clubName;
+    private String successMessage;
+    private String clubDescription;
+    private String errorMessage;
 
     public String getClubDescription() {
         return clubDescription;
@@ -31,9 +34,13 @@ public class CreateClubState {
         this.clubName = clubName1;
     }
 
-    public String getSuccessMessage() {return successMessage;}
+    public String getSuccessMessage() {
+        return successMessage;
+    }
 
-    public void setSuccessMessage(String successMessage1) {this.successMessage = successMessage1;}
+    public void setSuccessMessage(String successMessage1) {
+        this.successMessage = successMessage1;
+    }
 
     public String getErrorMessage() {
         return errorMessage;

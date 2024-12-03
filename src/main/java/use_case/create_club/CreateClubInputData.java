@@ -1,5 +1,8 @@
 package use_case.create_club;
 
+/**
+ * Input data for the CreateClub usecase.
+ */
 public class CreateClubInputData {
     private final String clubName;
     private final String clubDescription;
