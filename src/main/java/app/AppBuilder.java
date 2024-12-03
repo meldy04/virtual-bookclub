@@ -2,15 +2,14 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.DBBookClubDataAccessObject;
-import data_access.InMemoryUserDataAccessObject;
-import data_access.JacksonTranslator;
-import data_access.OpenLibraryClient;
+import data_access.*;
+import entity.Book;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
@@ -39,6 +38,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsPresenter;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.recommendations.RecommendationController;
+import interface_adapter.recommendations.RecommendationPresenter;
+import interface_adapter.recommendations.RecommendationViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchViewModel;
@@ -79,6 +81,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.my_clubs.MyClubsInputBoundary;
 import use_case.my_clubs.MyClubsInteractor;
 import use_case.my_clubs.MyClubsOutputBoundary;
+import use_case.recommendations.RecommendationInteractor;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
@@ -457,6 +460,44 @@ public class AppBuilder {
         searchView.setSearchController(searchControllerP);
         searchedView.setSearchController(searchControllerP);
         loggedInView.setSearchController(searchControllerP);
+        return this;
+    }
+
+    /**
+     * Adds the recommendation view to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecommendationView() {
+        final RecommendationViewModel recommendationViewModel = new RecommendationViewModel();
+        final RecommendationView recommendationView = new RecommendationView(recommendationViewModel);
+        cardPanel.add(recommendationView, "recommendationsView");
+        return this;
+    }
+
+    /**
+     * Adds the recommendation use case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecommendationUseCase() {
+        final RecommendationViewModel recommendationViewModel = new RecommendationViewModel();
+        final RecommendationPresenter recommendationPresenter = new RecommendationPresenter(
+                viewManagerModel, recommendationViewModel
+        );
+
+        final List<Book> allBooks = JacksonTranslator.loadBooks();
+        final InMemoryRecommendationDataAccessObject recommendationDataAccess =
+                new InMemoryRecommendationDataAccessObject(allBooks);
+
+        final RecommendationInteractor recommendationInteractor = new RecommendationInteractor(
+                recommendationDataAccess, recommendationPresenter
+        );
+
+        final RecommendationController recommendationController = new RecommendationController(
+                recommendationInteractor, viewManagerModel
+        );
+
+        loggedInView.setRecommendationController(recommendationController);
+
         return this;
     }
 

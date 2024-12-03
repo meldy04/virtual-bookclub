@@ -13,6 +13,8 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
+     * @throws URISyntaxException if a URI syntax error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         final AppBuilder appBuilder = new AppBuilder();
@@ -28,6 +30,7 @@ public class Main {
                 .addAddMessageView()
                 .addCreateClubView()
                 .addShowBooksView()
+                .addRecommendationUseCase()
                 .addLogoutUseCase()
                 .addSignupUseCase()
                 .addChangePasswordUseCase()

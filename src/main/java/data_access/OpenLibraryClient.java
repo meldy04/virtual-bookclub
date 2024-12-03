@@ -3,16 +3,19 @@ package data_access;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import entity.Book;
+import use_case.recommendations.BookRecommendationApi;
 import use_case.search.SearchDataAccessInterface;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class OpenLibraryClient implements SearchDataAccessInterface {
+public class OpenLibraryClient implements SearchDataAccessInterface, BookRecommendationApi {
     private static final String OPEN_LIBRARY_API_SEARCH_URL = "https://openlibrary.org/search.json?title=";
     private static final String OPEN_LIBRAY_API_COVER_URL = "https://covers.openlibrary.org/b/olid/";
     private final Gson gson;
@@ -67,6 +70,45 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
         return books;
     }
 
+    @Override
+    public List<Book> fetchBooksByGenre(String genre) {
+        final List<Book> books = new ArrayList<>();
+
+        try {
+            final String urlString = "https://openlibrary.org/subjects/" + genre.toLowerCase() + ".json?limit=5";
+            final URL url = new URL(urlString);
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            final int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                final StringBuilder inline = new StringBuilder();
+                try (Scanner scanner = new Scanner(url.openStream())) {
+                    while (scanner.hasNext()) {
+                        inline.append(scanner.nextLine());
+                    }
+                }
+
+                final JsonObject jsonResponse = gson.fromJson(inline.toString(), JsonObject.class);
+                final JsonArray works = jsonResponse.getAsJsonArray("works");
+
+                for (int i = 0; i < works.size(); i++) {
+                    final JsonObject work = works.get(i).getAsJsonObject();
+                    final String title = work.get("title").getAsString();
+                    final JsonArray authors = work.getAsJsonArray("authors");
+                    final String author = authors.get(0).getAsJsonObject().get("name").getAsString();
+
+                    books.add(new Book(title, author, genre, 0));
+                }
+            }
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        return books;
+    }
 
     private BookDataTransferObject parseBookFromJson(JsonObject bookJson, String bookTitle) {
         final String titre = bookTitle;
