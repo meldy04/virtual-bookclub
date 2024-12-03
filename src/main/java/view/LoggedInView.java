@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -20,12 +21,9 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_club.CreateClubController;
-import interface_adapter.join_club.JoinClubViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
-import interface_adapter.my_clubs.MyClubsState;
-import interface_adapter.my_clubs.MyClubsViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -55,7 +53,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
-
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -214,6 +211,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
+
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }

@@ -1,23 +1,35 @@
 package view;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.create_club.CreateClubController;
-import interface_adapter.create_club.CreateClubState;
-import interface_adapter.create_club.CreateClubViewModel;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.create_club.CreateClubController;
+import interface_adapter.create_club.CreateClubState;
+import interface_adapter.create_club.CreateClubViewModel;
+
+/**
+ * The CreateClubView.
+ */
 public class CreateClubView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "create club";
     private final CreateClubViewModel createClubViewModel;
+    private final int size2 = 24;
 
     private final JTextField clubNameInputField = new JTextField(15);
     private final JLabel clubNameErrorField = new JLabel();
@@ -36,8 +48,8 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
         this.viewManagerModel = viewManagerModel;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel banner = new JLabel("Create a Club!", SwingConstants.CENTER);
-        banner.setFont(new Font("Brush Script MT", Font.ITALIC, 24));
+        final JLabel banner = new JLabel("Create a Club!", SwingConstants.CENTER);
+        banner.setFont(new Font("Brush Script MT", Font.ITALIC, getSize2()));
         banner.setOpaque(true);
         banner.setBackground(Color.WHITE);
         banner.setForeground(Color.BLACK);
@@ -139,13 +151,15 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
             clubNameInputField.setText(state.getBookclub());
             clubDesInputField.setText(state.getClubDescription());
             clubNameErrorField.setText(state.getErrorMessage());
-        } else if ("error".equals(evt.getPropertyName())) {
+        }
+        else if ("error".equals(evt.getPropertyName())) {
             final String error = createClubViewModel.getState().getErrorMessage();
             JOptionPane.showMessageDialog(this, error);
             System.err.println("Error: " + error);
-        } else if ("success".equals(evt.getPropertyName())) {
+        }
+        else if ("success".equals(evt.getPropertyName())) {
             final String successMessage = createClubViewModel.getState().getSuccessMessage();
-            int option = JOptionPane.showOptionDialog(this,
+            final int option = JOptionPane.showOptionDialog(this,
                     successMessage,
                     "Success",
                     JOptionPane.DEFAULT_OPTION,
@@ -170,5 +184,9 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public int getSize2() {
+        return size2;
     }
 }

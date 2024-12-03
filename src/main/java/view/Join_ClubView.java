@@ -8,7 +8,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.join_club.JoinClubController;
@@ -23,8 +30,7 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
 
     private static final String VIEW_NAME = "JoinClub";
 
-    private final JTextField welcome = new JTextField("Welcome to Joining your Favourite BookClub", 20);
-    private final JTextField instructions = new JTextField("Select a book club from the drop-down menu", 20);
+    private final JTextField instructions = new JTextField("Select a book club from the drop-down menu.", 20);
     private final JComboBox<String> bookClubListComboBox = new JComboBox<>();
     private final JButton backButton = new JButton("Back");
     private final JButton joinClubButton = new JButton("Join Club");
@@ -56,15 +62,13 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
     private void setupU() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        final JLabel title = new JLabel("Joining Club");
+        final JLabel title = new JLabel("Join a Book-Club!");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(title.getFont().deriveFont(font));
         this.add(title);
 
         // Add components
-        welcome.setEditable(false);
         instructions.setEditable(false);
-        this.add(welcome);
         this.add(instructions);
         this.add(bookClubListComboBox);
 

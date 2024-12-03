@@ -14,13 +14,13 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
-import interface_adapter.create_club.*;
-import interface_adapter.create_club.CreateClubController;
 import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_club.CreateClubController;
+import interface_adapter.create_club.CreateClubPresenter;
 import interface_adapter.create_club.CreateClubViewModel;
 import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.exit_bookclub.ExitClubPresenter;
@@ -74,7 +74,15 @@ import use_case.show_discussions.ShowDiscussionsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.AddMessageView;
+import view.CreateClubView;
+import view.Join_ClubView;
+import view.LoggedInView;
+import view.LoginView;
+import view.MyClubsView;
+import view.ShowDiscussionsView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -134,6 +142,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds JoinClub View to the application.
+     * @return the builder.
+     */
     public AppBuilder addJoinClubView() {
         joinClubViewModel = new JoinClubViewModel();
         joinClubView = new Join_ClubView(joinClubViewModel, viewManagerModel);
@@ -229,7 +241,8 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel, myClubsViewModel, createClubViewModel);
+                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel,
+                myClubsViewModel, createClubViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -350,6 +363,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds create club usecase to application.
+     * @return builder.
+     */
     public AppBuilder addCreateClubUseCase() {
         final CreateClubOutputBoundary createClubOutputBoundary =
                 new CreateClubPresenter(createClubViewModel, viewManagerModel, loggedInViewModel);

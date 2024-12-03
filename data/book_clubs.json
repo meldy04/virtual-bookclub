@@ -9,7 +9,28 @@
   "slay" : {
     "name" : "slay",
     "description" : "dsiiuhsuha",
+    "members" : [ ],
+    "books" : [ ],
+    "discussions" : { }
+  },
+  "13" : {
+    "name" : "13",
+    "description" : "19i3i23",
+    "members" : [ "fju" ],
+    "books" : [ ],
+    "discussions" : { }
+  },
+  "fuewj" : {
+    "name" : "fuewj",
+    "description" : "r3i8ejwih",
     "members" : [ "vish" ],
+    "books" : [ ],
+    "discussions" : { }
+  },
+  "zesty" : {
+    "name" : "zesty",
+    "description" : "a saxophone club",
+    "members" : [ ],
     "books" : [ ],
     "discussions" : { }
   }
