@@ -26,12 +26,18 @@ public class CreateClubInteractorTest {
         CreateClubOutputBoundary successPresenter = new CreateClubOutputBoundary() {
             @Override
             public void prepareSuccessView(CreateClubOutputData outputData) {
-                assertTrue(outputData.getUsername().equals(userName) && outputData.getClubname().equals(clubName));
+                assertTrue(outputData.getUsername().equals(userName) &&
+                        outputData.getClubname().equals(clubName) && outputData.getClubDes().equals(clubDes));
             }
 
             @Override
             public void prepareFailView(String errorMessage) {
                 fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void switchToLoggedInView() {
+                fail("Use case switch is unexpected.");
             }
         };
         CreateClubInputBoundary createClubInteractor = new CreateClubInteractor(successPresenter, bookClubRepository);
@@ -58,6 +64,11 @@ public class CreateClubInteractorTest {
             public void prepareFailView(String error) {
                 assertEquals("Mystery Books already exists.", error);
 
+            }
+
+            @Override
+            public void switchToLoggedInView() {
+                fail("Use case switch is unexpected.");
             }
         };
         CreateClubInputBoundary createClubInteractor = new CreateClubInteractor(failPresenter, bookClubRepository);

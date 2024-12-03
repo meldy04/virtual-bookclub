@@ -18,24 +18,27 @@ public class CreateClubInteractor implements CreateClubInputBoundary {
         this.createclubDataAccessInterface = createclubDataAccessInterface;
     }
 
-    // @Override
+    @Override
     public void execute(CreateClubInputData createClubInputData) {
         final String username = createClubInputData.getUsername();
         final String clubName = createClubInputData.getClubName();
-        Map<String, BookClub> bookClubMap = new HashMap<>();
         final String clubDescription = createClubInputData.getClubDescription();
         if (createclubDataAccessInterface.clubExists(clubName)) {
             createclubOutputBoundary.prepareFailView(clubName + " already" + " exists.");
         }
         else {
-            final BookClub bookclub = new BookClub(clubName, clubDescription);
-            final CreateClubOutputData outputData = new CreateClubOutputData(username, clubName, false);
-            createclubDataAccessInterface.addClub(bookclub.getName());
-            createclubDataAccessInterface.addUser(username, bookclub.getName());
-            JacksonTranslator.saveBookClubData(bookClubMap);
+            final CreateClubOutputData outputData = new CreateClubOutputData(username, clubName, clubDescription,
+                    false);
+            createclubDataAccessInterface.addClub(clubName, clubDescription);
+            createclubDataAccessInterface.saveClub();
+            createclubDataAccessInterface.addUser(username, clubName);
             createclubOutputBoundary.prepareSuccessView(outputData);
         }
+    }
 
+    @Override
+    public void switchToLoggedInView() {
+        createclubOutputBoundary.switchToLoggedInView();
     }
 }
 

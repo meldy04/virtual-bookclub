@@ -1,32 +1,18 @@
 package view;
 
-import data_access.DBBookClubDataAccessObject;
-import data_access.InMemoryBookClubDataAccessObject;
-import data_access.JacksonTranslator;
-import entity.BookClub;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.add_message.AddMessageViewModel;
-import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_club.CreateClubController;
-import interface_adapter.create_club.CreateClubPresenter;
 import interface_adapter.create_club.CreateClubState;
 import interface_adapter.create_club.CreateClubViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
-import use_case.create_club.CreateClubDataAccessInterface;
-import use_case.create_club.CreateClubInputBoundary;
-import use_case.create_club.CreateClubInteractor;
-import use_case.create_club.CreateClubOutputBoundary;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CreateClubView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -42,16 +28,13 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
     private final JButton createButton;
     private final JButton cancelButton;
     private CreateClubController createClubController;
-    private LoginViewModel loginViewModel;
-    private LoginController loginController;
+    private final ViewManagerModel viewManagerModel;
 
-    public CreateClubView(CreateClubViewModel createClubViewModel) {
-
+    public CreateClubView(CreateClubViewModel createClubViewModel, ViewManagerModel viewManagerModel) {
         this.createClubViewModel = createClubViewModel;
         this.createClubViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel = viewManagerModel;
 
-//        final JLabel title = new JLabel("Create Club Screen");
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JLabel banner = new JLabel("Create a Club!", SwingConstants.CENTER);
         banner.setFont(new Font("Brush Script MT", Font.ITALIC, 24));
@@ -73,36 +56,19 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
         cancelButton = new JButton("cancel");
         buttons.add(cancelButton);
 
-        createButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(createButton)) {
-                            final CreateClubState currentState = createClubViewModel.getState();
+        createButton.addActionListener(evt -> {
+            final CreateClubState currentState = createClubViewModel.getState();
+            createClubController.execute(
+                    currentState.getBookclub(),
+                    currentState.getClubDescription(),
+                    currentState.getUsername()
+            );
+        });
 
-                            createClubController.execute(
-                                    currentState.getBookclub(),
-                                    currentState.getClubDescription(),
-                                    currentState.getUsername()
-                            );
-                        }
-                    }
-                }
-        );
-
-        cancelButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(cancelButton)) {
-                            final LoginState currentState = loginViewModel.getState();
-
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
+        cancelButton.addActionListener(evt -> {
+            viewManagerModel.setState("logged in");
+            viewManagerModel.firePropertyChanged();
+        });
 
         this.add(banner);
         this.add(clubNameInfo);
@@ -111,64 +77,98 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
         buttons.setBackground(Color.WHITE);
         this.setBackground(Color.WHITE);
+
+        clubNameListener();
+        clubDesListener();
     }
 
-    /**
-     * React to a button click that results in evt.
-     * @param evt the ActionEvent to react to
-     */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+    private void clubNameListener() {
+        clubNameInputField.getDocument().addDocumentListener(new DocumentListener() {
+            private void documentListenerHelper() {
+                final CreateClubState currentState = createClubViewModel.getState();
+                currentState.setBookclub(clubNameInputField.getText());
+                createClubViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+    }
+
+    private void clubDesListener() {
+        clubDesInputField.getDocument().addDocumentListener(new DocumentListener() {
+            private void documentListenerHelper() {
+                final CreateClubState currentState = createClubViewModel.getState();
+                currentState.setClubDescription(clubDesInputField.getText());
+                createClubViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final CreateClubState state = (CreateClubState) evt.getNewValue();
-        setFields(state);
-        clubNameErrorField.setText(state.getErrorMessage());
-    }
-
-    private void setFields(CreateClubState state) {
-        clubNameInputField.setText(state.getBookclub());
-        clubDesInputField.setText(state.getClubDescription());
+        if ("state".equals(evt.getPropertyName())) {
+            final CreateClubState state = (CreateClubState) evt.getNewValue();
+            clubNameInputField.setText(state.getBookclub());
+            clubDesInputField.setText(state.getClubDescription());
+            clubNameErrorField.setText(state.getErrorMessage());
+        } else if ("error".equals(evt.getPropertyName())) {
+            final String error = createClubViewModel.getState().getErrorMessage();
+            JOptionPane.showMessageDialog(this, error);
+            System.err.println("Error: " + error);
+        } else if ("success".equals(evt.getPropertyName())) {
+            final String successMessage = createClubViewModel.getState().getSuccessMessage();
+            int option = JOptionPane.showOptionDialog(this,
+                    successMessage,
+                    "Success",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"OK"},
+                    "OK");
+            if (option == 0) {
+                createClubController.switchToLoggedInView();
+            }
+        }
     }
 
     public String getViewName() {
         return viewName;
     }
 
-    public void setController(CreateClubController controller) {
-        this.createClubController = controller;
+    public void setController(CreateClubController createController) {
+        this.createClubController = createController;
     }
 
-    public static void main(String[] args) {
-        final CreateClubViewModel model = new CreateClubViewModel();
-        final LoggedInViewModel model2 = new LoggedInViewModel();
-        Map<String, BookClub> bookClubMap = new HashMap<>();
-        BookClub club = new BookClub("Cooking", "Culinary");
-        bookClubMap.put("Cooking", club);
-        String username = "John";
-        String clubName = "Girl";
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-        final CreateClubDataAccessInterface dataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
-        dataAccessObject.clubExists(clubName);
-        dataAccessObject.addClub(clubName);
-        dataAccessObject.addUser(username, clubName);
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        final CreateClubOutputBoundary presenter = new CreateClubPresenter(model, viewManagerModel, model2);
-        final CreateClubInputBoundary interactor = new CreateClubInteractor(presenter, dataAccessObject);
-        final CreateClubController controller = new CreateClubController(interactor); // Create the controller
-
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Create Club View");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            CreateClubView view = new CreateClubView(model);
-            view.setController(controller); // Assign the controller to the view
-
-            frame.add(view); // Add the JPanel to the JFrame
-            frame.setSize(500, 400); // Set the size of the JFrame
-            frame.setVisible(true); // Make the JFrame visible
-        });
     }
 }

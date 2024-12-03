@@ -46,12 +46,17 @@ public class DBBookClubDataAccessObject implements
         bookClub.addMember(username);
         JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
+    }
+
+    @Override
+    public void addClub(String clubName, String ClubDes) {
+        bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
 
     }
 
     @Override
-    public void addClub(String clubName) {
-        bookClubMap.put(clubName, new BookClub());
+    public void saveClub() {
+        JacksonTranslator.saveBookClubData(bookClubMap);
     }
 
     @Override

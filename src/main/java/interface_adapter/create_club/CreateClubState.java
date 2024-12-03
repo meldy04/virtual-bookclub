@@ -1,23 +1,11 @@
 package interface_adapter.create_club;
 
 public class CreateClubState {
-    private String username = "";
-    private String clubName = "";
-    private boolean created;
-    private String clubDescription = "";
+    private String username = " ";
+    private String clubName = " ";
+    private String successMessage = " ";
+    private String clubDescription = " ";
     private String errorMessage = "";
-
-    public CreateClubState() {
-
-    }
-
-    public CreateClubState(interface_adapter.create_club.CreateClubState copy) {
-        this.username = copy.username;
-        this.clubName = copy.clubName;
-        this.created = copy.created;
-        this.errorMessage = copy.errorMessage;
-        this.clubDescription = copy.clubDescription;
-    }
 
     public String getClubDescription() {
         return clubDescription;
@@ -43,13 +31,9 @@ public class CreateClubState {
         this.clubName = clubName1;
     }
 
-    public boolean isCreated() {
-        return created;
-    }
+    public String getSuccessMessage() {return successMessage;}
 
-    public void setCreated(boolean created1) {
-        this.created = created1;
-    }
+    public void setSuccessMessage(String successMessage1) {this.successMessage = successMessage1;}
 
     public String getErrorMessage() {
         return errorMessage;
@@ -58,5 +42,4 @@ public class CreateClubState {
     public void setErrorMessage(String errorMessage1) {
         this.errorMessage = errorMessage1;
     }
-
 }

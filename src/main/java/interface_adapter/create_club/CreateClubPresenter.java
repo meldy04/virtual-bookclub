@@ -24,26 +24,29 @@ public class CreateClubPresenter implements CreateClubOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateClubOutputData response) {
-//        final LoggedInState loggedInState = loggedInViewModel.getState();
-//        final AddMessageState addMessageState = addMessageViewModel.getState();
-//
-//        loggedInState.setUsername(response.getUsername());
-//        addMessageState.setCurrentUsername(response.getUsername());
-//
-//        this.loggedInViewModel.setState(loggedInState);
-//        this.loggedInViewModel.firePropertyChanged();
-//        this.addMessageViewModel.setState(addMessageState);
+        final CreateClubState createClubState = createClubViewModel.getState();
+        final String clubName = response.getClubname();
+        createClubState.setSuccessMessage(("Congratulations,! You have successfully joined the club \""
+                + clubName + "\". Click Ok to see your book clubs in \"My Clubs\""));
+        createClubViewModel.setState(createClubState);
+        createClubViewModel.firePropertyChanged("success");
 
-        this.viewManagerModel.setState(loggedInViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-        final CreateClubState didNotCreateClub = createClubViewModel.getState();
-        didNotCreateClub.setBookclub("");
-        didNotCreateClub.setCreated(false);
-        this.createClubViewModel.setState(didNotCreateClub);
-        createClubViewModel.firePropertyChanged();
+        final CreateClubState createClubState = createClubViewModel.getState();
+        createClubState.setErrorMessage(errorMessage);
+        createClubViewModel.setState(createClubState);
+        createClubViewModel.firePropertyChanged("error");
+    }
+
+    @Override
+    public void switchToLoggedInView() {
+        final LoggedInState loggedInState = loggedInViewModel.getState();
+        loggedInViewModel.setState(loggedInState);
+        loggedInViewModel.firePropertyChanged();
+        this.viewManagerModel.setState(loggedInViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 }

@@ -1,5 +1,7 @@
 package use_case.create_club;
 
+import data_access.JacksonTranslator;
+
 /**
  * DAO for Create Club.
  */
@@ -15,8 +17,9 @@ public interface CreateClubDataAccessInterface {
      * Adds the club to the ClubMap.
      * @param clubName the name of the club being added.
      */
-    void addClub(String clubName);
+    void addClub(String clubName, String clubDes);
 
+    void saveClub();
     /**
      * Checks if the club already exists.
      * @param clubName name of the club.

@@ -10,4 +10,6 @@ public interface CreateClubOutputBoundary {
      * Prepares the fail view for the Join Club Use Case.
      */
     void prepareFailView(String errorMessage);
+
+    void switchToLoggedInView();
 }

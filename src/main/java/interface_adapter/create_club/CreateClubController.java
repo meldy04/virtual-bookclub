@@ -14,14 +14,19 @@ public class CreateClubController {
     }
 
     /**
-     * Executes the Join Club Use Case.
+     * Executes the Create Club Use Case.
+     *
      * @param clubDescription description of the club
-     * @param clubName name of the club the user wants to join
-     * @param username the username of the person creating the bookclub.
+     * @param clubName        name of the club the user wants to join
+     * @param username        the username of the person creating the bookclub.
      */
     public void execute(String clubName, String clubDescription, String username) {
         final CreateClubInputData inputData = new CreateClubInputData(clubName, clubDescription, username);
         createClubUseCaseInteractor.execute(inputData);
-
     }
+
+    public void switchToLoggedInView() {
+        createClubUseCaseInteractor.switchToLoggedInView();
+    }
+
 }
