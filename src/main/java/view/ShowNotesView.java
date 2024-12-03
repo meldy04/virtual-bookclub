@@ -17,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.show_notes.ShowNotesController;
 import interface_adapter.show_notes.ShowNotesState;
 import interface_adapter.show_notes.ShowNotesViewModel;
@@ -35,8 +36,13 @@ public class ShowNotesView extends JPanel implements PropertyChangeListener {
     private final JButton viewMessages;
     private final JButton newNote;
 
-    public ShowNotesView(ShowNotesViewModel showTopicsViewModel) {
+    private final JButton back;
+
+    private final ViewManagerModel viewManagerModel;
+
+    public ShowNotesView(ShowNotesViewModel showTopicsViewModel, ViewManagerModel viewManagerModel) {
         this.showTopicsViewModel = showTopicsViewModel;
+        this.viewManagerModel = viewManagerModel;
         showTopicsViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(ShowNotesViewModel.TITLE_LABEL);
@@ -47,6 +53,7 @@ public class ShowNotesView extends JPanel implements PropertyChangeListener {
 
         viewMessages = new JButton(ShowNotesViewModel.VIEW_MESSAGES_BUTTON_LABEL);
         newNote = new JButton(ShowNotesViewModel.NEW_DISCUSSION_BUTTON_LABEL);
+        back = new JButton("Back");
 
         topicsList.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -72,9 +79,20 @@ public class ShowNotesView extends JPanel implements PropertyChangeListener {
 
         );
 
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource() == back) {
+                    viewManagerModel.setState("my clubs");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
+
         final JPanel buttons = new JPanel();
         buttons.add(viewMessages);
         buttons.add(newNote);
+        buttons.add(back);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
