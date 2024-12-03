@@ -47,6 +47,16 @@
           "username" : "user2",
           "text" : "hi"
         } ]
+      },
+      "Topic2" : {
+        "topic" : null,
+        "messages" : [ {
+          "username" : "user1",
+          "text" : "finished reading till page 176"
+        }, {
+          "username" : "user1",
+          "text" : "will continue next week"
+        } ]
       }
     }
   },
