@@ -136,9 +136,11 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
                 if (e.getSource() == back) {
                     viewManagerModel.setState("logged in");
                     viewManagerModel.firePropertyChanged();
+
                 }
             }
         });
+
 
         final JScrollPane scrollPane = new JScrollPane(myClubs);
         final JPanel buttons = new JPanel();
@@ -186,3 +188,4 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
         this.showBooksController = showBooksController;
     }
 }
+
