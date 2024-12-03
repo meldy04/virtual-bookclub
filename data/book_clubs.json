@@ -10,7 +10,7 @@
       "rating" : 9.0,
       "reviews" : [ ]
     } ],
-    "discussions" : {
+    "notes" : {
       "topic1" : {
         "topic" : "topic1",
         "messages" : [ {
@@ -40,8 +40,35 @@
         }, {
           "username" : "user2",
           "text" : "hi"
+        }, {
+          "username" : "user2",
+          "text" : "hey"
+        }, {
+          "username" : "user2",
+          "text" : "hi"
         } ]
       }
     }
+  },
+  "harry potter fans" : {
+    "name" : "harry potter fans",
+    "description" : "club for harry potter fans",
+    "members" : [ "user1" ],
+    "books" : [ ],
+    "notes" : { }
+  },
+  "club3" : {
+    "name" : "club3",
+    "description" : "desc",
+    "members" : [ "user3" ],
+    "books" : [ ],
+    "notes" : { }
+  },
+  "CSC207 club" : {
+    "name" : "CSC207 club",
+    "description" : "club for csc207 students",
+    "members" : [ "user1" ],
+    "books" : [ ],
+    "notes" : { }
   }
 }
