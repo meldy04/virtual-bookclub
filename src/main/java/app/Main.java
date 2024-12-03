@@ -23,6 +23,7 @@ public class Main {
                                             .addJoinClubView()
                                             .addShowDiscussionsView()
                                             .addAddMessageView()
+                                            .addCreateClubView()
                                             .addBookClubListUseCase()
                                             .addLogoutUseCase()
                                             .addSignupUseCase()
@@ -33,6 +34,7 @@ public class Main {
                                             .addShowDiscussionsUseCase()
                                             .addAddMessagesUseCase()
                                             .addLoginUseCase()
+                                            .addCreateClubUseCase()
                                             .build();
 
         application.pack();

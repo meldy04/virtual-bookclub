@@ -5,6 +5,7 @@ import java.util.*;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
@@ -14,7 +15,7 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
  * NOT persist data between runs of the program.
  */
 public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
+        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -41,6 +42,21 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     @Override
     public void addUser(String username, String clubName) {
         bookClubMap.get(clubName).addMember(username);
+    }
+
+    @Override
+    public void addClub(String clubName, String ClubDes) {
+        bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
+    }
+
+    @Override
+    public void saveClub() {
+        JacksonTranslator.saveBookClubData(bookClubMap);
+    }
+
+    @Override
+    public boolean clubExists(String clubName) {
+        return bookClubMap.containsKey(clubName);
     }
 
     @Override

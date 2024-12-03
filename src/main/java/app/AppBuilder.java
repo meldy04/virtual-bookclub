@@ -14,11 +14,14 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
+import interface_adapter.create_club.*;
+import interface_adapter.create_club.CreateClubController;
 import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_club.CreateClubViewModel;
 import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.exit_bookclub.ExitClubPresenter;
 import interface_adapter.join_club.JoinClubController;
@@ -47,6 +50,9 @@ import use_case.bookclub_list.BookClubOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.create_club.CreateClubInputBoundary;
+import use_case.create_club.CreateClubInteractor;
+import use_case.create_club.CreateClubOutputBoundary;
 import use_case.exit_bookclub.ExitClubInputBoundary;
 import use_case.exit_bookclub.ExitClubInteractor;
 import use_case.exit_bookclub.ExitClubOutputBoundary;
@@ -107,6 +113,8 @@ public class AppBuilder {
     private AddMessageViewModel addMessageViewModel;
     private AddMessageView addMessageView;
     private Join_ClubView joinClubView;
+    private CreateClubViewModel createClubViewModel;
+    private CreateClubView createClubView;
 
     private JoinClubViewModel joinClubViewModel;
 
@@ -118,6 +126,13 @@ public class AppBuilder {
      * Adds the JoinClub to the application.
      * @return this builder
      */
+
+    public AppBuilder addCreateClubView() {
+        createClubViewModel = new CreateClubViewModel();
+        createClubView = new CreateClubView(createClubViewModel, viewManagerModel);
+        cardPanel.add(createClubView, createClubView.getViewName());
+        return this;
+    }
 
     public AppBuilder addJoinClubView() {
         joinClubViewModel = new JoinClubViewModel();
@@ -214,12 +229,13 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel, myClubsViewModel);
+                loggedInViewModel, loginViewModel, joinClubViewModel, addMessageViewModel, myClubsViewModel, createClubViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        loggedInView.setLoginController(loginController);
         return this;
     }
 
@@ -331,6 +347,16 @@ public class AppBuilder {
                 new JoinClubInteractor(joinClubOutputBoundary, bookClubDataAccessObject);
         final JoinClubController joinClubController = new JoinClubController(joinClubInteractor);
         joinClubView.setJoinClubController(joinClubController);
+        return this;
+    }
+
+    public AppBuilder addCreateClubUseCase() {
+        final CreateClubOutputBoundary createClubOutputBoundary =
+                new CreateClubPresenter(createClubViewModel, viewManagerModel, loggedInViewModel);
+        final CreateClubInputBoundary createClubInteractor =
+                new CreateClubInteractor(createClubOutputBoundary, bookClubDataAccessObject);
+        final CreateClubController createClubController = new CreateClubController(createClubInteractor);
+        createClubView.setController(createClubController);
         return this;
     }
 
