@@ -1,18 +1,16 @@
 package view;
 
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.search.*;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -32,14 +30,25 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
 
     private final JButton backButton = new JButton("Back to Search");
 
-    public SearchedView(SearchedViewModel searchedViewModelP) {
+    private final ViewManagerModel viewManagerModel;
+
+    public SearchedView(SearchedViewModel searchedViewModelP, ViewManagerModel viewManagerModel) {
         this.searchedViewModel = searchedViewModelP;
+        this.viewManagerModel = viewManagerModel;
 
         searchedViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
-        backButton.addActionListener(evt -> goBackToSearch());
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == backButton) {
+                    viewManagerModel.setState("logged in");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
         add(backButton, BorderLayout.NORTH);
 
         resultList.setCellRenderer(new BookCellRenderer());
@@ -54,7 +63,6 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
             }
         });
     }
-
     /**
      * Updates the results displayed in the JList.
      *

@@ -80,5 +80,12 @@
     "members" : [ "user1" ],
     "books" : [ ],
     "notes" : { }
+  },
+  "csc236 club" : {
+    "name" : "csc236 club",
+    "description" : "a csc236 club",
+    "members" : [ "user1" ],
+    "books" : [ ],
+    "notes" : { }
   }
 }

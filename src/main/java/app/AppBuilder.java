@@ -246,7 +246,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addSearchedView() {
-        searchedView = new SearchedView(searchedViewModel);
+        searchedView = new SearchedView(searchedViewModel, viewManagerModel);
 
         searchedView.addPropertyChangeListener(evt -> {
             if ("backToSearch".equals(evt.getPropertyName())) {
@@ -295,6 +295,7 @@ public class AppBuilder {
                 userDataAccessObject, loginOutputBoundary);
 
         final LoginController loginController = new LoginController(loginInteractor);
+        loggedInView.setLoginController(loginController);
         loginView.setLoginController(loginController);
         return this;
     }
