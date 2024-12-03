@@ -13,7 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import interface_adapter.recommendations.RecommendationViewModel;
-
+/**
+ * Recommendations View Structure.
+ */
 public class RecommendationView extends JPanel implements PropertyChangeListener {
     private final RecommendationViewModel recommendationViewModel;
     private final JTextArea recommendationsArea = new JTextArea(25, 25);

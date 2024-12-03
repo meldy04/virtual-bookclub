@@ -24,6 +24,7 @@ import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.recommendations.RecommendationController;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -61,6 +62,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private SearchController searchController;
 
+    private final JButton viewRecommendations;
+    private RecommendationController recommendationController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel,
                         SearchedViewModel searchedViewModel, SearchViewModel searchViewModel) {
@@ -200,6 +203,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        viewRecommendations = new JButton("View Recommendations");
+        buttons.add(viewRecommendations);
+
+        viewRecommendations.addActionListener(evt -> {
+            if (evt.getSource().equals(viewRecommendations) && recommendationController != null) {
+                final String user = loggedInViewModel.getState().getUsername();
+                if (user != null) {
+                    final String requestType = "genres";
+                    recommendationController.generateRecommendations(user, requestType);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "No user is currently logged in");
+                }
+            }
+        });
+
         final JPanel changePasswordPanel = new JPanel();
         changePasswordPanel.add(passwordInfo);
         changePasswordPanel.add(passwordErrorField);
@@ -263,6 +282,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setSearchController(SearchController searchController) {
         this.searchController = searchController;
+    }
+
+    public void setRecommendationController(RecommendationController recommendationController) {
+        this.recommendationController = recommendationController;
     }
 
 }

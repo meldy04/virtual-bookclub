@@ -13,6 +13,7 @@ import use_case.recommendations.RecommendationDataAccessInterface;
 public class InMemoryRecommendationDataAccessObject implements RecommendationDataAccessInterface {
 
     private final List<Book> books;
+    private final double minRecommendRating = 4.0;
 
     public InMemoryRecommendationDataAccessObject(List<Book> books) {
         this.books = books;
@@ -23,7 +24,7 @@ public class InMemoryRecommendationDataAccessObject implements RecommendationDat
      * @param user The user.
      * @return List of recommended books.
      */
-    @Override
+
     public List<Book> getBooksBasedOnGenres(User user) {
         final List<Book> recommendations = new ArrayList<>();
         for (Book book : books) {
@@ -34,16 +35,21 @@ public class InMemoryRecommendationDataAccessObject implements RecommendationDat
         return recommendations;
     }
 
+    @Override
+    public List<Book> getBooksBasedOnGenres(String user) {
+        return List.of();
+    }
+
     /**
      * Gets the recommended books for a user based on ratings.
      * @param user The user.
      * @return List of recommended books.
      */
     @Override
-    public List<Book> getBooksBasedOnRatings(User user) {
+    public List<Book> getBooksBasedOnRatings(String user) {
         final List<Book> recommendations = new ArrayList<>();
         for (Book book : books) {
-            if (book.getRating() > 4.0) {
+            if (book.getRating() > minRecommendRating) {
                 recommendations.add(book);
             }
         }

@@ -33,14 +33,14 @@ public class RecommendationInteractorTest {
 
     @Test
     public void testGenerateRecommendationsBasedOnGenres() {
-        User user = new User("testUser", "password");
+        String username = "testUser";
         List<Book> recommendedBooks = Collections.singletonList(
                 new Book("Title1", "Author1", "Genre1", 4.5)
         );
 
-        when(dataAccess.getBooksBasedOnGenres(user)).thenReturn(recommendedBooks);
-        interactor.generateRecommendations(new RecommendationInputData(user));
-        verify(dataAccess).getBooksBasedOnGenres(user);
+        when(dataAccess.getBooksBasedOnGenres(username)).thenReturn(recommendedBooks);
+        interactor.generateRecommendations(new RecommendationInputData(username, "genres"));
+        verify(dataAccess).getBooksBasedOnGenres(username);
 
         ArgumentCaptor<RecommendationOutputData> captor = ArgumentCaptor.forClass(RecommendationOutputData.class);
         verify(outputBoundary).presentRecommendations(captor.capture());
@@ -51,14 +51,14 @@ public class RecommendationInteractorTest {
 
     @Test
     public void testGenerateRecommendationsBasedOnRatings() {
-        User user = new User("testUser", "password");
+        String username = "testUser";
         List<Book> highRatedBooks = Collections.singletonList(
                 new Book("Title2", "Author2", "Genre2", 5.0)
         );
 
-        when(dataAccess.getBooksBasedOnRatings(user)).thenReturn(highRatedBooks);
-        interactor.generateRecommendations(new RecommendationInputData(user));
-        verify(dataAccess).getBooksBasedOnRatings(user);
+        when(dataAccess.getBooksBasedOnRatings(username)).thenReturn(highRatedBooks);
+        interactor.generateRecommendations(new RecommendationInputData(username, "ratings"));
+        verify(dataAccess).getBooksBasedOnRatings(username);
 
         ArgumentCaptor<RecommendationOutputData> captor = ArgumentCaptor.forClass(RecommendationOutputData.class);
         verify(outputBoundary).presentRecommendations(captor.capture());
@@ -66,4 +66,52 @@ public class RecommendationInteractorTest {
         List<Book> capturedBooks = captor.getValue().getRecommendedBooks();
         assertEquals(highRatedBooks, capturedBooks);
     }
+
+    @Test
+    public void testGenerateRecommendationsWithUnknownType() {
+        String username = "testUser";
+
+        interactor.generateRecommendations(new RecommendationInputData(username, "unknownType"));
+
+        // Verify no interactions for unsupported types
+        verify(dataAccess, never()).getBooksBasedOnGenres(any());
+        verify(dataAccess, never()).getBooksBasedOnRatings(any());
+        verify(outputBoundary, never()).presentRecommendations(any());
+    }
+
+    @Test
+    public void testGenerateRecommendationsWithNullUsername() {
+        interactor.generateRecommendations(new RecommendationInputData(null, "genres"));
+        verify(dataAccess, never()).getBooksBasedOnGenres(any());
+        verify(outputBoundary, never()).presentRecommendations(any());
+    }
+
+    @Test
+    public void testGenerateRecommendationsWithEmptyUsername() {
+        interactor.generateRecommendations(new RecommendationInputData("", "ratings"));
+        verify(dataAccess, never()).getBooksBasedOnRatings(any());
+        verify(outputBoundary, never()).presentRecommendations(any());
+    }
+
+    @Test
+    public void testGenerateRecommendationsWithNoBooks() {
+        String username = "testUser";
+
+        when(dataAccess.getBooksBasedOnGenres(username)).thenReturn(Collections.emptyList());
+        interactor.generateRecommendations(new RecommendationInputData(username, "genres"));
+        verify(dataAccess).getBooksBasedOnGenres(username);
+
+        ArgumentCaptor<RecommendationOutputData> captor = ArgumentCaptor.forClass(RecommendationOutputData.class);
+        verify(outputBoundary).presentRecommendations(captor.capture());
+
+        List<Book> capturedBooks = captor.getValue().getRecommendedBooks();
+        assertEquals(Collections.emptyList(), capturedBooks);
+    }
+
+    @Test
+    public void testRecommendMethod() {
+        User user = new User("testUser", "testPassword");
+        interactor.recommend(user);
+    }
+
 }

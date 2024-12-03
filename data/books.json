@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Book Title 1",
+    "author": "Author 1",
+    "genre": "Romance",
+    "rating": 4.5
+  },
+  {
+    "title": "Book Title 2",
+    "author": "Author 2",
+    "genre": "Crime",
+    "rating": 4.0
+  }
+]
