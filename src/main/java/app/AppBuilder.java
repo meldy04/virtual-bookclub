@@ -32,6 +32,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsPresenter;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.show_books.ShowBooksController;
+import interface_adapter.show_books.ShowBooksPresenter;
+import interface_adapter.show_books.ShowBooksViewModel;
 import interface_adapter.show_discussions.ShowDiscussionsController;
 import interface_adapter.show_discussions.ShowDiscussionsPresenter;
 import interface_adapter.show_discussions.ShowDiscussionsViewModel;
@@ -62,6 +65,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.my_clubs.MyClubsInputBoundary;
 import use_case.my_clubs.MyClubsInteractor;
 import use_case.my_clubs.MyClubsOutputBoundary;
+import use_case.show_books.ShowBooksInputBoundary;
+import use_case.show_books.ShowBooksInteractor;
+import use_case.show_books.ShowBooksOutputBoundary;
 import use_case.show_discussions.ShowDiscussionsInputBoundary;
 import use_case.show_discussions.ShowDiscussionsInteractor;
 import use_case.show_discussions.ShowDiscussionsOutputBoundary;
@@ -105,6 +111,8 @@ public class AppBuilder {
     private ShowDiscussionsViewModel showDiscussionsViewModel;
     private ShowDiscussionsView showDiscussionsView;
     private AddMessageViewModel addMessageViewModel;
+    private ShowBooksViewModel showBooksViewModel;
+    private ShowBooksView showBooksView;
     private AddMessageView addMessageView;
     private Join_ClubView joinClubView;
 
@@ -125,6 +133,13 @@ public class AppBuilder {
         cardPanel.add(joinClubView, joinClubView.getViewName());
         return this;
 
+    }
+
+    public AppBuilder addShowBooksView(){
+        showBooksViewModel = new ShowBooksViewModel();
+        showBooksView = new ShowBooksView(showBooksViewModel, viewManagerModel);
+        cardPanel.add(showBooksView, showBooksView.getViewName());
+        return this;
     }
 
     /**
@@ -345,6 +360,16 @@ public class AppBuilder {
                 new ExitClubInteractor(exitClubOutputBoundary, bookClubDataAccessObject);
         final ExitClubController exitClubController = new ExitClubController(exitClubInteractor);
         myClubsView.setExitClubController(exitClubController);
+        return this;
+    }
+
+    public AppBuilder addBooksListUseCase(){
+        final ShowBooksOutputBoundary showBooksOutputBoundary =
+                new ShowBooksPresenter(viewManagerModel, showBooksViewModel);
+        final ShowBooksInputBoundary showBooksInteractor = new
+                ShowBooksInteractor(showBooksOutputBoundary, bookClubDataAccessObject);
+        final ShowBooksController showBooksController = new ShowBooksController(showBooksInteractor);
+        myClubsView.setShowBooksController(showBooksController);
         return this;
     }
 

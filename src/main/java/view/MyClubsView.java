@@ -17,6 +17,7 @@ import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.show_books.ShowBooksController;
 
 /**
  * The view for my clubs use case.
@@ -27,6 +28,8 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
     private final MyClubsViewModel myClubsViewModel;
     private MyClubsController myClubsController;
     private ExitClubController exitClubController;
+
+    private ShowBooksController showBooksController;
 
     private final JLabel title;
     private final JButton discussions;
@@ -102,6 +105,14 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        books.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final String currentClub = myClubsViewModel.getState().getCurrentClub();
+                showBooksController.execute(currentClub);
+            }
+        });
+
         final JScrollPane scrollPane = new JScrollPane(myClubs);
         final JPanel buttons = new JPanel();
         buttons.add(discussions);
@@ -141,5 +152,9 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
 
     public void setExitClubController(ExitClubController exitClubController) {
         this.exitClubController = exitClubController;
+    }
+
+    public void setShowBooksController(ShowBooksController showBooksController){
+        this.showBooksController = showBooksController;
     }
 }

@@ -20,6 +20,7 @@ public class Main {
                                             .addSignupView()
                                             .addMyClubsView()
                                             .addLoggedInView()
+                                            .addShowBooksView()
                                             .addJoinClubView()
                                             .addShowDiscussionsView()
                                             .addAddMessageView()
@@ -32,6 +33,7 @@ public class Main {
                                             .addJoinClubUseCase()
                                             .addShowDiscussionsUseCase()
                                             .addAddMessagesUseCase()
+                                            .addBooksListUseCase()
                                             .addLoginUseCase()
                                             .build();
 
