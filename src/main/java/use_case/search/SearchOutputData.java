@@ -1,30 +1,42 @@
 package use_case.search;
 
-import entity.Book;
-
-import java.util.List;
-
 /**
  * Output Data for the `Search` Use Case.
  */
 public class SearchOutputData {
-    private List<Book> books;
+    // Make it a list of String for the book title
+
+    private String title;
+    private String author;
+    private String key;
+    private String coverUrl;
     private String query = "";
     private boolean useCaseFailed;
 
 
-    public SearchOutputData(List<Book> books, boolean useCaseFailed) {
-        this.books = books;
+    public SearchOutputData(String title, String author, String key, String coverUrl, boolean useCaseFailed) {
+        this.title = title;
+        this.author = author;
+        this.key = key;
+        this.coverUrl = coverUrl;
         this.query = "";
         this.useCaseFailed = useCaseFailed;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
     public String getQuery() {
@@ -42,7 +54,5 @@ public class SearchOutputData {
     public void setUseCaseFailed(boolean useCaseFailed) {
         this.useCaseFailed = useCaseFailed;
     }
-
-
 
 }

@@ -1,5 +1,8 @@
 package data_access;
 
+/**
+ * A storage class after book parsing.
+ */
 public class BookDataTransferObject {
     private String title;
     private String author;

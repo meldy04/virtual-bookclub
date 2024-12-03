@@ -18,6 +18,8 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
+                .addSearchedView()
+                .addSearchView()
                 .addSignupView()
                 .addMyClubsView()
                 .addLoggedInView()
@@ -38,6 +40,7 @@ public class Main {
                 .addLoginUseCase()
                 .addCreateClubUseCase()
                 .addBookClubListUseCase()
+                .addSearchUseCase()
                 .build();
 
         application.pack();

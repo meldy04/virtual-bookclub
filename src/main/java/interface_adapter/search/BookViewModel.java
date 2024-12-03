@@ -1,5 +1,8 @@
 package interface_adapter.search;
 
+/**
+ * A storage device for book details used by the Presenter.
+ */
 public class BookViewModel {
     private String title;
     private String author;

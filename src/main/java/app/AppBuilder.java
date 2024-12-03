@@ -10,6 +10,7 @@ import javax.swing.WindowConstants;
 import data_access.DBBookClubDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.JacksonTranslator;
+import data_access.OpenLibraryClient;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
@@ -38,6 +39,10 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsPresenter;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.search.SearchedViewModel;
 import interface_adapter.show_books.ShowBooksController;
 import interface_adapter.show_books.ShowBooksPresenter;
 import interface_adapter.show_books.ShowBooksViewModel;
@@ -74,6 +79,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.my_clubs.MyClubsInputBoundary;
 import use_case.my_clubs.MyClubsInteractor;
 import use_case.my_clubs.MyClubsOutputBoundary;
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInteractor;
+import use_case.search.SearchOutputBoundary;
 import use_case.show_Notes.ShowNotesInputBoundary;
 import use_case.show_Notes.ShowNotesInteractor;
 import use_case.show_Notes.ShowNotesOutputBoundary;
@@ -83,16 +91,7 @@ import use_case.show_books.ShowBooksOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.AddMessageView;
-import view.CreateClubView;
-import view.Join_ClubView;
-import view.LoggedInView;
-import view.LoginView;
-import view.MyClubsView;
-import view.ShowBooksView;
-import view.ShowNotesView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -138,6 +137,12 @@ public class AppBuilder {
 
     private ShowBooksViewModel showBooksViewModel;
     private ShowBooksView showBooksView;
+
+    private SearchedViewModel searchedViewModel = new SearchedViewModel();
+    private SearchedView searchedView;
+    private SearchViewModel searchViewModel = new SearchViewModel();
+    private SearchView searchView;
+    private SearchController searchController;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -198,7 +203,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, searchedViewModel, searchViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -237,6 +242,34 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Searched view to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchedView() {
+        searchedView = new SearchedView(searchedViewModel);
+
+        searchedView.addPropertyChangeListener(evt -> {
+            if ("backToSearch".equals(evt.getPropertyName())) {
+                viewManagerModel.setState(loginView.getViewName());
+                viewManagerModel.firePropertyChanged();
+            }
+        });
+
+        cardPanel.add(searchedView, searchedView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Searched view to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchView() {
+        searchView = new SearchView(searchViewModel);
+        cardPanel.add(searchView, searchView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -263,7 +296,6 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
-        loggedInView.setLoginController(loginController);
         return this;
     }
 
@@ -409,6 +441,22 @@ public class AppBuilder {
                 ShowBooksInteractor(showBooksOutputBoundary, bookClubDataAccessObject);
         final ShowBooksController showBooksController = new ShowBooksController(showBooksInteractor);
         myClubsView.setShowBooksController(showBooksController);
+        return this;
+    }
+
+    /**
+     * Adds the exit club usecase to the application.
+     * @return this builder
+     */
+    public AppBuilder addSearchUseCase() {
+        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel,
+                viewManagerModel, searchedViewModel);
+        final OpenLibraryClient apiCaller = new OpenLibraryClient();
+        final SearchInputBoundary searchInteractor = new SearchInteractor(apiCaller, searchOutputBoundary);
+        final SearchController searchControllerP = new SearchController(searchInteractor);
+        searchView.setSearchController(searchControllerP);
+        searchedView.setSearchController(searchControllerP);
+        loggedInView.setSearchController(searchControllerP);
         return this;
     }
 
