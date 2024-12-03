@@ -19,7 +19,9 @@ import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_club.CreateClubController;
 import interface_adapter.join_club.JoinClubViewModel;
+import interface_adapter.login.LoginController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
@@ -37,6 +39,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private MyClubsController myClubsController;
     private LogoutController logoutController;
+    private CreateClubController createClubController;
+    private LoginController loginController;
 
     private BookClubListController bookClubListController;
 
@@ -46,6 +50,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton myClubs;
 
     private final JButton joinClub;
+
+    private final JButton createClub;
 
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
@@ -74,8 +80,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         changePassword = new JButton("Change Password");
         buttons.add(changePassword);
 
-        joinClub = new JButton("Proceed to Join a Club");
+        joinClub = new JButton("Join a Club");
         buttons.add(joinClub);
+
+        createClub = new JButton("Create a Club");
+        buttons.add(createClub);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -127,6 +136,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+
+        createClub.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(createClub)) {
+                        // 1. get the state out of the loggedInViewModel. It contains the username.
+                        // 2. Execute the logout Controller.
+                        loginController.switchToCreateClubView();
+                    }
+                }
+        );
+
         joinClub.addActionListener(
                 new ActionListener() {
                     @Override
@@ -190,6 +211,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.changePasswordController = changePasswordController;
     }
 
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
+    }
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
