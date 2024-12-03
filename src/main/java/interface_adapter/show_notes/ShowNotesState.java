@@ -1,4 +1,4 @@
-package interface_adapter.show_discussions;
+package interface_adapter.show_notes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * The State for the show topics View Model.
  */
-public class ShowDiscussionsState {
+public class ShowNotesState {
     private List<String> topics = new ArrayList<>();
     private String currentClub;
-    private String currentDiscussion;
+    private String currentNotes;
     private String errorMessage;
 
     public List<String> getTopics() {
@@ -36,11 +36,11 @@ public class ShowDiscussionsState {
         this.currentClub = currentClub;
     }
 
-    public String getCurrentDiscussion() {
-        return currentDiscussion;
+    public String getCurrentNotes() {
+        return currentNotes;
     }
 
-    public void setCurrentDiscussion(String currentDiscussion) {
-        this.currentDiscussion = currentDiscussion;
+    public void setCurrentNotes(String currentNotes) {
+        this.currentNotes = currentNotes;
     }
 }

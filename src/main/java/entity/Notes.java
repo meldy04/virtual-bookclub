@@ -9,25 +9,25 @@ import java.util.List;
  * A discussion class.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Discussion {
+public class Notes {
     private String topic;
     private List<Message> messages = new ArrayList<>();
 
-    public Discussion(String topic, List<Message> messages) {
+    public Notes(String topic, List<Message> messages) {
         this.topic = topic;
         this.messages = messages;
     }
 
     // Default constructor (required for deserialization)
-    public Discussion() {
+    public Notes() {
 
     }
 
-    public Discussion(String topic) {
+    public Notes(String topic) {
         this.topic = topic;
     }
 
-    public Discussion(List<Message> messages) {
+    public Notes(List<Message> messages) {
         this.messages = messages;
     }
 

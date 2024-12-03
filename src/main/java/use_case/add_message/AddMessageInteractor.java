@@ -24,7 +24,7 @@ public class AddMessageInteractor implements AddMessageInputBoundary {
 
         final AddMessageOutputData outputData =
                 new AddMessageOutputData(addMessageDataAccessInterface.getMessages(), addMessageDataAccessInterface
-                        .getCurrentDiscussion());
+                        .getCurrentNote());
 
         addMessageOutputBoundary.prepareShowMessageView(outputData);
     }
