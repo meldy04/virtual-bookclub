@@ -10,6 +10,12 @@
       "genre" : "action",
       "rating" : 9.0,
       "reviews" : [ ]
+    }, {
+      "title" : "book2",
+      "author" : "author2",
+      "genre" : "thriller",
+      "rating" : 8.0,
+      "reviews" : [ ]
     } ],
     "notes" : {
       "topic1" : {
@@ -47,6 +53,12 @@
         }, {
           "username" : "user2",
           "text" : "hi"
+        }, {
+          "username" : "user1",
+          "text" : "nice meeting you"
+        }, {
+          "username" : "user1",
+          "text" : "hello"
         } ]
       }
     }

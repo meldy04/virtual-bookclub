@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsState;
@@ -36,12 +37,17 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
     private final JButton books;
     private final JButton exit;
 
+    private final JButton back;
+
     private final JTable myClubs;
     private final String[] columnNames = {"Club Name", "Description"};
     private final DefaultTableModel tableModel;
 
-    public MyClubsView(MyClubsViewModel myClubsViewModel) {
+    private final ViewManagerModel viewManagerModel;
+
+    public MyClubsView(MyClubsViewModel myClubsViewModel, ViewManagerModel viewManagerModel) {
         this.myClubsViewModel = myClubsViewModel;
+        this.viewManagerModel = viewManagerModel;
         myClubsViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(myClubsViewModel.TITLE_LABEL);
@@ -56,6 +62,7 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
         discussions = new JButton(MyClubsViewModel.NOTES_LABEL);
         books = new JButton(MyClubsViewModel.BOOKS_LABEL);
         exit = new JButton(MyClubsViewModel.EXIT_LABEL);
+        back = new JButton("Back");
 
         final JTableHeader tableHeader = myClubs.getTableHeader();
         tableHeader.setFont(new Font("Arial", Font.BOLD, 18));
@@ -113,11 +120,21 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == back) {
+                    viewManagerModel.setState("logged in");
+                    viewManagerModel.firePropertyChanged();
+            }
+        }});
+
         final JScrollPane scrollPane = new JScrollPane(myClubs);
         final JPanel buttons = new JPanel();
         buttons.add(discussions);
         buttons.add(books);
         buttons.add(exit);
+        buttons.add(back);
 
         title.setBackground(Color.WHITE);
         scrollPane.setBackground(Color.WHITE);
@@ -158,3 +175,4 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
         this.showBooksController = showBooksController;
     }
 }
+

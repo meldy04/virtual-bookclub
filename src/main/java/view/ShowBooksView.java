@@ -1,15 +1,24 @@
 package view;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.show_books.ShowBooksViewModel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.show_books.ShowBooksViewModel;
 
 /**
  * The Show books viewclass represents the GUI for users to see books in bookclubs.
@@ -23,7 +32,6 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
     private final DefaultListModel<String> bookListModel = new DefaultListModel<>();
     private final JList<String> bookList = new JList<>(bookListModel);
     private final JButton backButton = new JButton("Back");
-    private final JButton searchButton = new JButton("Search Books");
 
     private final ShowBooksViewModel showBooksViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -78,12 +86,10 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
         final JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(backButton);
-        bottomPanel.add(searchButton);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         // Add action listeners for buttons
         backButton.addActionListener(this);
-        searchButton.addActionListener(this);
     }
 
     /**
@@ -105,10 +111,6 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             viewManagerModel.setState("my clubs");
-            viewManagerModel.firePropertyChanged();
-        }
-        else if (e.getSource() == searchButton) {
-            viewManagerModel.setState("searchBooksView");
             viewManagerModel.firePropertyChanged();
         }
     }
