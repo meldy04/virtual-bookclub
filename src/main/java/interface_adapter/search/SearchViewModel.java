@@ -2,8 +2,6 @@ package interface_adapter.search;
 
 import interface_adapter.ViewModel;
 
-
-
 /**
  * The View Model for the Search View.
  */

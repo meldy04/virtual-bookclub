@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import use_case.search.SearchDataAccessInterface;
 
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -12,6 +13,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The OpenLibraryClient is responsible for making the Api calls and parsing it.
+ */
 public class OpenLibraryClient implements SearchDataAccessInterface {
     private static final String OPEN_LIBRARY_API_SEARCH_URL = "https://openlibrary.org/search.json?title=";
     private static final String OPEN_LIBRAY_API_COVER_URL = "https://covers.openlibrary.org/b/olid/";
@@ -66,7 +70,6 @@ public class OpenLibraryClient implements SearchDataAccessInterface {
         }
         return books;
     }
-
 
     private BookDataTransferObject parseBookFromJson(JsonObject bookJson, String bookTitle) {
         final String titre = bookTitle;

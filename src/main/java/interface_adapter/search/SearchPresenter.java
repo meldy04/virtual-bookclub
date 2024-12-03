@@ -4,7 +4,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
 
-
+/**
+ * The search presenter responsible for preparing the views.
+ */
 public class SearchPresenter implements SearchOutputBoundary {
     private final SearchViewModel searchViewModel;
     private final SearchedViewModel searchedViewModel;
@@ -17,8 +19,6 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.searchedViewModel = searchedViewModel;
     }
-
-
 
     @Override
     public void prepareSuccessView(SearchOutputData outputData) {

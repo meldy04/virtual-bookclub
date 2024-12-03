@@ -89,7 +89,7 @@ class SearchInteractorTest {
 
             @Override
             public void prepareFailView(String errorMessage) {
-                assertEquals("No results found", errorMessage);
+                assertEquals("Search failed. Enter a valid query", errorMessage);
             }
         };
 
