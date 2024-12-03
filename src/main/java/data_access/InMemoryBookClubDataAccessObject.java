@@ -6,18 +6,20 @@ import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.bookclub_list.BookClubDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
-import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
+import use_case.show_Notes.ShowNotesDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface, ExitClubDataAccessInterface,
-        BookClubDataAccessInterface {
+public class InMemoryBookClubDataAccessObject implements
+        JoinClubDataAccessInterface, AddMessageDataAccessInterface, MyClubsDataAccessInterface,
+        ExitClubDataAccessInterface,
+        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -37,13 +39,23 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public String getCurrentDiscussion() {
+    public String getCurrentNote() {
         return currentDiscussion;
     }
 
     @Override
     public void addUser(String username, String clubName) {
         bookClubMap.get(clubName).addMember(username);
+    }
+
+    @Override
+    public void addClub(String clubName, String ClubDes) {
+        bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
+    }
+
+    @Override
+    public boolean clubExists(String clubName) {
+        return bookClubMap.containsKey(clubName);
     }
 
     @Override
@@ -62,14 +74,14 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
 
     @Override
     public void saveMessage(String text, String currentUsername) {
-        bookClubMap.get(currentClub).getDiscussions().get(currentDiscussion)
+        bookClubMap.get(currentClub).getNotes().get(currentDiscussion)
                 .addMessage(new Message(currentUsername, text));
     }
 
     @Override
     public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
         final List<Message> messagesList = bookClubMap.get(currentClub)
-                .getDiscussions().get(currentDiscussion).getMessages();
+                .getNotes().get(currentDiscussion).getMessages();
 
         final List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
 
@@ -80,14 +92,14 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
     }
 
     @Override
-    public List<String> getDiscussionsTopics() {
-        final Set<String> keys = bookClubMap.get(currentClub).getDiscussions().keySet();
+    public List<String> getNotesTopics() {
+        final Set<String> keys = bookClubMap.get(currentClub).getNotes().keySet();
         return new ArrayList<>(keys);
     }
 
     @Override
-    public void setCurrentDiscussion(String currentDiscussion) {
-        this.currentDiscussion = currentDiscussion;
+    public void setCurrentNote(String currentNote) {
+        this.currentDiscussion = currentNote;
     }
 
     @Override
@@ -95,7 +107,7 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
         final Map<String, String> result = new HashMap<>();
         for (BookClub bookClub : bookClubMap.values()) {
             if (bookClub.isMember(currentUsername)) {
-                result.put(bookClub.getName(), bookClub.getDescription());
+                result.put(bookClub.getName(), bookClub.getName());
             }
         }
         return result;

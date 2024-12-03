@@ -3,6 +3,10 @@ package interface_adapter.show_books;
 import use_case.show_books.ShowBooksInputBoundary;
 import use_case.show_books.ShowBooksInputData;
 
+/**
+ * Controller for the Show bookclub.
+ */
+
 public class ShowBooksController {
 
 
@@ -14,7 +18,7 @@ public class ShowBooksController {
 
     /**
      * Excutes the cotroller.
-     * @param clubName
+     * @param clubName for the excute.
      */
 
     public void execute(String clubName) {

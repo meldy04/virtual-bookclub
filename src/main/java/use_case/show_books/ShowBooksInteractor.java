@@ -6,8 +6,7 @@ import java.util.List;
  * The show books club Interactor.
  */
 
-public class ShowBooksInteractor implements ShowBooksInputBoundary{
-
+public class ShowBooksInteractor implements ShowBooksInputBoundary {
     private final ShowBooksOutputBoundary showBooksOutputBoundary;
 
     private final ShowBooksDataAccessInterface showBooksDataAccessInterface;
@@ -18,7 +17,7 @@ public class ShowBooksInteractor implements ShowBooksInputBoundary{
     }
 
     @Override
-    public void execute(ShowBooksInputData showBooksInputData){
+    public void execute(ShowBooksInputData showBooksInputData) {
         final String clubName = showBooksInputData.getClubName();
         final List<String> titles = showBooksDataAccessInterface.getBooks(clubName);
         final ShowBooksOutputData outputData = new ShowBooksOutputData(titles);

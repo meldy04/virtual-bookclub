@@ -4,12 +4,15 @@ import interface_adapter.ViewManagerModel;
 import use_case.show_books.ShowBooksOutputBoundary;
 import use_case.show_books.ShowBooksOutputData;
 
+/**
+ * The Presenter for the Join Club Use Case.
+ */
+
 public class ShowBooksPresenter implements ShowBooksOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
 
     private final ShowBooksViewModel showBooksViewModel;
-
 
     public ShowBooksPresenter(ViewManagerModel viewManagerModel, ShowBooksViewModel showBooksViewModel) {
         this.viewManagerModel = viewManagerModel;

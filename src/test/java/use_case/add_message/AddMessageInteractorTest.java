@@ -2,7 +2,7 @@ package use_case.add_message;
 
 import data_access.InMemoryBookClubDataAccessObject;
 import entity.BookClub;
-import entity.Discussion;
+import entity.Notes;
 import entity.Message;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,14 @@ class AddMessageInteractorTest {
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub bookClub = new BookClub("Cooking", "Culinary");
         // adds 2 empty discussions in the book club
-        bookClub.addDiscussion("favourite foods", new Discussion("favourite foods", new ArrayList<>()));
-        bookClub.addDiscussion("cooking tips", new Discussion("cooking tips", new ArrayList<>()));
-        bookClub.getDiscussion("favourite foods").addMessage(new Message("user 1", "Pizza is my favourite"));
+        bookClub.addNotes("favourite foods", new Notes("favourite foods", new ArrayList<>()));
+        bookClub.addNotes("cooking tips", new Notes("cooking tips", new ArrayList<>()));
+        bookClub.getNote("favourite foods").addMessage(new Message("user 1", "Pizza is my favourite"));
         bookClubMap.put("Cooking", bookClub);
 
         inMemoryBookClubDataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
         inMemoryBookClubDataAccessObject.setCurrentClub("Cooking");
-        inMemoryBookClubDataAccessObject.setCurrentDiscussion("favourite foods");
+        inMemoryBookClubDataAccessObject.setCurrentNote("favourite foods");
         // setting current book club and current discussion which is done by other use cases.
 
     }

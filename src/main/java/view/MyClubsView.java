@@ -53,7 +53,7 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
         myClubs.setCellSelectionEnabled(true);
         myClubs.setRowSelectionAllowed(false);
         myClubs.setColumnSelectionAllowed(false);
-        discussions = new JButton(MyClubsViewModel.DISCUSSIONS_LABEL);
+        discussions = new JButton(MyClubsViewModel.NOTES_LABEL);
         books = new JButton(MyClubsViewModel.BOOKS_LABEL);
         exit = new JButton(MyClubsViewModel.EXIT_LABEL);
 

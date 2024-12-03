@@ -1,3 +1,4 @@
+
 package app;
 
 import java.io.IOException;
@@ -16,26 +17,28 @@ public class Main {
     public static void main(String[] args) throws URISyntaxException, IOException {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addMyClubsView()
-                                            .addLoggedInView()
-                                            .addShowBooksView()
-                                            .addJoinClubView()
-                                            .addShowDiscussionsView()
-                                            .addAddMessageView()
-                                            .addBookClubListUseCase()
-                                            .addLogoutUseCase()
-                                            .addSignupUseCase()
-                                            .addChangePasswordUseCase()
-                                            .addExitBookClubUseCase()
-                                            .addMyClubsUsecase()
-                                            .addJoinClubUseCase()
-                                            .addShowDiscussionsUseCase()
-                                            .addAddMessagesUseCase()
-                                            .addBooksListUseCase()
-                                            .addLoginUseCase()
-                                            .build();
+                .addLoginView()
+                .addSignupView()
+                .addMyClubsView()
+                .addLoggedInView()
+                .addJoinClubView()
+                .addShowDiscussionsView()
+                .addAddMessageView()
+                .addCreateClubView()
+                .addShowBooksView()
+                .addLogoutUseCase()
+                .addSignupUseCase()
+                .addChangePasswordUseCase()
+                .addExitBookClubUseCase()
+                .addBooksListUseCase()
+                .addMyClubsUsecase()
+                .addJoinClubUseCase()
+                .addShowDiscussionsUseCase()
+                .addAddMessagesUseCase()
+                .addLoginUseCase()
+                .addCreateClubUseCase()
+                .addBookClubListUseCase()
+                .build();
 
         application.pack();
         application.setVisible(true);

@@ -1,4 +1,4 @@
-package use_case.show_discussions;
+package use_case.show_Notes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * The output data for the show discussions usecase.
  */
-public class ShowDiscussionsOutputData {
+public class ShowNotesOutputData {
 
     private List<String> topics = new ArrayList<>();
 
-    public ShowDiscussionsOutputData(List<String> topics) {
+    public ShowNotesOutputData(List<String> topics) {
         this.topics = topics;
     }
 

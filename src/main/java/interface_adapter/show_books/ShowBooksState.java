@@ -3,6 +3,10 @@ package interface_adapter.show_books;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The state for showbooks state.
+ */
+
 public class ShowBooksState {
 
     private List<String> booksList = new ArrayList<>();

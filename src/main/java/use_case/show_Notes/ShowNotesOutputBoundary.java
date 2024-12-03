@@ -1,15 +1,15 @@
-package use_case.show_discussions;
+package use_case.show_Notes;
 
 /**
  * Output boundary for show discussions usecase.
  */
-public interface ShowDiscussionsOutputBoundary {
+public interface ShowNotesOutputBoundary {
 
     /**
      * Prepares the success view for the show discussions usecase.
      * @param outputData the output data
      */
-    void prepareSuccessView(ShowDiscussionsOutputData outputData);
+    void prepareSuccessView(ShowNotesOutputData outputData);
 
     /**
      * Prepares the fail view for the show discussions usecase.

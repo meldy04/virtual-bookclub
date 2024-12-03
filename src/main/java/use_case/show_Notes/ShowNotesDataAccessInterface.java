@@ -1,4 +1,4 @@
-package use_case.show_discussions;
+package use_case.show_Notes;
 
 import java.util.List;
 
@@ -6,16 +6,16 @@ import java.util.List;
  * DAO for show discussions usecase.
  */
 
-public interface ShowDiscussionsDataAccessInterface {
+public interface ShowNotesDataAccessInterface {
     /**
      * Gets the topics of the discussions in the current club.
      * @return list of topic names
      */
-    List<String> getDiscussionsTopics();
+    List<String> getNotesTopics();
 
     /**
-     * Sets the current discussion topic in the current club.
+     * Sets the current Note topic in the current club.
      * @param discussion the discussion topic
      */
-    void setCurrentDiscussion(String discussion);
+    void setCurrentNote(String discussion);
 }

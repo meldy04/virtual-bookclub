@@ -1,7 +1,6 @@
-
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -23,8 +22,8 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
 
     private static final String VIEW_NAME = "JoinClub";
 
-    private final JTextField welcome = new JTextField("Welcome to Joining your Favourite BookClub", 20);
-    private final JTextField instructions = new JTextField("Select a book club from the drop-down menu", 20);
+    private final JTextArea welcome = new JTextArea("Join A Club");
+    private final JTextArea instructions = new JTextArea("Select a book club from the drop-down menu.");
     private final JComboBox<String> bookClubListComboBox = new JComboBox<>();
     private final JButton backButton = new JButton("Back");
     private final JButton joinClubButton = new JButton("Join Club");
@@ -34,8 +33,8 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
 
     private JoinClubController joinClubController;
 
-    private final float font = 15f;
-    private final int width = 10;
+    private final float font = 16f;
+    private final float width = 14f;
 
     /**
      * Constructs a new Join_ClubView instance.
@@ -54,27 +53,44 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
      * Sets up the UI components and layout for the join club view.
      */
     private void setupU() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
 
-        final JLabel title = new JLabel("Joining Club");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(title.getFont().deriveFont(font));
-        this.add(title);
+        // Top panel for welcome and instructions
+        final JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 
-        // Add components
+        // Configure welcome text area
         welcome.setEditable(false);
+        welcome.setWrapStyleWord(true);
+        welcome.setLineWrap(true);
+        welcome.setFont(welcome.getFont().deriveFont(font));
+        welcome.setBackground(this.getBackground());
+        topPanel.add(welcome);
+
+        // Configure instructions text area
         instructions.setEditable(false);
-        this.add(welcome);
-        this.add(instructions);
-        this.add(bookClubListComboBox);
+        instructions.setWrapStyleWord(true);
+        instructions.setLineWrap(true);
+        instructions.setFont(instructions.getFont().deriveFont(width));
+        instructions.setBackground(this.getBackground());
+        topPanel.add(instructions);
 
-        final JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(backButton);
-        buttonPanel.add(Box.createHorizontalStrut(width));
-        buttonPanel.add(joinClubButton);
-        this.add(buttonPanel);
+        this.add(topPanel, BorderLayout.NORTH);
 
+        // Center panel for combo box
+        final JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.add(bookClubListComboBox);
+        this.add(centerPanel, BorderLayout.CENTER);
+
+        // Bottom panel for buttons
+        final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.add(backButton);
+        bottomPanel.add(joinClubButton);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+
+        // Add action listeners for buttons
         backButton.addActionListener(this);
         joinClubButton.addActionListener(this);
     }
@@ -108,12 +124,10 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
     public void propertyChange(final PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             populateBookClubList();
-        }
-        else if ("error".equals(evt.getPropertyName())) {
+        } else if ("error".equals(evt.getPropertyName())) {
             final String error = joinClubViewModel.getState().getErrorMessage();
             JOptionPane.showMessageDialog(this, error);
-        }
-        else if ("success".equals(evt.getPropertyName())) {
+        } else if ("success".equals(evt.getPropertyName())) {
             final String successMessage = joinClubViewModel.getState().getSucceesMessage();
 
             // Custom success message with OK button using showOptionDialog

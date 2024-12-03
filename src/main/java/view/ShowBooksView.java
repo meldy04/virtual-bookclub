@@ -1,42 +1,41 @@
 package view;
 
-
+import interface_adapter.ViewManagerModel;
+import interface_adapter.show_books.ShowBooksViewModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.join_club.JoinClubController;
-import interface_adapter.show_books.ShowBooksViewModel;
-
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The Show books viewclass represents the GUI for users to see books in bookclubs.
+ */
 public class ShowBooksView extends JPanel implements PropertyChangeListener, ActionListener {
 
     private static final String VIEW_NAME = "Books";
 
-    private final JTextField welcome = new JTextField("Books List", 20);
-    private final JTextField instructions = new JTextField("You can see all the books in this book club and go to the search view.", 20);
+    private final JTextArea welcome = new JTextArea("Books List");
+    private final JTextArea instructions = new JTextArea("You can see all the books in this book club");
     private final DefaultListModel<String> bookListModel = new DefaultListModel<>();
     private final JList<String> bookList = new JList<>(bookListModel);
     private final JButton backButton = new JButton("Back");
     private final JButton searchButton = new JButton("Search Books");
 
-    private ShowBooksViewModel showBooksViewModel;
+    private final ShowBooksViewModel showBooksViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    private JoinClubController joinClubController;
-
-    private final float font = 15f;
-    private final int width = 10;
+    private final float font = 16f;
+    private final float width = 14f;
 
     public ShowBooksView(ShowBooksViewModel showBooksViewModel, ViewManagerModel viewManagerModel) {
         this.showBooksViewModel = showBooksViewModel;
         this.viewManagerModel = viewManagerModel;
         showBooksViewModel.addPropertyChangeListener(this);
+
         setupU();
     }
 
@@ -44,34 +43,45 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
      * Sets up the UI components and layout for the show books view.
      */
     private void setupU() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
 
-        final JLabel title = new JLabel("Show Books");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(title.getFont().deriveFont(font));
-        this.add(title);
+        // Create top panel for title and instructions
+        final JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 
-        // Add header and instructions
+        // Configure welcome text
         welcome.setEditable(false);
+        welcome.setWrapStyleWord(true);
+        welcome.setLineWrap(true);
+        welcome.setBackground(this.getBackground());
+        welcome.setFont(welcome.getFont().deriveFont(font));
+        welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
+        topPanel.add(welcome);
+
+        // Configure instructions text
         instructions.setEditable(false);
-        this.add(welcome);
-        this.add(instructions);
+        instructions.setWrapStyleWord(true);
+        instructions.setLineWrap(true);
+        instructions.setBackground(this.getBackground());
+        instructions.setFont(instructions.getFont().deriveFont(font));
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+        topPanel.add(instructions);
 
-        final JLabel booksHeader = new JLabel("Books Title:");
-        booksHeader.setFont(booksHeader.getFont().deriveFont(font));
-        booksHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
-        this.add(booksHeader);
+        // Add top panel to the top of the layout
+        this.add(topPanel, BorderLayout.NORTH);
 
+        // Configure book list with a scroll pane
         final JScrollPane scrollPane = new JScrollPane(bookList);
-        this.add(scrollPane);
+        this.add(scrollPane, BorderLayout.CENTER);
 
-        final JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(backButton);
-        buttonPanel.add(Box.createHorizontalStrut(width));
-        buttonPanel.add(searchButton);
-        this.add(buttonPanel);
+        // Create bottom panel for buttons
+        final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.add(backButton);
+        bottomPanel.add(searchButton);
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
+        // Add action listeners for buttons
         backButton.addActionListener(this);
         searchButton.addActionListener(this);
     }
@@ -98,7 +108,6 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
             viewManagerModel.firePropertyChanged();
         }
         else if (e.getSource() == searchButton) {
-            // Handle search button logic
             viewManagerModel.setState("searchBooksView");
             viewManagerModel.firePropertyChanged();
         }
