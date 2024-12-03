@@ -1,13 +1,21 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -24,8 +32,10 @@ import interface_adapter.show_books.ShowBooksController;
  * The view for my clubs use case.
  */
 public class MyClubsView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "my clubs";
+    private static final int TITLE_SIZE = 24;
+    private static final int TABLE_SIZE = 18;
 
+    private final String viewName = "my clubs";
     private final MyClubsViewModel myClubsViewModel;
     private MyClubsController myClubsController;
     private ExitClubController exitClubController;
@@ -33,7 +43,7 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
     private ShowBooksController showBooksController;
 
     private final JLabel title;
-    private final JButton discussions;
+    private final JButton notes;
     private final JButton books;
     private final JButton exit;
 
@@ -52,20 +62,20 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
 
         title = new JLabel(myClubsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE));
         tableModel = new DefaultTableModel(columnNames, 0);
 
         myClubs = new JTable(tableModel);
         myClubs.setCellSelectionEnabled(true);
         myClubs.setRowSelectionAllowed(false);
         myClubs.setColumnSelectionAllowed(false);
-        discussions = new JButton(MyClubsViewModel.NOTES_LABEL);
+        notes = new JButton(MyClubsViewModel.NOTES_LABEL);
         books = new JButton(MyClubsViewModel.BOOKS_LABEL);
         exit = new JButton(MyClubsViewModel.EXIT_LABEL);
         back = new JButton("Back");
 
         final JTableHeader tableHeader = myClubs.getTableHeader();
-        tableHeader.setFont(new Font("Arial", Font.BOLD, 18));
+        tableHeader.setFont(new Font("Arial", Font.BOLD, TABLE_SIZE));
         tableHeader.setBackground(Color.WHITE);
         myClubs.setBackground(Color.WHITE);
 
@@ -94,7 +104,7 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        discussions.addActionListener(new ActionListener() {
+        notes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 final String currentClub = myClubsViewModel.getState().getCurrentClub();
@@ -126,12 +136,15 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
                 if (e.getSource() == back) {
                     viewManagerModel.setState("logged in");
                     viewManagerModel.firePropertyChanged();
+
+                }
             }
-        }});
+        });
+
 
         final JScrollPane scrollPane = new JScrollPane(myClubs);
         final JPanel buttons = new JPanel();
-        buttons.add(discussions);
+        buttons.add(notes);
         buttons.add(books);
         buttons.add(exit);
         buttons.add(back);
@@ -171,7 +184,7 @@ public class MyClubsView extends JPanel implements PropertyChangeListener {
         this.exitClubController = exitClubController;
     }
 
-    public void setShowBooksController(ShowBooksController showBooksController){
+    public void setShowBooksController(ShowBooksController showBooksController) {
         this.showBooksController = showBooksController;
     }
 }

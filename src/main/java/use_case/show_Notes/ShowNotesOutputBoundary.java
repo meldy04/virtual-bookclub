@@ -1,18 +1,18 @@
 package use_case.show_Notes;
 
 /**
- * Output boundary for show discussions usecase.
+ * Output boundary for show Notes usecase.
  */
 public interface ShowNotesOutputBoundary {
 
     /**
-     * Prepares the success view for the show discussions usecase.
+     * Prepares the success view for the show Notes usecase.
      * @param outputData the output data
      */
     void prepareSuccessView(ShowNotesOutputData outputData);
 
     /**
-     * Prepares the fail view for the show discussions usecase.
+     * Prepares the fail view for the show Notes usecase.
      * @param errorMessage the message that will be displayed
      */
     void prepareFailView(String errorMessage);

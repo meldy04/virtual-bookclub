@@ -52,7 +52,7 @@ public class ShowNotesView extends JPanel implements PropertyChangeListener {
         final JScrollPane scrollPane = new JScrollPane(topicsList);
 
         viewMessages = new JButton(ShowNotesViewModel.VIEW_MESSAGES_BUTTON_LABEL);
-        newNote = new JButton(ShowNotesViewModel.NEW_DISCUSSION_BUTTON_LABEL);
+        newNote = new JButton(ShowNotesViewModel.NEW_NOTE_BUTTON_LABEL);
         back = new JButton("Back");
 
         topicsList.addListSelectionListener(new ListSelectionListener() {

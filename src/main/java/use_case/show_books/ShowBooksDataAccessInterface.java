@@ -10,8 +10,8 @@ public interface ShowBooksDataAccessInterface {
 
     /**
      * Adds user to club.
-     *
      * @param clubName name of club user is added to
+     * @return List of book names
      */
 
     List<String> getBooks(String clubName);

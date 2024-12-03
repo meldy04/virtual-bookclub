@@ -13,6 +13,8 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
+     * @throws URISyntaxException a URISyntax exception
+     * @throws IOException a IOException
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         final AppBuilder appBuilder = new AppBuilder();
@@ -24,7 +26,7 @@ public class Main {
                 .addMyClubsView()
                 .addLoggedInView()
                 .addJoinClubView()
-                .addShowDiscussionsView()
+                .addShowNotesView()
                 .addAddMessageView()
                 .addCreateClubView()
                 .addShowBooksView()
@@ -35,7 +37,7 @@ public class Main {
                 .addBooksListUseCase()
                 .addMyClubsUsecase()
                 .addJoinClubUseCase()
-                .addShowDiscussionsUseCase()
+                .addShowNotesUseCase()
                 .addAddMessagesUseCase()
                 .addLoginUseCase()
                 .addCreateClubUseCase()

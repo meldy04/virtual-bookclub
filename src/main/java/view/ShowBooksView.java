@@ -31,6 +31,7 @@ public class ShowBooksView extends JPanel implements PropertyChangeListener, Act
     private final JTextArea instructions = new JTextArea("You can see all the books in this book club");
     private final DefaultListModel<String> bookListModel = new DefaultListModel<>();
     private final JList<String> bookList = new JList<>(bookListModel);
+
     private final JButton backButton = new JButton("Back");
 
     private final ShowBooksViewModel showBooksViewModel;

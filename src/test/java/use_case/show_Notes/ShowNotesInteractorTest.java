@@ -40,8 +40,8 @@ public class ShowNotesInteractorTest {
                 fail("Use case switch view is unexpected.");
             }
         };
-        ShowNotesInputBoundary showDiscussionsInteractor = new ShowNotesInteractor(inMemoryBookClubDataAccessObject, successPresenter);
-        showDiscussionsInteractor.execute();
+        ShowNotesInputBoundary showNotesInteractor = new ShowNotesInteractor(inMemoryBookClubDataAccessObject, successPresenter);
+        showNotesInteractor.execute();
     }
 
 
@@ -62,7 +62,7 @@ public class ShowNotesInteractorTest {
 
             @Override
             public void prepareFailView(String errorMessage) {
-                assertEquals("There are no discussions here, create a new discussion", errorMessage);
+                assertEquals("There are no Notes here, create a new Note", errorMessage);
             }
 
             @Override
@@ -71,8 +71,8 @@ public class ShowNotesInteractorTest {
             }
         };
 
-        ShowNotesInputBoundary showDiscussionsInteractor = new ShowNotesInteractor(inMemoryBookClubDataAccessObject, failPresenter);
-        showDiscussionsInteractor.execute();
+        ShowNotesInputBoundary showNotesInteractor = new ShowNotesInteractor(inMemoryBookClubDataAccessObject, failPresenter);
+        showNotesInteractor.execute();
     }
 
     @Test

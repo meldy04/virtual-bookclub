@@ -18,7 +18,7 @@ class AddMessageInteractorTest {
     public void setup() {
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub bookClub = new BookClub("Cooking", "Culinary");
-        // adds 2 empty discussions in the book club
+        // adds 2 empty Notes in the book club
         bookClub.addNotes("favourite foods", new Notes("favourite foods", new ArrayList<>()));
         bookClub.addNotes("cooking tips", new Notes("cooking tips", new ArrayList<>()));
         bookClub.getNote("favourite foods").addMessage(new Message("user 1", "Pizza is my favourite"));
@@ -27,7 +27,7 @@ class AddMessageInteractorTest {
         inMemoryBookClubDataAccessObject = new InMemoryBookClubDataAccessObject(bookClubMap);
         inMemoryBookClubDataAccessObject.setCurrentClub("Cooking");
         inMemoryBookClubDataAccessObject.setCurrentNote("favourite foods");
-        // setting current book club and current discussion which is done by other use cases.
+        // setting current book club and current Note which is done by other use cases.
 
     }
 
@@ -57,7 +57,7 @@ class AddMessageInteractorTest {
             @Override
             public void prepareShowMessageView(AddMessageOutputData outputData) {
                 Assertions.assertEquals(expectedOutput, outputData.getMessages());
-                Assertions.assertEquals(discussion, outputData.getCurrentDiscussion());
+                Assertions.assertEquals(discussion, outputData.getCurrentNote());
             }
         };
         AddMessageInputBoundary addMessageInteractor = new AddMessageInteractor(inMemoryBookClubDataAccessObject, showMessagesPresenter);

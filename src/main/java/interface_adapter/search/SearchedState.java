@@ -1,11 +1,5 @@
 package interface_adapter.search;
 
-import data_access.BookDataTransferObject;
-import entity.Book;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The State information representing the searched books.
  */
@@ -24,7 +18,6 @@ public class SearchedState {
         this.message = message;
         this.query = query;
     }
-
 
     public BookViewModel getBooks() {
         return books;
@@ -49,6 +42,5 @@ public class SearchedState {
     public void setQuery(String query) {
         this.query = query;
     }
-
 
 }

@@ -5,13 +5,13 @@ package use_case.show_Notes;
  */
 public interface ShowNotesInputBoundary {
     /**
-     * Executes the show discussions use case.
+     * Executes the show Notes use case.
      */
     void execute();
 
     /**
      * Switch to add message view.
-     * @param discussion the discussion chosen by the user
+     * @param Note the Note chosen by the user
      */
-    void switchToAddMessageView(String discussion);
+    void switchToAddMessageView(String Note);
 }

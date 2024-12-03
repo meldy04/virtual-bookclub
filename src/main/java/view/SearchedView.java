@@ -1,19 +1,33 @@
 package view;
 
-
-import interface_adapter.search.*;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.beans.PropertyChangeListener;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.search.BookViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchedState;
+import interface_adapter.search.SearchedViewModel;
 
 /**
  *  Displays view after searching
@@ -29,17 +43,27 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
 
     private final JTextField queryInputField = new JTextField(50);
 
-
     private final JButton backButton = new JButton("Back to Search");
 
-    public SearchedView(SearchedViewModel searchedViewModelP) {
+    private final ViewManagerModel viewManagerModel;
+
+    public SearchedView(SearchedViewModel searchedViewModelP, ViewManagerModel viewManagerModel) {
         this.searchedViewModel = searchedViewModelP;
+        this.viewManagerModel = viewManagerModel;
 
         searchedViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
-        backButton.addActionListener(evt -> goBackToSearch());
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == backButton) {
+                    viewManagerModel.setState("logged in");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
         add(backButton, BorderLayout.NORTH);
 
         resultList.setCellRenderer(new BookCellRenderer());
@@ -54,12 +78,12 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
             }
         });
     }
-
     /**
      * Updates the results displayed in the JList.
      *
      * @param books The Book object to display.
      */
+
     public void updateResults(BookViewModel books) {
         final DefaultListModel<BookViewModel> model = new DefaultListModel<>();
         model.addElement(books);
@@ -90,15 +114,16 @@ public class SearchedView extends JPanel implements PropertyChangeListener {
         this.searchController = searchController;
     }
 
+    /**
+     * Renders the book cover pages.
+     */
     private static final class BookCellRenderer extends JPanel implements ListCellRenderer<BookViewModel> {
         private final JLabel coverLabel = new JLabel();
         private final JLabel textLabel = new JLabel();
 
-        public BookCellRenderer() {
+        BookCellRenderer() {
             setLayout(new GridBagLayout());
         }
-
-
 
         @Override
         public Component getListCellRendererComponent(

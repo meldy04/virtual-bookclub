@@ -1,4 +1,3 @@
-
 {
   "Reading Club" : {
     "name" : "Reading Club",
@@ -18,7 +17,7 @@
       "reviews" : [ ]
     } ],
     "notes" : {
-      "topic1" : {
+      "Topic1" : {
         "topic" : "topic1",
         "messages" : [ {
           "username" : "user1",
@@ -62,26 +61,5 @@
         } ]
       }
     }
-  },
-  "harry potter fans" : {
-    "name" : "harry potter fans",
-    "description" : "club for harry potter fans",
-    "members" : [ "user1" ],
-    "books" : [ ],
-    "notes" : { }
-  },
-  "club3" : {
-    "name" : "club3",
-    "description" : "desc",
-    "members" : [ "user3" ],
-    "books" : [ ],
-    "notes" : { }
-  },
-  "CSC207 club" : {
-    "name" : "CSC207 club",
-    "description" : "club for csc207 students",
-    "members" : [ "user1" ],
-    "books" : [ ],
-    "notes" : { }
   }
 }

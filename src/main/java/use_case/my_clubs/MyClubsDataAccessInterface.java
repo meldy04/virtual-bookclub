@@ -1,8 +1,8 @@
 package use_case.my_clubs;
 
-import data_access.CurrentClubManager;
-
 import java.util.Map;
+
+import data_access.CurrentClubManager;
 
 /**
  * The interface of the DAO for my clubs usecase.

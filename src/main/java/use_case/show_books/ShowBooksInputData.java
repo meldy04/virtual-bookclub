@@ -7,7 +7,7 @@ public class ShowBooksInputData {
 
     private String clubName;
 
-    public ShowBooksInputData(String clubName){
+    public ShowBooksInputData(String clubName) {
         this.clubName = clubName;
     }
 

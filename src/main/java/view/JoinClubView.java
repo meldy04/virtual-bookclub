@@ -1,13 +1,19 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.join_club.JoinClubController;
@@ -18,7 +24,7 @@ import interface_adapter.join_club.JoinClubViewModel;
  * It displays available book clubs, handles user interactions, and communicates
  * with the JoinClubController to execute user actions.
  */
-public final class Join_ClubView extends JPanel implements PropertyChangeListener, ActionListener {
+public final class JoinClubView extends JPanel implements PropertyChangeListener, ActionListener {
 
     private static final String VIEW_NAME = "JoinClub";
 
@@ -42,7 +48,7 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
      * @param joinClubViewModel the ViewModel that holds the current state of the join club functionality
      * @param viewManagerModel  the ViewManagerModel to manage view transitions
      */
-    public Join_ClubView(final JoinClubViewModel joinClubViewModel, final ViewManagerModel viewManagerModel) {
+    public JoinClubView(final JoinClubViewModel joinClubViewModel, final ViewManagerModel viewManagerModel) {
         this.joinClubViewModel = joinClubViewModel;
         this.viewManagerModel = viewManagerModel;
         this.joinClubViewModel.addPropertyChangeListener(this);
@@ -124,10 +130,12 @@ public final class Join_ClubView extends JPanel implements PropertyChangeListene
     public void propertyChange(final PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             populateBookClubList();
-        } else if ("error".equals(evt.getPropertyName())) {
+        }
+        else if ("error".equals(evt.getPropertyName())) {
             final String error = joinClubViewModel.getState().getErrorMessage();
             JOptionPane.showMessageDialog(this, error);
-        } else if ("success".equals(evt.getPropertyName())) {
+        }
+        else if ("success".equals(evt.getPropertyName())) {
             final String successMessage = joinClubViewModel.getState().getSucceesMessage();
 
             // Custom success message with OK button using showOptionDialog

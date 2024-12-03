@@ -11,7 +11,8 @@ public class ShowBooksInteractor implements ShowBooksInputBoundary {
 
     private final ShowBooksDataAccessInterface showBooksDataAccessInterface;
 
-    public ShowBooksInteractor(ShowBooksOutputBoundary showBooksOutputBoundary, ShowBooksDataAccessInterface showBooksDataAccessInterface) {
+    public ShowBooksInteractor(ShowBooksOutputBoundary showBooksOutputBoundary,
+                               ShowBooksDataAccessInterface showBooksDataAccessInterface) {
         this.showBooksOutputBoundary = showBooksOutputBoundary;
         this.showBooksDataAccessInterface = showBooksDataAccessInterface;
     }

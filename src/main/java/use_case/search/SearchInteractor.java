@@ -1,17 +1,14 @@
 package use_case.search;
 
-import data_access.BookDataTransferObject;
-import entity.Book;
-
 import java.util.List;
+
+import data_access.BookDataTransferObject;
 
 /**
  * The Search Interactor.
  */
 public class SearchInteractor implements SearchInputBoundary {
-    // API object in this case
     private final SearchDataAccessInterface searchDataAccessInterface;
-    // Output data object
     private final SearchOutputBoundary searchOutputBoundary;
 
     public SearchInteractor(SearchDataAccessInterface searchDataInter1,
@@ -50,7 +47,8 @@ public class SearchInteractor implements SearchInputBoundary {
                             false);
                     searchOutputBoundary.prepareSuccessView(outputData);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception someExc) {
                 searchOutputBoundary.prepareFailView("Search failed. Enter a valid query");
             }
         }

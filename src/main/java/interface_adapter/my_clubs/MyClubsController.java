@@ -27,6 +27,6 @@ public class MyClubsController {
      * @param currentClub the club the user selected
      */
     public void switchToShowMessageView(String currentClub) {
-        myClubsInteractor.switchToShowDiscussionsView(currentClub);
+        myClubsInteractor.switchToShowNotesView(currentClub);
     }
 }

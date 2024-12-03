@@ -1,6 +1,12 @@
 package data_access;
 
-import java.util.*;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import entity.Book;
 import entity.BookClub;
@@ -21,7 +27,9 @@ import use_case.show_books.ShowBooksDataAccessInterface;
 public class InMemoryBookClubDataAccessObject implements
         JoinClubDataAccessInterface, AddMessageDataAccessInterface, MyClubsDataAccessInterface,
         ExitClubDataAccessInterface,
-        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface, ShowBooksDataAccessInterface {
+        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface,
+        ShowBooksDataAccessInterface {
+
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -109,7 +117,7 @@ public class InMemoryBookClubDataAccessObject implements
         final Map<String, String> result = new HashMap<>();
         for (BookClub bookClub : bookClubMap.values()) {
             if (bookClub.isMember(currentUsername)) {
-                result.put(bookClub.getName(), bookClub.getName());
+                result.put(bookClub.getName(), bookClub.getDescription());
             }
         }
         return result;

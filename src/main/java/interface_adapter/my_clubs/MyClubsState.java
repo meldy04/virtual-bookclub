@@ -1,6 +1,6 @@
 package interface_adapter.my_clubs;
 
-import java.util.HashMap;;
+import java.util.HashMap;
 import java.util.Map;
 
 /**

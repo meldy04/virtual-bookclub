@@ -33,6 +33,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
     private static final Integer FONTSIZE = 20;
     private static final Integer ROWS = 25;
     private static final Integer COLUMNS = 25;
+    private static final Integer TIME = 500;
 
     private final String viewName = "add message";
 
@@ -93,11 +94,11 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
         }
         );
 
-        timer = new Timer(500, new ActionListener() {
+        timer = new Timer(TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 // This code runs every 500ms
-                addMessageController.showMessages(addMessageViewModel.getState().getCurrentDiscussion());
+                addMessageController.showMessages(addMessageViewModel.getState().getCurrentNote());
             }
         });
 
@@ -147,7 +148,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
             messagesArea.append(username + ": " + text + "\n");
         }
         // current discussion is set by show discussions usecase
-        title.setText(AddMessageViewModel.TITLE_LABEL + addMessageViewModel.getState().getCurrentDiscussion());
+        title.setText(AddMessageViewModel.TITLE_LABEL + addMessageViewModel.getState().getCurrentNote());
 
     }
 
