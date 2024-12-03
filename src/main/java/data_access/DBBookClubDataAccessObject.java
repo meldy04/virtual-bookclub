@@ -1,18 +1,18 @@
 package data_access;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 
+import entity.Book;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
-import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.bookclub_list.BookClubDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_Notes.ShowNotesDataAccessInterface;
+import use_case.show_books.ShowBooksDataAccessInterface;
 
 /**
  * DAO representing book club data.
@@ -20,7 +20,9 @@ import use_case.show_Notes.ShowNotesDataAccessInterface;
 public class DBBookClubDataAccessObject implements
         JoinClubDataAccessInterface, ExitClubDataAccessInterface,
         BookClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowNotesDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
+        ShowNotesDataAccessInterface,
+        MyClubsDataAccessInterface, CreateClubDataAccessInterface, ShowBooksDataAccessInterface {
+
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
     private String currentNote;
@@ -84,7 +86,7 @@ public class DBBookClubDataAccessObject implements
 
         final List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
 
-        for (Message message: messagesList) {
+        for (Message message : messagesList) {
             result.add(new AbstractMap.SimpleEntry<>(message.getUsername(), message.getText()));
         }
         return result;
@@ -133,4 +135,14 @@ public class DBBookClubDataAccessObject implements
         JacksonTranslator.saveBookClubData(bookClubMap);
     }
 
+    @Override
+    public List<String> getBooks(String clubName) {
+        final List<String> title = new ArrayList<>();
+        final BookClub bookClub = bookClubMap.get(clubName);
+        final List<Book> book = bookClub.getBooks();
+        for (Book books : book) {
+            title.add(books.getTitle());
+        }
+        return title;
+    }
 }

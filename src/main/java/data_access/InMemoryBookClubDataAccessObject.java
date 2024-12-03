@@ -5,7 +5,9 @@ import java.util.*;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
+import use_case.bookclub_list.BookClubDataAccessInterface;
 import use_case.create_club.CreateClubDataAccessInterface;
+import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
 import use_case.show_Notes.ShowNotesDataAccessInterface;
@@ -14,8 +16,10 @@ import use_case.show_Notes.ShowNotesDataAccessInterface;
  * In-memory implementation of the DAO for storing BookClub data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowNotesDataAccessInterface, MyClubsDataAccessInterface, CreateClubDataAccessInterface {
+public class InMemoryBookClubDataAccessObject implements
+        JoinClubDataAccessInterface, AddMessageDataAccessInterface, MyClubsDataAccessInterface,
+        ExitClubDataAccessInterface,
+        BookClubDataAccessInterface, ShowNotesDataAccessInterface, CreateClubDataAccessInterface {
 
     private final Map<String, BookClub> bookClubMap;
     private String currentClub;
@@ -107,5 +111,11 @@ public class InMemoryBookClubDataAccessObject implements JoinClubDataAccessInter
             }
         }
         return result;
+    }
+
+    @Override
+    public void removeUser(String userName, String clubName) {
+        bookClubMap.get(clubName).removeMember(userName);
+        JacksonTranslator.saveBookClubData(bookClubMap);
     }
 }

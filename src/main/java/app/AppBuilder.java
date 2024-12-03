@@ -1,3 +1,4 @@
+
 package app;
 
 import java.awt.CardLayout;
@@ -14,13 +15,15 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessagePresenter;
 import interface_adapter.add_message.AddMessageViewModel;
-import interface_adapter.create_club.*;
 import interface_adapter.create_club.CreateClubController;
 import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.bookclub_list.BookClubListPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_club.CreateClubController;
+import interface_adapter.create_club.CreateClubPresenter;
+import interface_adapter.create_club.CreateClubViewModel;
 import interface_adapter.create_club.CreateClubViewModel;
 import interface_adapter.exit_bookclub.ExitClubController;
 import interface_adapter.exit_bookclub.ExitClubPresenter;
@@ -35,6 +38,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.my_clubs.MyClubsController;
 import interface_adapter.my_clubs.MyClubsPresenter;
 import interface_adapter.my_clubs.MyClubsViewModel;
+import interface_adapter.show_books.ShowBooksController;
+import interface_adapter.show_books.ShowBooksPresenter;
+import interface_adapter.show_books.ShowBooksViewModel;
 import interface_adapter.show_notes.ShowNotesController;
 import interface_adapter.show_notes.ShowNotesPresenter;
 import interface_adapter.show_notes.ShowNotesViewModel;
@@ -71,10 +77,22 @@ import use_case.my_clubs.MyClubsOutputBoundary;
 import use_case.show_Notes.ShowNotesInputBoundary;
 import use_case.show_Notes.ShowNotesInteractor;
 import use_case.show_Notes.ShowNotesOutputBoundary;
+import use_case.show_books.ShowBooksInputBoundary;
+import use_case.show_books.ShowBooksInteractor;
+import use_case.show_books.ShowBooksOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.AddMessageView;
+import view.CreateClubView;
+import view.Join_ClubView;
+import view.LoggedInView;
+import view.LoginView;
+import view.MyClubsView;
+import view.ShowBooksView;
+import view.ShowNotesView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -118,6 +136,9 @@ public class AppBuilder {
 
     private JoinClubViewModel joinClubViewModel;
 
+    private ShowBooksViewModel showBooksViewModel;
+    private ShowBooksView showBooksView;
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
@@ -131,6 +152,13 @@ public class AppBuilder {
         createClubViewModel = new CreateClubViewModel();
         createClubView = new CreateClubView(createClubViewModel, viewManagerModel);
         cardPanel.add(createClubView, createClubView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addShowBooksView(){
+        showBooksViewModel = new ShowBooksViewModel();
+        showBooksView = new ShowBooksView(showBooksViewModel, viewManagerModel);
+        cardPanel.add(showBooksView, showBooksView.getViewName());
         return this;
     }
 
@@ -192,7 +220,7 @@ public class AppBuilder {
      */
     public AppBuilder addAddMessageView() {
         addMessageViewModel = new AddMessageViewModel();
-        addMessageView = new AddMessageView(addMessageViewModel);
+        addMessageView = new AddMessageView(addMessageViewModel, viewManagerModel);
         cardPanel.add(addMessageView, addMessageView.getViewName());
         return this;
     }
@@ -203,7 +231,7 @@ public class AppBuilder {
      */
     public AppBuilder addShowDiscussionsView() {
         showDiscussionsViewModel = new ShowNotesViewModel();
-        showDiscussionsView = new ShowNotesView(showDiscussionsViewModel);
+        showDiscussionsView = new ShowNotesView(showDiscussionsViewModel, viewManagerModel);
         cardPanel.add(showDiscussionsView, showDiscussionsView.getViewName());
         return this;
     }
@@ -371,6 +399,16 @@ public class AppBuilder {
                 new ExitClubInteractor(exitClubOutputBoundary, bookClubDataAccessObject);
         final ExitClubController exitClubController = new ExitClubController(exitClubInteractor);
         myClubsView.setExitClubController(exitClubController);
+        return this;
+    }
+
+    public AppBuilder addBooksListUseCase(){
+        final ShowBooksOutputBoundary showBooksOutputBoundary =
+                new ShowBooksPresenter(viewManagerModel, showBooksViewModel);
+        final ShowBooksInputBoundary showBooksInteractor = new
+                ShowBooksInteractor(showBooksOutputBoundary, bookClubDataAccessObject);
+        final ShowBooksController showBooksController = new ShowBooksController(showBooksInteractor);
+        myClubsView.setShowBooksController(showBooksController);
         return this;
     }
 
