@@ -11,7 +11,7 @@ you are reading and access the list of books in a book-club. The search function
 Our project has the primary goal of enhancing a book lover's dream.
 
 
-<img height="250" src="images/dependencies.jpeg" width="500"/>
+<img height="300" src="images/dependencies.jpeg" width="500"/>
 
 **Team Members**
 
