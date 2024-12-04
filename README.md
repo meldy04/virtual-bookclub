@@ -28,11 +28,16 @@ Our project has the primary goal of enhancing a book lover's dream.
 
 ## Features of the Software
 1. You can join a book-club by browsing the list of current book clubs and it will show up in your clubs once joined.
-   <img height="600" src="images/joinaclubview.png" width="300"/>
-   <img height="600" src="images/joinedaclubview.png" width="300"/>
+   <img height="500" src="images/joinaclubview.png" width="300"/>
+   <img height="500" src="images/joinedaclubview.png" width="300"/>
 2. You can create a book-club about any topic and it'll automatically show up in your clubs once joined.
    <img height="450" src="images/createclubview.png" width="300"/>
-
+3. From the My Clubs tab, you can access each individual book club's books and your own personal notes about your 
+current reads.
+   <img height="500" src="images/notes.png" width="300"/>
+   <img height="500" src="images/bookslist.png" width="300"/>
+4. Additionally, with our search, you can look for books that cater to your interests.
+   <img height="500" src="images/searchview.png" width="300"/>
 
 * * *
 <img height="300" src="images/dependencies.jpeg" width="500"/>
