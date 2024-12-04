@@ -61,7 +61,7 @@ disappear from your clubs and you won't be a member anymore.
 
 ## Usage Guide
 1. After downloading, run main which will prompt you to sign up. After signing up, you can get to the home-screen.
-   <img height="500" src="images/homescreen.png" width="300"/>
+   <img height="450" src="images/homescreen.png" width="300"/>
 2. From your home-screen, you can access all the functions listed in [the major features](#features-of-the-software) 
 including creating a book-club, joining a book-club, searching for books, accessing personal notes and book-lists.
 3. Once you're done with the program, please click logout. Your bookclubs will be saved for the next time you want to 
