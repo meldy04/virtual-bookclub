@@ -9,7 +9,7 @@
 5. [Simple User Guide](#usage-guide)
 6. [Feedback](#feedback)
 7. [If You'd Like to Contribute](#contributions)
-8. [[License](#license)
+8. [License](#license)
 
 * * *
 ## Page Turners: A General Introduction:
