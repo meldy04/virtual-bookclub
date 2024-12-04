@@ -20,6 +20,7 @@ import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.add_message.AddMessageController;
 import interface_adapter.add_message.AddMessageState;
 import interface_adapter.add_message.AddMessageViewModel;
@@ -32,6 +33,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
     private static final Integer FONTSIZE = 20;
     private static final Integer ROWS = 25;
     private static final Integer COLUMNS = 25;
+    private static final Integer TIME = 500;
 
     private final String viewName = "add message";
 
@@ -43,18 +45,25 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
     private final Timer timer;
     private final JButton post;
 
-    public AddMessageView(AddMessageViewModel addMessageViewModel) {
+    private final JButton back;
+
+    private final ViewManagerModel viewManagerModel;
+
+    public AddMessageView(AddMessageViewModel addMessageViewModel, ViewManagerModel viewManagerModel) {
         this.addMessageViewModel = addMessageViewModel;
+        this.viewManagerModel = viewManagerModel;
         addMessageViewModel.addPropertyChangeListener(this);
 
         title = new JLabel(AddMessageViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         post = new JButton(AddMessageViewModel.POST_BUTTON_LABEL);
+        back = new JButton("Back");
 
         final JPanel textboxPanel = new JPanel();
         textboxPanel.add(messageInputField);
         textboxPanel.add(post);
+        textboxPanel.add(back);
 
         messagesArea.setLineWrap(true);
         messagesArea.setWrapStyleWord(true);
@@ -74,12 +83,22 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == back) {
+                    viewManagerModel.setState("show Notes");
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        }
+        );
 
-        timer = new Timer(500, new ActionListener() {
+        timer = new Timer(TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 // This code runs every 500ms
-                addMessageController.showMessages(addMessageViewModel.getState().getCurrentDiscussion());
+                addMessageController.showMessages(addMessageViewModel.getState().getCurrentNote());
             }
         });
 
@@ -129,7 +148,7 @@ public class AddMessageView extends JPanel implements PropertyChangeListener {
             messagesArea.append(username + ": " + text + "\n");
         }
         // current discussion is set by show discussions usecase
-        title.setText(AddMessageViewModel.TITLE_LABEL + addMessageViewModel.getState().getCurrentDiscussion());
+        title.setText(AddMessageViewModel.TITLE_LABEL + addMessageViewModel.getState().getCurrentNote());
 
     }
 

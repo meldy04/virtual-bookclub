@@ -16,5 +16,8 @@ public interface LoginOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
+    /**
+     * Switches to create club view.
+     */
     void switchToCreateClubView();
 }

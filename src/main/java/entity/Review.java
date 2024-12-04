@@ -37,18 +37,31 @@ public class Review {
         return book;
     }
 
+    /**
+     * Gets the rating.
+     * @return the rating
+     */
     public double getRating() {
         return rating;
     }
 
+    /**
+     * Edits the rating.
+     * @param ratings the new rating
+     */
     public void editRating(double ratings) {
         this.rating = ratings;
     }
 
+    /**
+     * Edits the text.
+     * @param texts the new text
+     */
     public void editText(String texts) {
         this.text = texts;
     }
 
+    @Override
     public String toString() {
         final String p1 = "User" + ':' + ' ';
         final String p2 = "Book" + ':' + ' ';

@@ -11,6 +11,9 @@ public interface LoginInputBoundary {
      */
     void execute(LoginInputData loginInputData);
 
+    /**
+     * Switches to create club view.
+     */
     void switchToCreateClubView();
 
 }

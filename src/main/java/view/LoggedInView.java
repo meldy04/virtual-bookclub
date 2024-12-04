@@ -20,10 +20,13 @@ import interface_adapter.bookclub_list.BookClubListController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.create_club.CreateClubController;
 import interface_adapter.login.LoginController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.my_clubs.MyClubsController;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
+import interface_adapter.search.SearchViewModel;
+import interface_adapter.search.SearchedViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -37,7 +40,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private MyClubsController myClubsController;
     private LogoutController logoutController;
-    private CreateClubController createClubController;
     private LoginController loginController;
 
     private BookClubListController bookClubListController;
@@ -46,16 +48,24 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JButton logOut;
     private final JButton myClubs;
-
-    private final JButton joinClub;
-
     private final JButton createClub;
+    private final JButton joinClub;
 
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    private final SearchedViewModel searchedViewModel;
+    private final SearchViewModel searchViewModel;
+    private final JTextField queryInputField = new JTextField(30);
+    private final JButton searchButton;
+
+    private SearchController searchController;
+
+    public LoggedInView(LoggedInViewModel loggedInViewModel,
+                        SearchedViewModel searchedViewModel, SearchViewModel searchViewModel) {
         this.loggedInViewModel = loggedInViewModel;
+        this.searchedViewModel = searchedViewModel;
+        this.searchViewModel = searchViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Logged In Screen");
@@ -77,11 +87,53 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         changePassword = new JButton("Change Password");
         buttons.add(changePassword);
 
-        joinClub = new JButton("Join a Club");
+        joinClub = new JButton("Proceed to Join a Club");
         buttons.add(joinClub);
 
-        createClub = new JButton("Create a Club");
-        buttons.add(createClub);
+        createClub = new JButton("Create Club");
+
+        final LabelTextPanel searchInfo = new LabelTextPanel(
+                new JLabel("Search Query"), queryInputField);
+
+        final JPanel button = new JPanel();
+        searchButton = new JButton("Search");
+        button.add(searchButton);
+
+        searchButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(searchButton)) {
+                            final SearchState currentState = searchViewModel.getState();
+
+                            searchController.startSearch(currentState.getQuery());
+                        }
+                    }
+                }
+        );
+
+        queryInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final SearchState currentState = searchViewModel.getState();
+                currentState.setQuery(queryInputField.getText());
+                searchViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -133,18 +185,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
-
-        createClub.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(createClub)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        // 2. Execute the logout Controller.
-                        loginController.switchToCreateClubView();
-                    }
-                }
-        );
-
         joinClub.addActionListener(
                 new ActionListener() {
                     @Override
@@ -160,6 +200,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 myClubsController.execute(loggedInViewModel.getState().getUsername());
             }
         });
+
+        createClub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginController.switchToCreateClubView();
+            }
+        });
+
+        buttons.add(createClub);
 
         final JPanel changePasswordPanel = new JPanel();
         changePasswordPanel.add(passwordInfo);
@@ -181,6 +230,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(usernameInfoPanel);
         this.add(buttons);
         this.add(changePasswordPanel);
+        this.add(searchInfo);
+        this.add(searchButton);
     }
 
     @Override
@@ -208,10 +259,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.changePasswordController = changePasswordController;
     }
 
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
@@ -224,4 +271,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.bookClubListController = bookClubListController;
     }
 
+    public void setSearchController(SearchController searchController) {
+        this.searchController = searchController;
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
+    }
 }
