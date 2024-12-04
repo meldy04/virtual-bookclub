@@ -1,9 +1,15 @@
-# Lab 5: Logout
+# Page Turners: A Virtual Book-Club
 
-## Preamble
+## Table of Contents
 
-The current project provides an outline for our project 'Book Buddies'. Book Buddies has the primary goal of enhancing
-book lovers' reading experience.
+1. [Introduction to Page Turners](#page-turners-a-general-introduction)
+
+## Page Turners: A General Introduction:
+Page Turners is a virtual book-club that lets you join book-clubs that you are interested in or create book-clubs if you 
+don't find something suitable to your liking. Additionally, you can maintain personal notes about the current books that
+you are reading and access the list of books in a book-club. The search function lets you search for your next big read.
+Our project has the primary goal of enhancing a book lover's dream.
+
 
 **Team Members**
 
