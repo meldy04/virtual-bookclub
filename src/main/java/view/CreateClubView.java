@@ -23,12 +23,13 @@ import interface_adapter.create_club.CreateClubState;
 import interface_adapter.create_club.CreateClubViewModel;
 
 /**
- * The create club view.
+ * The CreateClubView.
  */
 public class CreateClubView extends JPanel implements ActionListener, PropertyChangeListener {
-    private static final int SIZE = 24;
+
     private final String viewName = "create club";
     private final CreateClubViewModel createClubViewModel;
+    private final int size2 = 24;
 
     private final JTextField clubNameInputField = new JTextField(15);
     private final JLabel clubNameErrorField = new JLabel();
@@ -48,7 +49,7 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         final JLabel banner = new JLabel("Create a Club!", SwingConstants.CENTER);
-        banner.setFont(new Font("Brush Script MT", Font.ITALIC, SIZE));
+        banner.setFont(new Font("Brush Script MT", Font.ITALIC, getSize2()));
         banner.setOpaque(true);
         banner.setBackground(Color.WHITE);
         banner.setForeground(Color.BLACK);
@@ -183,5 +184,9 @@ public class CreateClubView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public int getSize2() {
+        return size2;
     }
 }

@@ -2,22 +2,16 @@
   "Reading Club" : {
     "name" : "Reading Club",
     "description" : "Literature",
-    "members" : [ "user2", "user1", "y" ],
+    "members" : [ "user2", "user1" ],
     "books" : [ {
       "title" : "book1",
       "author" : "author1",
       "genre" : "action",
       "rating" : 9.0,
       "reviews" : [ ]
-    }, {
-      "title" : "book2",
-      "author" : "author2",
-      "genre" : "thriller",
-      "rating" : 8.0,
-      "reviews" : [ ]
     } ],
     "notes" : {
-      "Topic1" : {
+      "topic1" : {
         "topic" : "topic1",
         "messages" : [ {
           "username" : "user1",
@@ -52,14 +46,23 @@
         }, {
           "username" : "user2",
           "text" : "hi"
-        }, {
-          "username" : "user1",
-          "text" : "nice meeting you"
-        }, {
-          "username" : "user1",
-          "text" : "hello"
         } ]
       }
     }
+  },
+  "harry potter fans" : {
+    "name" : "harry potter fans",
+    "description" : "club for harry potter fans",
+    "members" : [ "user1" ],
+    "books" : [ ],
+    "notes" : { }
+  },
+  "club3" : {
+    "name" : "club3",
+    "description" : "desc",
+    "members" : [ "user3" ],
+    "books" : [ ],
+    "notes" : { }
+  },
   }
 }
