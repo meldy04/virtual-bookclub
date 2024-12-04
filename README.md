@@ -17,6 +17,7 @@ Page Turners is a virtual book-club that lets you join book-clubs that you are i
 don't find something suitable to your liking. Additionally, you can maintain personal notes about the current books that
 you are reading and access the list of books in a book-club. The search function lets you search for your next big read.
 Our project has the primary goal of enhancing a book lover's dream.
+
 * * *
 ## Contributors
 
@@ -30,6 +31,7 @@ Our project has the primary goal of enhancing a book lover's dream.
 | Ali Zeitoun          | [@zeitoun1](https://github.com/zeitoun1)         |
 
 * * *
+
 ## Installation Instructions
 1. Make a fork of the Github repo and clone it.
 2. Ensure that the pom file has been downloaded.
@@ -38,22 +40,21 @@ Our project has the primary goal of enhancing a book lover's dream.
 5. The software makes use of OpenLibraryClient API to call out API link points.
 5. The program runs on all systems and the Jackson 2.16.2 and Gson 2.11.0 packages should be downloaded to run this software.
 <img height="300" src="images/dependencies.jpeg" width="500"/>
+
 * * *
 
 ## Features of the Software
-1. You can join a book-club by browsing the list of current book clubs and it will show up in your clubs once joined.
+1. You can join a book-club by browsing the list of current book clubs and it will show up in your clubs.
    <img height="500" src="images/joinaclubview.png" width="300"/>
    <img height="500" src="images/joinedaclubview.png" width="300"/>
 2. You can create a book-club about any topic and it'll automatically show up in your clubs once joined.
    <img height="450" src="images/createclubview.png" width="300"/>
-3. From the My Clubs tab, you can access each individual book club's books and your own personal notes about your 
-current reads.
+3. From the My Clubs tab, you can access each individual book club's books and your own personal notes.
    <img height="500" src="images/notes.png" width="300"/>
    <img height="500" src="images/bookslist.png" width="300"/>
 4. If you decide to not be a part of a bookclub anymore, you can click exit bookclub in the bottom panel and it'll 
-5. disappear from your clubs and you won't be a member anymore. 
-5. Additionally, with our search, you can look for books that cater to your interests, or you can search for a specific 
-title.
+disappear from your clubs and you won't be a member anymore. 
+5. With our search, you can look for books that cater to your interests, or you can search for a specific title.
    <img height="500" src="images/searchview.png" width="300"/>
 
 * * *
