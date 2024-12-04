@@ -11,6 +11,9 @@ you are reading and access the list of books in a book-club. The search function
 Our project has the primary goal of enhancing a book lover's dream.
 
 
+![image](images/dependencies.jpeg)
+
+
 **Team Members**
 
 | Name                 | GitHub Username                                  |
