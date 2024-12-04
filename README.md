@@ -1,4 +1,4 @@
-# Lab 5: Logout
+# Virtual Book Club
 
 ## Preamble
 
@@ -17,56 +17,111 @@ book lovers' reading experience.
 | Ali Zeitoun          | [@zeitoun1](https://github.com/zeitoun1)         |
 
 * * *
+## Project Summary
 
-# User Stories
-The TODOs are summarized below (by stories) and split among team members as follows:
+#### **Purpose**
+
+Book Buddies is designed to bring book enthusiasts together through a virtual platform for creating and joining book 
+clubs, sharing personalized recommendations, writing reviews, and engaging in rich discussions about books and authors.
+
+#### **Why We Made This**
+
+We wanted to address the lack of a centralized, interactive, and user-friendly desktop tool for book lovers to 
+collaborate and share their literary journeys.
+
+#### What Problem Does It Solve?
+
+* Provides a personalized way to find new books.
+* Facilitates interaction between like-minded readers.
+* Streamlines access to book information, reviews, and recommendations.
+
+* * *
+## Table of Contents
+1. [Features](#features)
+2. [Installation Instructions](#installation-instructions)
+3. [Usage Guide](#usage-guide)
+4. [License](#license)
+5. [Feedback](#feedback)
+6. [Contributions](#contributions)
+* * *
+
+## Features
+
+### Core Functionalities (User Stories)
+
+1. **Book Club Creation and Membership**
+   * Join or create book clubs based on interests like genres, authors, or themes.
+   * Explore trending and popular clubs.
+2. **Personalized Book Recommendations**
+   * Get suggestions tailored to your reading history and preferences.
+   * Maintain a personal library to track books.
+3. **Review and Rating System**
+   * Write reviews, rate books, and explore opinions from other users.
+4. **Discussion Forums and Chats**
+   * Engage in discussions within book clubs about themes, books, or authors.
+5. **Book Information Search**
+   * Find detailed information about books, authors, and related literature using integrated APIs (Open Library).
 
 * * *
 
-- `Team Story`
+## Installation Instructions
 
-    - [ ] TODO: after signing up or logging in, user browses through a list of existing book clubs and joins one.
-    - [ ] TODO: user is able to view the club's books and participate in discussions.
+#### Requirements
+* Java: JDK 11 or later.
+* Maven: We have used the Project Object Model (POM) xml file to configure the project. You may need to right-click
+the `pom.xml` file and select 'Maven -> Reload Project'.
+
+#### Steps
+
+1. Clone the repository:
+
+```java
+git clone https://github.com/meldy04/virtual-bookclub.git
+```
+2. Compile the project:
+
+```java
+javac -d bin src/**/*.java
+```
+
+3. Run the application:
+
+```java
+java src/main/java/app/Main.java
+```
+* * *
+
+## Usage Guide
+TODO
+* * *
+
+## License
+This project is licensed under the Creative Commons Legal Code. See the [LICENSE](LICENSE) file for details.
 
 * * *
 
-- `Recommendations`
+## Feedback
 
-    - [ ] TODO: 'Recommended for You' - provides a list of books based on user's previous reads.
-    - [ ] TODO: user should be able to add recommendations to a 'Want To Read' list.
+We welcome your feedback to improve this project:
+* Open an issue on GitHub.
 
-* * *
-
-- `Add Review`
-
-    - [ ] TODO: user should be able to write a review for a book.
-    - [ ] TODO: review includes a 5-star rating system and text field.
-    - [ ] TODO: user should be able to read others' reviews.
+Guidelines for feedback:
+* Please be clear and constructive.
+* Provide examples if reporting bugs or suggesting features.
 
 * * *
+## Contributions
 
-- `Create Book Club`
+Contributions are welcome! Follow these steps:
 
-    - [ ] TODO: logged-in user should be able to start a new book club.
-    - [ ] TODO: book club is composed of a title, description and initial book.
+1. Fork the repository.
+2. Make your changes.
+3. Submit a pull request with a detailed description.
 
-* * *
+Guidelines for contributions:
 
-- `Search`
-
-    - [ ] TODO: implement api usage to allow user to be able to search the app for information e.g.author, book, etc.
-
-* * *
-
-- `New Discussion`
-
-    - [ ] TODO: allow user to create a new discussion on a book.
-
-* * *
-
-- `Leave Book Club`
-
-    - [ ] TODO: user should be able to exit a book club
-    - [ ] TODO: user should no longer be able to see any discussions after leaving.
+* Ensure code adheres to Java conventions.
+* Add unit tests for new features.
+* Provide relevant documentation updates.
 
 * * *

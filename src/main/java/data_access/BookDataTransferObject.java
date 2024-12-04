@@ -15,7 +15,7 @@ public class BookDataTransferObject {
         this.key = key;
         this.coverUrl = coverUrl;
     }
-
+  
     public String getTitle() {
         return title;
     }
@@ -23,6 +23,14 @@ public class BookDataTransferObject {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
 
     public String getAuthor() {
         return author;
@@ -47,6 +55,7 @@ public class BookDataTransferObject {
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
     }
+
 
     @Override
     public String toString() {
