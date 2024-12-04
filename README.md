@@ -60,8 +60,7 @@ disappear from your clubs and you won't be a member anymore.
 * * *
 
 ## Usage Guide
-1. After downloading, run main which will prompt you to sign up. After signing up, you can input your password and get 
-to the home-screen.
+1. After downloading, run main which will prompt you to sign up. After signing up, you can get to the home-screen.
    <img height="500" src="images/homescreen.png" width="300"/>
 2. From your home-screen, you can access all the functions listed in [the major features](#features-of-the-software) 
 including creating a book-club, joining a book-club, searching for books, accessing personal notes and book-lists.
