@@ -3,17 +3,17 @@
 ## Table of Contents
 
 1. [Introduction to Page Turners](#page-turners-a-general-introduction)
+2. [Contributors](#contributors)
+2. [Features of the Software](#features-of-the-software)
 
+* * *
 ## Page Turners: A General Introduction:
-Page Turners is a virtual book-club that lets you join book-clubs that you are interested in or create book-clubs if you 
+Page Turners is a virtual book-club that lets you join book-clubs that you are interested in or create book-clubs if you
 don't find something suitable to your liking. Additionally, you can maintain personal notes about the current books that
 you are reading and access the list of books in a book-club. The search function lets you search for your next big read.
 Our project has the primary goal of enhancing a book lover's dream.
-
-
-<img height="300" src="images/dependencies.jpeg" width="500"/>
-
-**Team Members**
+* * *
+## Contributors
 
 | Name                 | GitHub Username                                  |
 |----------------------|--------------------------------------------------|
@@ -25,6 +25,17 @@ Our project has the primary goal of enhancing a book lover's dream.
 | Ali Zeitoun          | [@zeitoun1](https://github.com/zeitoun1)         |
 
 * * *
+
+## Features of the Software
+1. You can join a book-club by browsing the list of current book clubs and it will show up in your clubs once joined.
+   <img height="600" src="images/joinaclubview.png" width="300"/>
+   <img height="600" src="images/joinedaclubview.png" width="300"/>
+2. You can create a book-club about any topic and it'll automatically show up in your clubs once joined.
+   <img height="450" src="images/createclubview.png" width="300"/>
+
+
+* * *
+<img height="300" src="images/dependencies.jpeg" width="500"/>
 
 # User Stories
 The TODOs are summarized below (by stories) and split among team members as follows:
