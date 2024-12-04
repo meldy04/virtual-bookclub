@@ -1,10 +1,9 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Class representing a book.
@@ -18,6 +17,8 @@ public class Book {
     private String genre;
     private double rating;
     private List<Review> reviews;
+    private String coverUrl;
+    private String iSbn;
 
     public Book(String title, String author, String genre, double rating) {
         this.title = title;
@@ -25,10 +26,19 @@ public class Book {
         this.genre = genre;
         this.rating = rating;
         this.reviews = new ArrayList<>();
+        this.coverUrl = "";
+        this.iSbn = "";
     }
 
     // Default constructor (required for deserialization)
     public Book() {
+    }
+
+    public Book(String title, String author, String Isbn, String coverUrl) {
+        this.title = title;
+        this.author = author;
+        this.iSbn = Isbn;
+        this.coverUrl = coverUrl;
     }
 
     public String getTitle() {

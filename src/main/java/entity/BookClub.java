@@ -1,11 +1,11 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A class representing a book club.
@@ -17,7 +17,7 @@ public class BookClub {
     private String description;
     private List<String> members = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
-    private Map<String, Discussion> discussions = new HashMap<>();
+    private Map<String, Notes> notes = new HashMap<>();
 
     // No-argument constructor
     public BookClub() {
@@ -38,14 +38,6 @@ public class BookClub {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<String> getMembers() {
         return members;
     }
@@ -54,12 +46,12 @@ public class BookClub {
         this.members = members;
     }
 
-    public Map<String, Discussion> getDiscussions() {
-        return discussions;
+    public Map<String, Notes> getNotes() {
+        return notes;
     }
 
-    public void setDiscussions(Map<String, Discussion> discussions) {
-        this.discussions = discussions;
+    public void setNotes(Map<String, Notes> notes) {
+        this.notes = notes;
     }
 
     public List<Book> getBooks() {
@@ -78,23 +70,22 @@ public class BookClub {
         this.members.add(username);
     }
 
-
     /**
-     * Adds a new discussion to discussions.
-     * @param topic of the discussion
-     * @param discussion to be added
+     * Adds a new Note to Notes.
+     * @param topic of the Note
+     * @param note to be added
      */
-    public void addDiscussion(String topic, Discussion discussion) {
-        this.discussions.put(topic, discussion);
+    public void addNotes(String topic, Notes note) {
+        this.notes.put(topic, note);
     }
 
     /**
-     * Gets the discussion with corresponding topic.
-     * @param topic the topic of the discussion
-     * @return a discussion
+     * Gets the Note with corresponding topic.
+     * @param topic the topic of the Note
+     * @return a Note
      */
-    public Discussion getDiscussion(String topic) {
-        return this.discussions.get(topic);
+    public Notes getNote(String topic) {
+        return this.notes.get(topic);
     }
 
     /**
@@ -120,5 +111,13 @@ public class BookClub {
      */
     public void removeMember(String userName) {
         this.members.remove(userName);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -38,7 +38,7 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void switchToShowDiscussionsView(String currentClub) {
+            public void switchToShowNotesView(String currentClub) {
                 fail("use case switch is unexpected");
             }
         };
@@ -68,7 +68,7 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void switchToShowDiscussionsView(String currentClub) {
+            public void switchToShowNotesView(String currentClub) {
                 fail("use case switch is unexpected");
             }
         };
@@ -77,7 +77,7 @@ public class MyClubsInteractorTest {
     }
 
     @Test
-    public void switchToShowDiscussionsViewTest() {
+    public void switchToShowNotesViewTest() {
         Map<String, BookClub> bookClubMap = new HashMap<>();
         BookClub club1 = new BookClub("Cooking", "Culinary");
         BookClub club2 = new BookClub("Comic fans", "A comic book club");
@@ -100,12 +100,12 @@ public class MyClubsInteractorTest {
             }
 
             @Override
-            public void switchToShowDiscussionsView(String currentClub) {
+            public void switchToShowNotesView(String currentClub) {
                 assertEquals(currentClub, bookClubRepository.getCurrentClub());
             }
         };
 
         MyClubsInputBoundary myClubsInteractor = new MyClubsInteractor(bookClubRepository, successPresenter);
-        myClubsInteractor.switchToShowDiscussionsView(currentClub);
+        myClubsInteractor.switchToShowNotesView(currentClub);
     }
 }

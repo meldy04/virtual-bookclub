@@ -12,5 +12,4 @@ public interface BookClubOutputBoundary {
      * @param outputData the output data to be displayed in the success view
      */
     void prepareSuccessView(BookClubOutputData outputData);
-
 }

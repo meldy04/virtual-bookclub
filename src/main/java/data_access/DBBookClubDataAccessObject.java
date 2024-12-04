@@ -1,18 +1,23 @@
 package data_access;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import entity.Book;
 import entity.BookClub;
 import entity.Message;
 import use_case.add_message.AddMessageDataAccessInterface;
 import use_case.bookclub_list.BookClubDataAccessInterface;
+import use_case.create_club.CreateClubDataAccessInterface;
 import use_case.exit_bookclub.ExitClubDataAccessInterface;
 import use_case.join_club.JoinClubDataAccessInterface;
 import use_case.my_clubs.MyClubsDataAccessInterface;
-import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
-
+import use_case.show_Notes.ShowNotesDataAccessInterface;
+import use_case.show_books.ShowBooksDataAccessInterface;
 
 /**
  * DAO representing book club data.
@@ -20,10 +25,12 @@ import use_case.show_discussions.ShowDiscussionsDataAccessInterface;
 public class DBBookClubDataAccessObject implements
         JoinClubDataAccessInterface, ExitClubDataAccessInterface,
         BookClubDataAccessInterface, AddMessageDataAccessInterface,
-        ShowDiscussionsDataAccessInterface, MyClubsDataAccessInterface {
+        ShowNotesDataAccessInterface,
+        MyClubsDataAccessInterface, CreateClubDataAccessInterface, ShowBooksDataAccessInterface {
+
     private Map<String, BookClub> bookClubMap;
     private String currentClub;
-    private String currentDiscussion;
+    private String currentNote;
     private final JacksonTranslator jacksonTranslator;
 
     // Constructor to initialize JSONTranslator and load clubs from the file
@@ -46,7 +53,18 @@ public class DBBookClubDataAccessObject implements
         bookClub.addMember(username);
         JacksonTranslator.saveBookClubData(bookClubMap);
         System.out.println("You have been sucessfully been added to the bookclub");
+    }
 
+    @Override
+    public void addClub(String clubName, String ClubDes) {
+        bookClubMap.put(clubName, new BookClub(clubName, ClubDes));
+        JacksonTranslator.saveBookClubData(bookClubMap);
+
+    }
+
+    @Override
+    public boolean clubExists(String clubName) {
+        return bookClubMap.containsKey(clubName);
     }
 
     @Override
@@ -62,18 +80,18 @@ public class DBBookClubDataAccessObject implements
 
     @Override
     public void saveMessage(String text, String currentUsername) {
-        bookClubMap.get(currentClub).getDiscussion(currentDiscussion).addMessage(new Message(currentUsername, text));
+        bookClubMap.get(currentClub).getNote(currentNote).addMessage(new Message(currentUsername, text));
         JacksonTranslator.saveBookClubData(bookClubMap);
     }
 
     @Override
     public List<AbstractMap.SimpleEntry<String, String>> getMessages() {
         final List<Message> messagesList = bookClubMap.get(currentClub)
-                .getDiscussions().get(currentDiscussion).getMessages();
+                .getNotes().get(currentNote).getMessages();
 
         final List<AbstractMap.SimpleEntry<String, String>> result = new ArrayList<>();
 
-        for (Message message: messagesList) {
+        for (Message message : messagesList) {
             result.add(new AbstractMap.SimpleEntry<>(message.getUsername(), message.getText()));
         }
         return result;
@@ -90,18 +108,18 @@ public class DBBookClubDataAccessObject implements
     }
 
     @Override
-    public void setCurrentDiscussion(String currentDiscussion) {
-        this.currentDiscussion = currentDiscussion;
+    public void setCurrentNote(String currentNote) {
+        this.currentNote = currentNote;
     }
 
     @Override
-    public String getCurrentDiscussion() {
-        return currentDiscussion;
+    public String getCurrentNote() {
+        return currentNote;
     }
 
     @Override
-    public List<String> getDiscussionsTopics() {
-        final Set<String> keys = bookClubMap.get(currentClub).getDiscussions().keySet();
+    public List<String> getNotesTopics() {
+        final Set<String> keys = bookClubMap.get(currentClub).getNotes().keySet();
         return new ArrayList<>(keys);
     }
 
@@ -122,4 +140,14 @@ public class DBBookClubDataAccessObject implements
         JacksonTranslator.saveBookClubData(bookClubMap);
     }
 
+    @Override
+    public List<String> getBooks(String clubName) {
+        final List<String> title = new ArrayList<>();
+        final BookClub bookClub = bookClubMap.get(clubName);
+        final List<Book> book = bookClub.getBooks();
+        for (Book books : book) {
+            title.add(books.getTitle());
+        }
+        return title;
+    }
 }

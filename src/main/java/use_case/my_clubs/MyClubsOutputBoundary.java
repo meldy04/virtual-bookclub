@@ -16,8 +16,8 @@ public interface MyClubsOutputBoundary {
     void prepareFailView();
 
     /**
-     * Switches to the show discussions view.
+     * Switches to the show Notes view.
      * @param currentClub the club the user selected
      */
-    void switchToShowDiscussionsView(String currentClub);
+    void switchToShowNotesView(String currentClub);
 }
