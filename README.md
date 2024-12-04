@@ -35,7 +35,8 @@ Our project has the primary goal of enhancing a book lover's dream.
 2. Ensure that the pom file has been downloaded.
 3. Reload the project after adding dependencies.
 4. Ensure that JDK 17 or above is installed on Intellij.
-5. The program runs on all systems and the Jackson and Gson packages should be downloaded to run this software.
+5. The software makes use of OpenLibraryClient API to call out API link points.
+5. The program runs on all systems and the Jackson 2.16.2 and Gson 2.11.0 packages should be downloaded to run this software.
 <img height="300" src="images/dependencies.jpeg" width="500"/>
 * * *
 
